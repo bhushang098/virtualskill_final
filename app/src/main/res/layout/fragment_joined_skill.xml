@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    tools:context="com.twilio.video.app.subMainPages.JoinedSkillFragment">
+
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_joined_skill_item_not_available"
+        android:textSize="22dp"
+        android:layout_marginTop="100dp"
+        android:text="No Skills Joined!"
+        android:textColor="#BEE04545"
+        android:gravity="center"
+        android:layout_centerInParent="true"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sh_v_joined_skill_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        shimmer:duration="800">
+
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/skill_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/skill_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/skill_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/skill_shimmer" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recViewJoinedSkill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65dp"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+</RelativeLayout>

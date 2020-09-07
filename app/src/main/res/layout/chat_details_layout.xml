@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_chat_with_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:padding="4dp"
+                    android:layout_weight="2"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:text="Messages"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="20dp"
+                    app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
+                    android:id="@+id/iv_toggle_chat_on_popup"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="2"
+            android:background="#ffffff"
+            android:id="@+id/rec_view_detailed_chat_with_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pb_chat_details"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp">
+
+            <EditText
+                android:background="@drawable/edit_text_border"
+                android:id="@+id/et_message"
+                android:hint="  Enter Message"
+                android:layout_weight="3"
+                android:padding="10dp"
+                android:textColor="@color/lobbyColorAccent"
+                android:textColorHint="@color/lobbyColorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_weight="0.5"
+                android:background="@color/colorWhite"
+                android:id="@+id/iv_send_chat_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_baseline_send_24"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

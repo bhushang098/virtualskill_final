@@ -1,0 +1,337 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.8, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
+def videoAndroidSdkDepProp = "videoAppSdkDependency"
+def videoAndroidSdkDep = (project.hasProperty(videoAndroidSdkDepProp) ?
+        project("${project.property(videoAndroidSdkDepProp)}") :
+        "com.twilio:video-android:5.8.0")
+def versionCodeProperty = project.property('versionCode') as Integer
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '28.0.3'
+
+    packagingOptions {
+        pickFirst 'lib/armeabi-v7a/libassmidi.so'
+        pickFirst 'lib/x86/libassmidi.so'
+    }
+
+    lintOptions {
+        disable 'GradleDependency'
+        warningsAsErrors true
+        // TODO: Fix all baseline app warnings and errors GSDK-1984
+        baseline file("lint-baseline.xml")
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
+    defaultConfig {
+        applicationId "com.virtualskill"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionName "0.1.0"
+        versionCode 44
+
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+        manifestPlaceholders = [
+                onesignal_app_id               : '4eef5819-abf0-4ce9-b12c-5ab75b51523d',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: '715356580973'
+        ]
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystore)
+            storePassword keystorePassword
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
+        }
+        debug {
+            storeFile file('video-android-app.keystore')
+            storePassword 'android'
+            keyAlias 'debug'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    flavorDimensions "environment"
+
+    productFlavors {
+        internal {
+            dimension "environment"
+
+            applicationId "com.virtualskill"
+            buildConfigField 'String', 'ENVIRONMENT_DEFAULT', '"production"'
+            buildConfigField 'String', 'APPCENTER_APP_KEY',
+                    "\"${getLocalProperty("APPCENTER_APP_KEY")}\""
+        }
+
+        twilio {
+            dimension "environment"
+            buildConfigField 'String', 'ENVIRONMENT_DEFAULT', '"production"'
+        }
+
+        community {
+            dimension "environment"
+            applicationId "com.virtualskill"
+            versionCode 44
+            versionName "1.0.45"
+            buildConfigField 'String', 'ENVIRONMENT_DEFAULT', '"production"'
+            buildConfigField("String",
+                    "TWILIO_ACCESS_TOKEN",
+                    "\"${getLocalProperty("TWILIO_ACCESS_TOKEN")}\"")
+            defaultConfig
+                    {
+                        manifestPlaceholders = [
+                                onesignal_app_id : '4eef5819-abf0-4ce9-b12c-5ab75b51523d',
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: '715356580973'
+                        ]
+                    }
+
+        }
+    }
+
+
+//    variantFilter { variant ->
+//        def names = variant.flavors*.name
+//
+//        // Ignore twilio debug and community release builds
+//        if ((names.contains("twilio") && variant.buildType.name == "debug")) {
+//            setIgnore(true)
+//        }
+//    }
+
+    dexOptions {
+        javaMaxHeapSize = "4g"
+        incremental = true
+
+    }
+
+    splits {
+
+        // Configures multiple APKs based on ABI.
+        abi {
+
+            // Enables building multiple APKs per ABI.
+            enable true
+
+            // By default all ABIs are included, so use reset() and include to specify that we only
+            // want APKs for x86 and x86_64.
+
+            // Resets the list of ABIs that Gradle should create APKs for to none.
+            reset()
+
+            // Specifies a list of ABIs that Gradle should create APKs for.
+            include "x86", "armeabi-v7a", "arm64-v8a", "x86_64"
+
+            // Specifies that we do not want to also generate a universal APK that includes all ABIs.
+            universalApk false
+        }
+    }
+
+
+}
+
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    def butterknifeVersion = '10.2.0'
+    def daggerVersion = '2.25.4'
+    def daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:$daggerVersion"
+    def daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
+    def retrofitVersion = '2.6.4'
+    def espressoVersion = '3.2.0'
+    def espresso = "androidx.test.espresso:espresso-core:$espressoVersion"
+    def androidXTest = '1.2.0'
+    def testCore = "androidx.test:core:$androidXTest"
+    def junitExtensions = 'androidx.test.ext:junit-ktx:1.1.1'
+    def lifecycleVersion = '2.2.0'
+    def coroutinesAndroidVersion = '1.3.3'
+    def fragmentVersion = '1.2.2'
+
+    implementation 'com.facebook.conceal:conceal:2.0.2@aar'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesAndroidVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
+    // TODO Remove as part of https://issues.corp.twilio.com/browse/AHOYAPPS-445
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutinesAndroidVersion"
+    implementation 'com.twilio:twilio-android-env:1.0.0'
+    implementation videoAndroidSdkDep
+    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycleVersion"
+    implementation "androidx.fragment:fragment:$fragmentVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "com.appyvet:materialrangebar:1.3"
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.twilio:audioswitch:0.1.5'
+
+    //Mine Dependencies
+    // Circula Image View
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    //Networking
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
+    implementation 'org.jsoup:jsoup:1.10.3'
+
+    //Time
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+    implementation 'com.github.marlonlom:timeago:4.0.0'
+    implementation 'com.android.support:support-annotations:24.2.0'
+
+    // Color Picker
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
+
+    //Media Picker
+    implementation 'net.alhazmy13.MediaPicker:libary:2.4.4'
+
+    // Youtube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    implementation 'com.devbrackets.android:exomedia:4.3.0'
+
+    //Loading BAr
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:17.2.2"
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+
+    //oneSignal For Notificatuion
+    implementation 'com.onesignal:OneSignal:[3.15.0, 3.99.99]'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    //Shimmer effect
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+
+    internalImplementation "com.microsoft.appcenter:appcenter-distribute:2.5.1"
+
+    kapt daggerAndroidProcessor
+    kapt daggerCompiler
+    kapt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    testImplementation testCore
+    testImplementation espresso
+    testImplementation junitExtensions
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesAndroidVersion"
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+    kaptTest daggerAndroidProcessor
+    kaptTest daggerCompiler
+
+    androidTestImplementation testCore
+    androidTestImplementation espresso
+    androidTestImplementation junitExtensions
+    androidTestImplementation "androidx.test:runner:$androidXTest"
+    androidTestImplementation "androidx.test:rules:$androidXTest"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'com.squareup.rx.idler:rx2-idler:0.9.1'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+}
+
+def getLocalProperty(key) {
+    if (project.rootProject.file('local.properties').exists()) {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def value = properties.getProperty(key)
+        return value
+    } else {
+        logger.log(LogLevel.WARN, "Could not find local.properties in " +
+                project.rootProject.toString() + ". Community variant cannot connect to room" +
+                " without credentials")
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'

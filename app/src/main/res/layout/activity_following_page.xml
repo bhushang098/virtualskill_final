@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    tools:context="com.twilio.video.app.subMainPages.FollowingPage">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        shimmer:title="Followings"
+        android:background="@color/colorPrimary"
+        shimmer:titleTextColor="@color/colorWhite"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sh_v_following_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        shimmer:duration="800">
+
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/user_item_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/user_item_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/user_item_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/user_item_shimmer" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_following_user_item_not_available_page"
+        android:textSize="22dp"
+        android:layout_marginTop="100dp"
+        android:text="Not Following Anyone !"
+        android:textColor="#BEE04545"
+        android:gravity="center"
+        android:layout_centerInParent="true"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recViewFollowingUsersPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

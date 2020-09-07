@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    tools:context="com.twilio.video.app.MainPages.ProUserPage">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Professors"
+        app:titleTextColor="@color/colorWhite"
+        android:background="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:id="@+id/lin_lay_nav_pro_page"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="3"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="3dp">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:id="@+id/fab_prev_pro"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_current_page_pro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:padding="3dp"
+                android:textSize="10dp"
+                android:text="Current Page : 1" />
+
+            <TextView
+                android:text="Total Pages : 200"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:padding="2dp"
+                android:textSize="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_total_page_pro"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:background="@drawable/edit_text_border"
+                android:inputType="number"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:textColorHint="@color/lobbyColorAccent"
+                android:hint=" Page No "
+                android:textSize="10dp"
+                android:imeOptions="actionDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_jump_page_pro"/>
+
+            <TextView
+                android:text="Jum to Page"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:padding="2dp"
+                android:textSize="10dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_jump_page_pro"/>
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/fab_next_pro"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:background="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_weight="60"
+        android:id="@+id/sh_v_pro_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        shimmer:duration="800">
+
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
+            android:elevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/user_item_shimmer" />
+            <include layout="@layout/user_item_shimmer" />
+            <include layout="@layout/user_item_shimmer" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="30"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rec_v_pro_user"/>
+
+
+
+</LinearLayout>

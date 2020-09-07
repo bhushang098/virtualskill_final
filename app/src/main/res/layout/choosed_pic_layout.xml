@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="5dp"
+    android:orientation="vertical"
+    android:padding="5dp"
+    app:cardCornerRadius="2dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/iv_cancle_poup_in_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                app:srcCompat="@drawable/ic_baseline_cancel_24" />
+
+            <Button
+                android:layout_alignParentRight="true"
+                android:text=" Set Cover Pic "
+                android:textAllCaps="false"
+                android:layout_marginRight="40dp"
+                android:textColor="@color/colorPrimary"
+                android:padding="5dp"
+                android:background="@drawable/edit_text_border"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_upload_cover_pic"/>
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/iv_choosed__image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/welcome_image" />
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

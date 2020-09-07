@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.MainPages.SearchPage">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:backgroundTint="#E4EBDCDC"
+                android:hint="Search on Site "
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textColor="#ffffff"
+                android:textColorHint="#E4EBDCDC" />
+
+            <ImageView
+                android:id="@+id/iv_make_serach"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/ic_baseline_search_24" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tbl_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tb_search"
+        android:minHeight="?actionBarSize"
+        app:tabBackground="@color/colorPrimary"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#ffffff"
+        app:tabIndicatorHeight="4dp"
+        app:tabMode="fixed"
+        app:tabTextColor="#ffffff">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpg_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tbl_search">
+
+    </androidx.viewpager.widget.ViewPager>
+
+
+    <!--    <LinearLayout-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@+id/lin_lay_search_tab_mine">-->
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/rec_view_users_on_search"/>-->
+
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:visibility="gone"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/rec_view_posts_on_search"/>-->
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:visibility="gone"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/rec_view_classes_on_search"/>-->
+
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:visibility="gone"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:id="@+id/rec_view_teams_on_search"/>-->
+
+
+    <!--    </LinearLayout>-->
+
+
+</RelativeLayout>

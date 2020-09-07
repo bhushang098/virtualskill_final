@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/flUsers"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.MainPages.UsersPage">
+
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleTextColor="#ffffff"
+        android:id="@+id/tbUsers">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_below="@+id/tbUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tbl_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?actionBarSize"
+            app:tabGravity="fill"
+            app:tabTextColor="#ffffff"
+            app:tabIndicatorColor="#ffffff"
+            app:tabIndicatorHeight="4dp"
+            app:tabBackground="@color/colorPrimary"
+            app:tabMode="fixed">
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_below="@+id/tbl_users"
+            android:id="@+id/vpg_users"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager.widget.ViewPager>
+
+
+    </RelativeLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/bottom_users"
+        android:padding="1dp"
+        app:labelVisibilityMode="labeled"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@android:color/white"
+        app:itemBackground="@android:color/white"
+        android:background="?android:attr/windowBackground"
+        android:layout_gravity="bottom"
+        app:menu="@menu/main_menu"/>
+
+</RelativeLayout>

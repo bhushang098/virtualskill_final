@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/flClasses"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.MainPages.ClassesPage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="#ffffff"
+        android:id="@+id/tbClasses">
+
+        <RelativeLayout
+            android:padding="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+               android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Classes"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:textSize="22dp"
+                android:textColor="#ffffff"/>
+
+            <Button
+                android:layout_alignParentRight="true"
+                android:text=" New Class"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/edit_text_border"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_new_class"/>
+
+        </RelativeLayout>
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tbClasses">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tbl_classes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?actionBarSize"
+            app:tabGravity="fill"
+            app:tabTextColor="#ffffff"
+            app:tabIndicatorColor="#ffffff"
+            app:tabIndicatorHeight="4dp"
+            app:tabBackground="@color/colorPrimary"
+            app:tabMode="fixed">
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_below="@+id/tbl_classes"
+            android:id="@+id/vpg_classes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager.widget.ViewPager>
+
+
+</RelativeLayout>
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_class"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            app:labelVisibilityMode="labeled"
+            android:background="?android:attr/windowBackground"
+            android:backgroundTint="@android:color/white"
+            android:fitsSystemWindows="true"
+            android:padding="1dp"
+            app:itemBackground="@android:color/white"
+            app:menu="@menu/main_menu" />
+
+    </RelativeLayout>
+
+</FrameLayout>

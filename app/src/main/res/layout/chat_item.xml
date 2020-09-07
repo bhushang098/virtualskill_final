@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/lin_lay_front_user"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name 1"
+            android:textStyle="bold"
+            android:textColor="#F71E1D1D"
+            android:layout_weight="2"
+            android:textSize="13dp"
+            android:id="@+id/tv_user_name_on_chat_item"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Stamp "
+            android:textSize="13dp"
+            android:layout_gravity="bottom"
+            android:id="@+id/tv_mess_time_stamp_on_chat_item"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_lay_front_user_mess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_baseline_person_24"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_front_user_mess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello"
+                android:padding="10dp"
+                android:background="@drawable/round_rect"/>
+
+            <ImageView
+                android:layout_marginTop="-1.5dp"
+                android:layout_width="8dp"
+                android:layout_height="16dp"
+                android:layout_gravity="start"
+                android:background="@drawable/corner"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/lin_lay_my_mess_top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Stamp "
+            android:layout_weight="2"
+            android:textStyle="bold"
+            android:textSize="13dp"
+            android:id="@+id/tv_mess_time_stamp_on_chat_item_self"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" You "
+            android:textStyle="bold"
+            android:textColor="#F71E1D1D"
+            android:textSize="13dp"
+            android:id="@+id/tv_user_name_on_chat_item_self"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_lay_my_mess_actual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hii !!"
+                android:padding="10dp"
+                android:layout_weight="2"
+                android:id="@+id/tv_my_message"
+                android:background="@drawable/round_rect_self"/>
+
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end"
+                android:background="@drawable/corner_self"
+                />
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_baseline_person_24"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

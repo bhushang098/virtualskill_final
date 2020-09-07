@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.twilio.video.app.MainPages.SettingsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_account_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text="Account Settings"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Name"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_name_user_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="E_Mail Address"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_mail_user_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Location"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_location_user_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Skill"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_skill_user_Setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Interests"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/chk_graphic_design"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginTop="10dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Graphic Designing" />
+
+                    <CheckBox
+                        android:id="@+id/chk_AI"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="AI" />
+
+                    <CheckBox
+                        android:id="@+id/chk_computer_network"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Computer Network" />
+
+                    <CheckBox
+                        android:id="@+id/chk_Python_programing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Python Programing" />
+
+
+                    <TextView
+                        android:id="@+id/tv_update_account_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Update"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="15dp"
+                android:id="@+id/cv_private_accnt_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_account_settings"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text="Private Account Settings"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+
+                    <CheckBox
+                        android:id="@+id/chk_private_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginTop="10dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Private Account " />
+
+                    <TextView
+                        android:id="@+id/tv_update_private_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Update"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="15dp"
+                android:id="@+id/cv_userName_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_private_accnt_setting"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text="UserName Settings"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="UserName"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_userName_on_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_update_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Update"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="15dp"
+                android:id="@+id/cv_user_role_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_userName_settings"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text="User Role Settings"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Role"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinner_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:id="@+id/tv_user_role_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Update"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="15dp"
+                android:id="@+id/cv_gender_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_user_role_settings"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text="Gender"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Gender"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinner_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:id="@+id/tv_user_gender_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Update"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="15dp"
+                android:id="@+id/cv_password_settings"
+                android:layout_below="@id/cv_gender_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text="Password Settings"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp" />
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Current Password"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_current_pass_on_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="New Password"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_new_pass1_on_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="6dp"
+                        android:text="Confirm New Password"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_new_pass2_on_settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_border"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_update_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Update"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="22dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="15dp"
+            android:id="@+id/cv_class"
+            app:cardElevation="4dp"
+            android:padding="5dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="5dp"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_class_name"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Class Programing "
+                    android:textSize="21dp"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/tv_class_location"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location : Nagpur"/>
+
+                <TextView
+                    android:id="@+id/tv_host_name"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hosted By : Bhushan Gurnule"
+                    android:gravity="center"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    app:cardBackgroundColor="@color/cardDarkBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_free_paid_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Fee : 100 INR "
+                        android:textColor="#ffffff" />
+                </androidx.cardview.widget.CardView>
+
+
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_baseline_date_range_24"/>
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/tv_class_since"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 12 July  "/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="3dp"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                       android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_baseline_access_time_24"/>
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/tv_class_timing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Daily at 06 :30 PM "/>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

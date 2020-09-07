@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2073CC</color>
+    <color name="colorPrimaryDark">#0960A3</color>
+    <color name="colorAccent">#2D64ED</color>
+    <color name="colorAccent2">#D5F1FF</color>
+    <color name="colorButtonText">#80fffffe</color>
+
+    <!-- Login Screen Colors -->
+    <color name="login_hint">#80ffffff</color>
+
+    <color name="lobbyColorPrimary">#757575</color>
+    <color name="lobbyColorPrimaryDark">#424242</color>
+    <color name="lobbyColorAccent">#9E9E9E</color>
+
+    <color name="lobbyToolbar">#66000000</color>
+    <color name="lobbyStatusBar">#e0e0e0</color>
+    <color name="lobbySecondaryText">#80ffffff</color>
+    <color name="lobbyEditTextUnderline">#1fffffff</color>
+    <color name="lobbyHint">#80ffffff</color>
+    <color name="lobbyMediaControls">#CC9B9B9B</color>
+    <color name="lobbyHangup">#4AB2EA</color>
+
+    <color name="joinLayoutTextColor">#ccffffff</color>
+    <color name="lobbyStatsDrawerBg">#CC000000</color>
+    <color name="colorFadedRed">#3493D1</color>
+
+    <!-- RemoteParticipant view colors -->
+    <color name="participantBackground">#66000000</color>
+    <color name="participantSelectedBackground">#cc000000</color>
+    <color name="participantTrackSwitchOff">#80000000</color>
+
+    <color name="cardDarkBackground">#F001141F</color>
+    <color name="colorWhite">#ffffff</color>
+
+    <color name="shimmerBackground">#dddddd</color>
+</resources>

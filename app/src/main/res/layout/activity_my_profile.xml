@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    tools:context="com.twilio.video.app.MainPages.MyProfile">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_my_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/colorWhite"
+        app:title="Your Profile"/>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_below="@+id/tb_my_profile"
+        android:id="@+id/sh_v_my_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        shimmer:duration="800">
+
+        <!-- Adding 7 rows of placeholders -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/user_item_shimmer"/>
+
+
+
+            <include layout="@layout/team_item_shimmer"/>
+
+            <include layout="@layout/skill_shimmer"/>
+
+            <include layout="@layout/user_item_shimmer"/>
+
+            <include layout="@layout/team_item_shimmer"/>
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/sh_v_my_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_profile_background_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/welcome_image"
+                android:padding="10dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/iv_profile_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@color/cardDarkBackground"
+                        android:transitionName="imgOfBlogitem" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_change_cover_pic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:padding="10dp"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="4dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_alignBottom="@+id/iv_profile_background">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="4dp"
+                            app:srcCompat="@drawable/ic_baseline_photo_camera_24"/>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_alignBottom="@+id/iv_profile_background"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civ_profile_pic"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/welcome_image"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_marginLeft="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:padding="5dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="5dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_user_name_on_profile"
+                                android:padding="5dp"
+                                android:textStyle="bold"
+                                android:textSize="16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Demo Name"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <!--//Star RAting View-->
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/cv_profile_background_image"
+                android:id="@+id/lin_lay_rating_view_my_profile"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <ImageView
+
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_baseline_star_24" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:padding="5dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Five Star"
+                        android:textColor="#ffffff" />
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_profile_company"
+                android:layout_marginTop="15dp"
+                app:cardElevation="2dp"
+                android:layout_below="@+id/lin_lay_rating_view_my_profile"
+                app:cardCornerRadius="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Company"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_gender_no_profile"
+                android:layout_marginTop="15dp"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="5dp"
+                android:layout_below="@+id/cv_profile_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_gender_self_profile"
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="20dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/male"/>
+
+                        <TextView
+                            android:id="@+id/tv_user_gender_on_profile"
+                            android:layout_marginLeft="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male"
+                            android:textSize="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="20dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/ic_baseline_local_phone_24"/>
+
+                        <TextView
+                            android:id="@+id/tv_user_phone_on_profile"
+                            android:layout_marginLeft="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1020309130"
+                            android:textSize="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="20dp"
+                            android:layout_height="30dp"
+                            app:srcCompat="@drawable/ic_baseline_location_on_24"/>
+
+                        <TextView
+                            android:id="@+id/tv_user_location_on_profile"
+                            android:layout_marginLeft="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" City "
+                            android:textSize="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <androidx.cardview.widget.CardView
+                        app:cardBackgroundColor="@color/cardDarkBackground"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Skills"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textColor="@color/colorWhite"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_user_skill"
+                        android:text="Skill Name"
+                        android:layout_gravity="center"
+                        android:padding="3dp"
+                        android:gravity="center"
+                        />
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:srcCompat="@drawable/ic_baseline_info_24"/>
+                        <TextView
+                            android:textColor="#00000f"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="   Interests"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/lin_lay_interests">
+
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:id="@+id/lin_lay_followings_count"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/cv_gender_no_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_weight="3"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:padding="4dp"
+                        android:id="@+id/tv_post_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/circle_backgrpund"
+                        android:elevation="10dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:text="Posts"
+                        android:textColor="@color/lobbyColorAccent"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Posts"
+                        android:padding="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="3"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:padding="4dp"
+                        android:id="@+id/tv_following_no"
+                        android:gravity="center"
+                        android:background="@drawable/circle_backgrpund"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lobbyColorAccent"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif"
+                        android:text="Following"
+                        android:textSize="15dp"
+                        android:elevation="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Following"
+                        android:padding="5dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="3"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:padding="4dp"
+                        android:id="@+id/tv_followers_no"
+                        android:gravity="center"
+                        android:background="@drawable/circle_backgrpund"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lobbyColorAccent"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif"
+                        android:text="Followers"
+                        android:textSize="15dp"
+                        android:elevation="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Followers"
+                        android:padding="5dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lin_lay_post_utils_profile"
+                android:layout_below="@+id/lin_lay_followings_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <EditText
+                    android:background="@drawable/edit_text_border"
+                    android:id="@+id/et_caption_on_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:hint="  Share what you think"
+                    android:textColorHint="@color/lobbyColorAccent" />
+
+                <ImageView
+                    android:id="@+id/iv_unSelect_image_on_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_baseline_highlight_off_24" />
+
+                <ImageView
+                    android:id="@+id/iv_prev_yt_vid_skill"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_baseline_bookmark_24" />
+
+                <EditText
+                    android:id="@+id/et_yt_link_on_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Youtube Link"
+                    android:textColor="@color/cardDarkBackground"
+                    android:visibility="gone" />
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/yt_selected_vv__on_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:enableAutomaticInitialization="false"
+                    app:showFullScreenButton="false" />
+
+                <ImageView
+                    android:id="@+id/iv_selected_image__on_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <VideoView
+                    android:id="@+id/vv_selected_video__on_profile"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:visibility="gone" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/lin_lay_pick_image_on_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/ic_baseline_image_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Image"
+                            android:textColor="@color/colorPrimary" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lin_lay_pick_video_on_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/ic_baseline_video_library_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Video"
+                            android:textColor="@color/colorPrimary" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lin_lay_pick_ytLink_on_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_horizontal"
+                            app:srcCompat="@drawable/ic_baseline_insert_link_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="YouTube"
+                            android:textColor="@color/colorPrimary" />
+
+
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardCornerRadius="5dp">
+
+                        <TextView
+                            android:id="@+id/tv_commit_post_on_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="Post!"
+                            android:textColor="#ffffff"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lin_lay_post_utils_profile"
+                android:layout_marginTop="10dp"
+                android:text="No Post To Show "
+                android:gravity="center"
+                android:textColor="@color/lobbyColorAccent"
+                android:textSize="22dp"
+                android:id="@+id/tv_no_post_self"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rec_v_my_profile"
+                android:layout_below="@id/lin_lay_post_utils_profile"/>
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

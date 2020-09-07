@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "715356580973",
+    "firebase_url": "https://virtualskill-ec9c1.firebaseio.com",
+    "project_id": "virtualskill-ec9c1",
+    "storage_bucket": "virtualskill-ec9c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715356580973:android:839b434843964458d02364",
+        "android_client_info": {
+          "package_name": "com.virtualskill"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715356580973-ohubul9l538v8e0u3fml54ip20gnr0tm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOSgXTX2DcmkkBZ5nfCPrPE-tOrpBRCpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715356580973-ohubul9l538v8e0u3fml54ip20gnr0tm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715356580973:android:839b434843964458d02364",
+        "android_client_info": {
+          "package_name": "com.virtualskill.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715356580973-ohubul9l538v8e0u3fml54ip20gnr0tm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOSgXTX2DcmkkBZ5nfCPrPE-tOrpBRCpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715356580973-ohubul9l538v8e0u3fml54ip20gnr0tm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+
+  ],
+  "configuration_version": "1"
+}

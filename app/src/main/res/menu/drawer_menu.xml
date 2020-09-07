@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/nav_my_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="My Profile" />
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_skill"
+        android:icon="@drawable/ic_baseline_bookmark_24"
+        android:title="Skills" />
+
+
+    <item
+        android:id="@+id/nav_teams"
+        android:icon="@drawable/ic_baseline_group_24"
+        android:title="Teams" />
+    <item
+        android:id="@+id/nav_classes"
+        android:icon="@drawable/ic_baseline_desktop_mac_24"
+        android:title="Classes" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/nav_users"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Students" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/nav_users_pro"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Professors" />
+
+    <group>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/log_out"
+            android:icon="@drawable/ic_baseline_arrow_back_ios_24"
+            android:title="Log Out" />
+
+    </group>
+
+</menu>

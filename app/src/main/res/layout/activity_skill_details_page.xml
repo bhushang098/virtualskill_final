@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.subMainPages.SkillDetailsPage">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:background="@color/colorPrimary"
+                android:id="@+id/tb_skill_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_skill_name_on_toolBar"
+                    android:textSize="20dp"
+                    android:textColor="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" "/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_skill_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/tb_skill_details"
+                android:background="@drawable/welcome_image"
+                android:elevation="5dp"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/iv_skill_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@color/cardDarkBackground"
+                        android:transitionName="imgOfBlogitem" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_join_leave_skill"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:padding="5dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignBottom="@+id/iv_skill_cover"
+                        app:cardCornerRadius="5dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardElevation="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_join_leave_skill"
+                            android:padding="8dp"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Join"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_skill_name"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:padding="5dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignBottom="@+id/iv_skill_cover"
+                        app:cardCornerRadius="5dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardElevation="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_skill_name"
+                            android:padding="8dp"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Skill Name"/>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_skill_query"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_below="@id/cv_skill_image"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/ic_baseline_bookmark_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Query"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/cv_skill_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_skill_query"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/pencil" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Edit Skill Info"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_skill_free_paid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cv_skill_edit"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                app:cardBackgroundColor="@color/cardDarkBackground">
+
+                <TextView
+                    android:id="@+id/tv_skill_fees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Free Skill"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_skill_main_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cv_skill_free_paid"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_skill_members"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="3 members"
+                        android:textColor="@color/colorPrimary" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/tv_skill_timeStamp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Since Timestamp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/tv_skill_host"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Hosted By : Host Name"
+                        android:textColor="@color/colorPrimary" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        app:cardBackgroundColor="@color/cardDarkBackground"
+                        app:cardCornerRadius="3dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                app:srcCompat="@drawable/ic_baseline_business_center_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
+                                android:text="BDE"
+                                android:textColor="#ffffff" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <ImageView
+
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_baseline_star_24" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_baseline_star_24" />
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:padding="5dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardCornerRadius="2dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:text="Five Star"
+                                android:textColor="#ffffff" />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            app:srcCompat="@drawable/ic_baseline_info_24" />
+
+                        <TextView
+                            android:id="@+id/tv_skill_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Skill Info" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_card_post_utils"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cv_skill_main_details"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <EditText
+                        android:id="@+id/et_caption_skill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:hint="  Share what you think"
+                        android:background="@drawable/edit_text_border"
+                        android:textColorHint="@color/lobbyColorAccent"
+                        android:textColor="@color/cardDarkBackground" />
+
+                    <ImageView
+                        android:id="@+id/iv_unSelect_image_skills"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_baseline_highlight_off_24" />
+
+                    <ImageView
+                        android:id="@+id/iv_prev_yt_vid_skill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_baseline_bookmark_24" />
+
+                    <EditText
+                        android:id="@+id/et_yt_link_skill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Youtube Link"
+                        android:textColor="@color/cardDarkBackground"
+                        android:visibility="gone" />
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/yt_selected_vv_skill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:enableAutomaticInitialization="false"
+                        app:showFullScreenButton="false" />
+
+                    <ImageView
+                        android:id="@+id/iv_selected_image_skills"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <VideoView
+                        android:id="@+id/vv_selected_video_skill"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
+                        android:visibility="gone" />
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:id="@+id/lin_lay_pick_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_horizontal"
+                                app:srcCompat="@drawable/ic_baseline_image_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="Image"
+                                android:textColor="@color/colorPrimary" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lin_lay_pick_video"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="0.4"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_horizontal"
+                                app:srcCompat="@drawable/ic_baseline_video_library_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="Video"
+                                android:textColor="@color/colorPrimary" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lin_lay_pick_ytLink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="0.4"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_horizontal"
+                                app:srcCompat="@drawable/ic_baseline_insert_link_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="YouTube"
+                                android:textColor="@color/colorPrimary" />
+
+
+                        </LinearLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="10dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardCornerRadius="5dp">
+
+                            <TextView
+                                android:id="@+id/tv_commit_post_skill"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:text="Post!"
+                                android:textColor="#ffffff"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_view_skill_posts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/cv_card_post_utils"
+                android:layout_marginTop="10dp"
+                android:padding="5dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

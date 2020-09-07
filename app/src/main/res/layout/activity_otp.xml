@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.OtpA">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                app:title="          Verify OTP"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:id="@+id/tbVerifyOTP"/>
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/progress_otp_verify"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="40dp"
+                android:layout_below="@+id/tbVerifyOTP"
+                android:id="@+id/etOtp_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:focusableInTouchMode="true"
+                    android:id="@+id/etOtp"
+                    android:layout_height="40dp"
+                    android:drawableLeft="@drawable/ic_baseline_lock_24"
+                    android:layout_gravity="center"
+                    android:background="@color/colorAccent2"
+                    android:padding="10dp"
+                    android:textColorHint="@color/colorPrimary"
+                    android:layout_width="300dp"
+                    android:inputType="number"
+                    android:hint="      Enter OTP"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+
+
+            <Button
+                android:id="@+id/btn_verify_otp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/etOtp_layout"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_back_primarycolor"
+                android:text="Verify OTP"
+                android:textColor="#ffffff"
+                android:textSize="22sp" />
+
+            <TextView
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="17dp"
+                android:text="OTP sent On Number U can Resend OTP in "
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/btn_verify_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_counter_for_otp"/>
+
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btn_resend_otp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tv_counter_for_otp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_back_primarycolor"
+                android:text="Resend OTP"
+                android:textColor="#ffffff"
+                android:textSize="22sp"
+                android:layout_marginBottom="100dp"/>
+
+
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

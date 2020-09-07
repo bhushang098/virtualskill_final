@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    android:padding="5dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginBottom="10dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_team_name_on_team_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:text="Team NAme"
+            android:textAllCaps="true"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_num_member_on_team_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="1 member"
+            android:textColor="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_location_on_24"/>
+
+            <TextView
+                android:id="@+id/tv_team_location_on_team_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text=" City "
+                android:textSize="15dp"/>
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_num_joined_on_team_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Joined : 1"
+            android:textSize="15dp"
+            android:textColor="@color/colorPrimary"/>
+
+
+
+        <TextView
+            android:id="@+id/tv_team_host_on_team_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Hosted By : Host NAme"
+            android:textSize="16dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

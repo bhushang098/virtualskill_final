@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.FormPages.CreateClassPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="New Class"
+                android:background="@color/colorPrimary"
+                android:id="@+id/tb_new_class"
+                app:titleTextColor="#ffffff"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:layout_below="@+id/tb_new_class"
+                android:id="@+id/cv_create_new_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    >
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Class Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:padding="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_new_class_name"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Class Location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:hint="where it is taking place ? "
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_new_class_location"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Start Date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:id="@+id/tv_new_class_start_date"
+                      android:drawableLeft="@drawable/ic_baseline_date_range_24"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="10dp"
+                      android:textColorHint="@color/lobbyColorPrimary"
+                      android:hint="        DD/MM/YY"
+                      android:background="@drawable/edit_text_border"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="End Date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_new_class_end_date"
+                        android:drawableLeft="@drawable/ic_baseline_date_range_24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:hint="        DD/MM/YY"
+                        android:background="@drawable/edit_text_border"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Start Time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tv_new_class_start_time"
+                        android:drawableLeft="@drawable/ic_baseline_access_time_24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:hint="        12 :00 AM"
+                        android:background="@drawable/edit_text_border"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Duration (Minutes)"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/et_new_class_duration"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Daily Recurring Class"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_Class"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:checked="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/radio_daily_class_yes"
+                            android:text="  Yes"/>
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/radio_daily_class_no"
+                            android:text="  No"/>
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="About"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_new_class_about"/>
+
+                    <CheckBox
+                        android:checked="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/chbk_free_class"
+                        android:text="Free Class"/>
+
+                    <TextView
+                        android:id="@+id/tv_join_fee_text"
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:text="Joining Fee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:visibility="gone"
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/et_new_class_joining_fees"/>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:layout_marginTop="10dp"
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btn_commit_new_class"
+                            android:text="Create"
+                            android:textColor="#ffffff"
+                            android:background="@drawable/button_back_primarycolor"/>
+                        <androidx.legacy.widget.Space
+                            android:layout_width="100dp"
+                            android:layout_height="1dp"/>
+
+                        <Button
+                            android:layout_marginTop="10dp"
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btn_delete_class"
+                            android:text=" Delete Class "
+                            android:textColor="#ffffff"
+                            android:visibility="gone"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/btn_back_red"/>
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

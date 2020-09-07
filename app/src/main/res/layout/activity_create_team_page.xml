@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.FormPages.CreateTeamPage">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="New Team"
+                android:background="@color/colorPrimary"
+                android:id="@+id/tb_new_team"
+                app:titleTextColor="#ffffff"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:layout_below="@+id/tb_new_team"
+                android:id="@+id/cv_create_new_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    >
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Team Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:padding="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_new_team_name"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:hint="where it is taking place ? "
+                        android:padding="10dp"
+                        android:textColorHint="@color/lobbyColorPrimary"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_new_team_location"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Who Can Post To Team"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:id="@+id/spinner_who_can_post_to_team"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Who Can See Post"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:id="@+id/spinner_who_can_see_post"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="Who can send messages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <Spinner
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:id="@+id/spinner_who_can_send_mess"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        android:text="About"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:padding="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edit_text_border"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_about_new_team"/>
+
+
+                    <LinearLayout
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:layout_marginTop="10dp"
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btn_commit_new_team"
+                            android:text="Create"
+                            android:textColor="#ffffff"
+                            android:background="@drawable/button_back_primarycolor"/>
+                        <androidx.legacy.widget.Space
+                            android:layout_width="100dp"
+                            android:layout_height="1dp"/>
+
+                        <Button
+                            android:layout_marginTop="10dp"
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btn_delete_team"
+                            android:text=" Delete Team "
+                            android:textColor="#ffffff"
+                            android:visibility="gone"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/btn_back_red"/>
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
