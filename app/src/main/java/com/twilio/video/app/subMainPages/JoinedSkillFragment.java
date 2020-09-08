@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.R;
@@ -49,6 +50,8 @@ public class JoinedSkillFragment extends Fragment {
    ShimmerFrameLayout shimmerFrameLayout;
     private List<Datum> skillDataList = new ArrayList<>();
     TextView tvSkillsEmpty;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     public JoinedSkillFragment() {
         // Required empty public constructor
@@ -89,16 +92,24 @@ public class JoinedSkillFragment extends Fragment {
         revJoinedSkills = root.findViewById(R.id.recViewJoinedSkill);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_joined_skill_page);
         shimmerFrameLayout.startShimmerAnimation();
+        refreshLayout = root.findViewById(R.id.ref_l_joined_skills);
         tvSkillsEmpty = root.findViewById(R.id.tv_joined_skill_item_not_available);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadJoinedSkills(settings.getString("token",""));
+        token = settings.getString("token","");
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                shimmerFrameLayout.setVisibility(View.VISIBLE);
+                loadJoinedSkills(token);
+            }
+        });
+        loadJoinedSkills(token);
         return root;
 
     }
 
     private void loadJoinedSkills(String token) {
-
         Call<SkillItemResponse> call = RetrifitClient.getInstance()
                 .getSkillApi().getJoinedSkills(token);
 
@@ -107,6 +118,7 @@ public class JoinedSkillFragment extends Fragment {
             public void onResponse(Call<SkillItemResponse> call, Response<SkillItemResponse> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                refreshLayout.setRefreshing(false);
                 Log.d("TeamResponse>>", response.raw().toString());
                 if(response.body()!=null)
                 {
@@ -127,6 +139,7 @@ public class JoinedSkillFragment extends Fragment {
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.INVISIBLE);
                 Log.d("Exception>>", t.toString());
+                refreshLayout.setRefreshing(false);
             }
         });
     }

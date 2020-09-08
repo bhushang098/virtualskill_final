@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -52,6 +54,8 @@ public class HostedSkills extends Fragment {
     TextView tvSkillsEmpty;
     UserObj userObj;
     ShimmerFrameLayout shimmerFrameLayout;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
 
 
@@ -92,13 +96,23 @@ public class HostedSkills extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_hosted_skills, null);
         revHostedSkills = root.findViewById(R.id.recViewHostedSkill);
+        refreshLayout = root.findViewById(R.id.ref_l_hosted_skill);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_hosted_skill_page);
+        tvSkillsEmpty = root.findViewById(R.id.tv_hosted_skill_item_not_available);
         shimmerFrameLayout.startShimmerAnimation();
         loadUser();
-        tvSkillsEmpty = root.findViewById(R.id.tv_hosted_skill_item_not_available);
+
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadhostedSkills(settings.getString("token",""));
+        token = settings.getString("token","");
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadhostedSkills(token);
+            }
+        });
+        loadhostedSkills(token);
         return root;
     }
 
@@ -106,6 +120,12 @@ public class HostedSkills extends Fragment {
         SharedPreferences settings =getContext().getSharedPreferences("login_preferences",Context.MODE_PRIVATE);
         Gson gson = new Gson();
         userObj = gson.fromJson(settings.getString("UserObj",""),UserObj.class);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadhostedSkills(token);
     }
 
     private void loadhostedSkills(String token) {
@@ -116,7 +136,7 @@ public class HostedSkills extends Fragment {
         call.enqueue(new Callback<SkillItemResponse>() {
             @Override
             public void onResponse(Call<SkillItemResponse> call, Response<SkillItemResponse> response) {
-
+                refreshLayout.setRefreshing(false);
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("TeamResponse>>", response.raw().toString());
@@ -136,7 +156,7 @@ public class HostedSkills extends Fragment {
 
             @Override
             public void onFailure(Call<SkillItemResponse> call, Throwable t) {
-
+                refreshLayout.setRefreshing(false);
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("Exception>>", t.toString());

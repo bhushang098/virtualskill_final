@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.R;
@@ -51,6 +53,8 @@ public class AvailableSkillFrag extends Fragment {
    ShimmerFrameLayout shimmerFrameLayout;
     private List<Datum> skillDataList = new ArrayList<>();
     TextView tvSkillsEmpty;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     public AvailableSkillFrag() {
         // Required empty public constructor
@@ -83,6 +87,8 @@ public class AvailableSkillFrag extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,9 +97,19 @@ public class AvailableSkillFrag extends Fragment {
         revAvailableSkills = root.findViewById(R.id.recViewAvailableSkill);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_available_skill_page);
         tvSkillsEmpty = root.findViewById(R.id.tv_available_skill_item_not_available);
+        refreshLayout = root.findViewById(R.id.ref_l_available_skill);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadAvailableSkills(settings.getString("token",""));
+        token = settings.getString("token","");
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                shimmerFrameLayout.setVisibility(View.VISIBLE);
+                loadAvailableSkills(token);
+            }
+        });
+        loadAvailableSkills(token);
         return root;
     }
 
@@ -104,6 +120,7 @@ public class AvailableSkillFrag extends Fragment {
         call.enqueue(new Callback<SkillItemResponse>() {
             @Override
             public void onResponse(Call<SkillItemResponse> call, Response<SkillItemResponse> response) {
+                refreshLayout.setRefreshing(false);
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("TeamResponse>>", response.raw().toString());
@@ -126,8 +143,15 @@ public class AvailableSkillFrag extends Fragment {
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("Exception>>", t.toString());
+                refreshLayout.setRefreshing(false);
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadAvailableSkills(token);
     }
 }

@@ -1112,8 +1112,6 @@ public class HomePage extends AppCompatActivity{
         fabHodeNav.setVisibility(View.GONE);
         return gestureDetector.onTouchEvent(event);
 
-
-
     }
 
     public class GestureListener extends
@@ -1157,25 +1155,34 @@ public class HomePage extends AppCompatActivity{
     }
 
     void onSwipeRight() {
-//        Toast.makeText(context, "Swiped Right", Toast.LENGTH_SHORT).show();
+        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
+        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
+        navView.setVisibility(View.GONE);
+        fabHodeNav.setVisibility(View.GONE);
         this.onSwipe.swipeRight();
     }
 
     void onSwipeLeft() {
-        context.startActivity(new Intent(context,SkillPage.class));
-        Activity activity = (Activity) context;
-        activity.finish();
-        activity.overridePendingTransition(0, 0);
+        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
+        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
+        navView.setVisibility(View.GONE);
+        fabHodeNav.setVisibility(View.GONE);
         this.onSwipe.swipeLeft();
     }
 
     void onSwipeTop() {
-//        Toast.makeText(context, "Swiped Up", Toast.LENGTH_SHORT).show();
+        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
+        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
+        navView.setVisibility(View.GONE);
+        fabHodeNav.setVisibility(View.GONE);
         this.onSwipe.swipeTop();
     }
 
     void onSwipeBottom() {
-//        Toast.makeText(context, "Swiped Down", Toast.LENGTH_SHORT).show();
+        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
+        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
+        navView.setVisibility(View.GONE);
+        fabHodeNav.setVisibility(View.GONE);
         this.onSwipe.swipeBottom();
     }
 
