@@ -28,7 +28,6 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".subMainPages.PostsPage"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.LoginScreen"></activity>
         <activity
             android:name=".subMainPages.FollowingPage"
@@ -157,14 +156,6 @@
 
         <service android:name=".MyNotificationService" />
 
-        <service
-            android:name=".NotificationExtenderExample"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-            <intent-filter>
-                <action android:name="com.onesignal.NotificationExtender" />
-            </intent-filter>
-        </service>
 
     </application>
 

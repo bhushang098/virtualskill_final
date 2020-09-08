@@ -212,7 +212,7 @@ public class HomePage extends AppCompatActivity{
 
             }
         });
-        onSwipeTouchListener = new OnSwipeTouchListener(this, findViewById(R.id.flHome),fabHodeNav,navView);
+        onSwipeTouchListener = new OnSwipeTouchListener(this, findViewById(R.id.flHome));
         fabHodeNav.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("RestrictedApi")
             @Override
@@ -572,7 +572,6 @@ public class HomePage extends AppCompatActivity{
                 .getSettingsApi().hasUpdate(token);
 
         call.enqueue(new Callback<Map<String,Integer>>() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onResponse(Call<Map<String,Integer>> call, Response<Map<String,Integer>> response) {
                 Log.d("Response>>",response.raw().toString());
@@ -1088,30 +1087,17 @@ public class HomePage extends AppCompatActivity{
  class OnSwipeTouchListener implements View.OnTouchListener {
     private final GestureDetector gestureDetector;
     Context context;
-     View mainView;
-     FloatingActionButton fabHodeNav;
-     NavigationView navView;
 
-    OnSwipeTouchListener(Context ctx, View mainView, FloatingActionButton fabHodeNav, NavigationView navView) {
+    OnSwipeTouchListener(Context ctx, View mainView) {
 
         gestureDetector = new GestureDetector(ctx, new GestureListener());
-        this.mainView = mainView;
-        this.navView = navView;
-        this.fabHodeNav = fabHodeNav;
         mainView.setOnTouchListener(this);
         context = ctx;
     }
 
-    @SuppressLint("RestrictedApi")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Toast.makeText(context, "Touched", Toast.LENGTH_SHORT).show();
-        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
-        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
-        navView.setVisibility(View.GONE);
-        fabHodeNav.setVisibility(View.GONE);
         return gestureDetector.onTouchEvent(event);
-
     }
 
     public class GestureListener extends
@@ -1155,34 +1141,25 @@ public class HomePage extends AppCompatActivity{
     }
 
     void onSwipeRight() {
-        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
-        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
-        navView.setVisibility(View.GONE);
-        fabHodeNav.setVisibility(View.GONE);
+//        Toast.makeText(context, "Swiped Right", Toast.LENGTH_SHORT).show();
         this.onSwipe.swipeRight();
     }
 
     void onSwipeLeft() {
-        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
-        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
-        navView.setVisibility(View.GONE);
-        fabHodeNav.setVisibility(View.GONE);
+        context.startActivity(new Intent(context,SkillPage.class));
+        Activity activity = (Activity) context;
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
         this.onSwipe.swipeLeft();
     }
 
     void onSwipeTop() {
-        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
-        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
-        navView.setVisibility(View.GONE);
-        fabHodeNav.setVisibility(View.GONE);
+//        Toast.makeText(context, "Swiped Up", Toast.LENGTH_SHORT).show();
         this.onSwipe.swipeTop();
     }
 
     void onSwipeBottom() {
-        fabHodeNav = ((Activity)context).findViewById(R.id.fab_hide_nav_home);
-        navView = ((Activity)context).findViewById(R.id.drawer_main_navigation);
-        navView.setVisibility(View.GONE);
-        fabHodeNav.setVisibility(View.GONE);
+//        Toast.makeText(context, "Swiped Down", Toast.LENGTH_SHORT).show();
         this.onSwipe.swipeBottom();
     }
 

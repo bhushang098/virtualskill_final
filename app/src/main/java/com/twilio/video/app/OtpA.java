@@ -186,9 +186,7 @@ public class OtpA extends AppCompatActivity {
 
                     }else {
                        userObj = response.body().getData();
-                       ///delete Preference And Go to Login Page For Fcm Toekn Amd All
-
-                        deletePreferences(token);
+                        savePreferences(token);
                         Intent i = new Intent(OtpA.this,LoginPage.class);
                         Toast.makeText(OtpA.this, "Registration SuccessFull", Toast.LENGTH_SHORT).show();
                         i.putExtra("token",token);
@@ -255,10 +253,20 @@ public class OtpA extends AppCompatActivity {
         });
     }
 
-    private void deletePreferences(String token) {
+    private void savePreferences(String token) {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
-        settings.edit().clear().commit();
+        SharedPreferences.Editor editor = settings.edit();
+        // Edit and commit
+        UnameValue = email;
+        PasswordValue = password;
+        editor.putString(PREF_UNAME, UnameValue);
+        editor.putString(PREF_PASSWORD, PasswordValue);
+        editor.putString(TOKEN,token);
+        Gson gson = new Gson();
+        String json = gson.toJson(userObj);
+        editor.putString("UserObj", json);
+        editor.commit();
     }
 
     public void showAuthError(String error) {
@@ -269,6 +277,7 @@ public class OtpA extends AppCompatActivity {
         outhErrorDialog.show();
         Button retryButton = outhErrorDialog.findViewById(R.id.btn_retry_register);
         TextView tvError = outhErrorDialog.findViewById(R.id.tv_regError_desc);
+
 
         tvError.setText(error);
 

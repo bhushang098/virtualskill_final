@@ -23,6 +23,7 @@ import com.onesignal.OSNotificationReceivedResult;
 import com.onesignal.OneSignal;
 import com.twilio.video.app.subMainPages.ClassDetails;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Random;
@@ -38,26 +39,10 @@ public class NotificationExtenderExample extends NotificationExtenderService {
         notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent resultIntent = null;
-        try
-        {
-            // Create an Intent for the activity you want to start
-            if(receivedResult.payload.additionalData.getString("class_id")==null)
-            {
-                resultIntent  = new Intent(this, ChatScreen.class);
-            }else {
-                resultIntent = new Intent(this, ClassDetails.class);
-                resultIntent.putExtra("classId",receivedResult.payload.additionalData
-                        .getString("class_id"));
-                resultIntent.putExtra("status","Joined");
-            }
-            resultIntent.putExtra("direct","1");
+        Intent resultIntent;
 
-        }catch (Exception e)
-        {
-            Log.d("PayloadException>>",e.toString());
-        }
-
+        // Create an Intent for the activity you want to start
+        resultIntent  = new Intent(this, ChatScreen.class);
 
 // Create the TaskStackBuilder and add the intent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

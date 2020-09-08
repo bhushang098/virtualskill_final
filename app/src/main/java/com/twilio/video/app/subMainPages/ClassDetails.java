@@ -125,6 +125,8 @@ public class ClassDetails extends AppCompatActivity {
         loadpreference();
         status = getIntent().getStringExtra("status");
         classId = getIntent().getStringExtra("classId");
+        Gson json = new Gson();
+        classHostUser = json.fromJson(getIntent().getStringExtra("classHost"),User.class);
         setUi();
         joinSuccessDialog = new Dialog(this);
         getsingleClass();
@@ -375,7 +377,7 @@ public class ClassDetails extends AppCompatActivity {
                     i.putExtra("token", token);
                     Gson gson = new Gson();
                     String userObjStr = gson.toJson(userObj);
-                    String classObjString = gson.toJson(classobj);
+                    String classObjString = gson.toJson(classHostUser);
                     i.putExtra("classObj", classObjString);
                     i.putExtra("userObj", userObjStr);
                     startActivity(i);
@@ -514,14 +516,6 @@ public class ClassDetails extends AppCompatActivity {
         duration.setText("Duration : " + classobj.getDuration().toString() + " minutes");
 
         about.setText(classobj.getAbout());
-        if(getIntent().getStringExtra("direct")!=null)
-        {
-            if(getIntent().getStringExtra("direct").equalsIgnoreCase("1"))
-            {
-                requestPermissions(Integer.parseInt(classId));
-            }
-        }
-
 
     }
 
@@ -751,6 +745,7 @@ public class ClassDetails extends AppCompatActivity {
                         PERMISSIONS_REQUEST_CODE);
             } else {
                 //setupLocalMedia();
+
                 //Store class Id in Asared prefs Fort temp Time
                 gteClassIdForprefs(token, classId);
 
@@ -823,7 +818,6 @@ public class ClassDetails extends AppCompatActivity {
 
 
     private void gteClassIdForprefs(String token, int classId) {
-        startProgressPopup(this);
 
         Call<RoomJoinResponse> call;
 
@@ -840,7 +834,6 @@ public class ClassDetails extends AppCompatActivity {
             public void onResponse(Call<RoomJoinResponse> call, Response<RoomJoinResponse> response) {
                 try {
                     Log.d("RoomJoinResponse",response.raw().toString());
-                    progressPopup.dismiss();
 
                     if (response.body() == null) {
 
@@ -867,14 +860,12 @@ public class ClassDetails extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    progressPopup.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<RoomJoinResponse> call, Throwable t) {
                 Log.d("Exception>in>room>token",t.toString());
-                progressPopup.dismiss();
             }
         });
     }

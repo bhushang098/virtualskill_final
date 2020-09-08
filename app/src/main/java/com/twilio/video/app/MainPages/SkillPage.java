@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -56,7 +55,6 @@ public class SkillPage extends AppCompatActivity {
     Data userObj = new Data();
 
     NetworkOperator networkOperator = new NetworkOperator();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

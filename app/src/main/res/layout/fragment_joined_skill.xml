@@ -18,66 +18,46 @@
         android:gravity="center"
         android:layout_centerInParent="true"/>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sh_v_joined_skill_page"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ref_l_joined_skills">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        shimmer:duration="800">
 
+        <!-- Adding 7 rows of placeholders -->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/sh_v_joined_skill_page"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/skill_shimmer" />
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                shimmer:duration="800">
-
-                <!-- Adding 7 rows of placeholders -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <include layout="@layout/skill_shimmer" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
-                    <include layout="@layout/skill_shimmer" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
-                    <include layout="@layout/skill_shimmer" />
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"/>
-                    <include layout="@layout/skill_shimmer" />
-                </LinearLayout>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recViewJoinedSkill"
+                android:layout_height="30dp"/>
+            <include layout="@layout/skill_shimmer" />
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="65dp"
-                android:scrollbars="vertical">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
+                android:layout_height="30dp"/>
+            <include layout="@layout/skill_shimmer" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <include layout="@layout/skill_shimmer" />
         </LinearLayout>
 
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recViewJoinedSkill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65dp"
+        android:scrollbars="vertical">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 

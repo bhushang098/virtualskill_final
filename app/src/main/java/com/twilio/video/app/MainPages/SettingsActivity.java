@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
             tvUpdateProfessor, tvUpdateGender, tvUpdatePass;
 
     CheckBox chkPrivate,chkGraphic,chkAi,chkcn,chkPython;
-    String[] interests = new String[5];
+    List<String> interests = new ArrayList<String>();
 
     String token;
     Data userObj = new Data();
@@ -87,18 +87,18 @@ public class SettingsActivity extends AppCompatActivity {
                 location = etLocation.getText().toString();
                 skill = etSkill.getText().toString();
                 if(chkGraphic.isChecked())
-                    interests[0] ="Graphics Designing ";
+                    interests.add("Graphics Designing ");
 
                 if(chkAi.isChecked())
-                    interests[1]="AI";
+                    interests.add("AI");
 
 
                 if(chkcn.isChecked())
-                    interests[2]="Computer Network";
+                    interests.add("Computer Network");
 
 
                 if(chkPython.isChecked())
-                    interests[3] = "Programming in Python";
+                    interests.add("Programming in Python");
 
 
                 if(location.isEmpty())
@@ -377,24 +377,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if(userObj.getSex()==1)
             spinGender.setSelection(1);
-
-        if (userObj.getInterests().isEmpty()) {
-
-        } else {
-            String[] interestsAry = userObj.getInterests().split("\"");
-
-            for (int i = 1; i < interestsAry.length; i++) {
-                if(interestsAry[i].equalsIgnoreCase("Ai"))
-                    chkAi.setChecked(true);
-                if(interestsAry[i].equalsIgnoreCase("Programming in Python"))
-                    chkPython.setChecked(true);
-                if(interestsAry[i].equalsIgnoreCase("Computer Network"))
-                    chkcn.setChecked(true);
-                if(interestsAry[i].equalsIgnoreCase("Graphics Designing"))
-                    chkGraphic.setChecked(true);
-
-            }
-        }
 
 
     }

@@ -11,14 +11,14 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
         </activity>
 
-<!--        <service-->
-<!--            android:name=".NotificationExtenderExample"-->
-<!--            android:exported="false"-->
-<!--            android:permission="android.permission.BIND_JOB_SERVICE">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.onesignal.NotificationExtender" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+        <service
+            android:name=".NotificationExtenderExample"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com.onesignal.NotificationExtender" />
+            </intent-filter>
+        </service>
 
         <service android:name=".MyNotificationService" />
 

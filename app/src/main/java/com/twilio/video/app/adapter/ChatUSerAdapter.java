@@ -144,7 +144,6 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                     inflateDetailedMessage(detailedChatList, userList.get(position).getReceiver().getId()
                             ,userList.get(position).getReceiver().getName());
                 }else {
-
                     call  = RetrifitClient.getInstance()
 
                             .getChatApi().getDetailedChatList(token,userList.get(position).getSender().getId()
@@ -216,7 +215,6 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                 recyclerView.smoothScrollToPosition(detailedChatList.size());
                 // Tost.makeText(context, etMessage.getText().toString(), Toast.LENGTH_SHORT).show();
                 sendmessage(etMessage.getText().toString(),String.valueOf(id),mopoup);
-                etMessage.setText("");
             }
         });
 

@@ -26,7 +26,7 @@
                     android:textColor="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" "/>
+                    android:text="ClassName"/>
 
             </androidx.appcompat.widget.Toolbar>
 
