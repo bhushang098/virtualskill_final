@@ -303,6 +303,7 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -357,6 +358,7 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -441,6 +443,8 @@
                         android:id="@+id/et_new_pass1_on_settings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/edit_text_border"
                         android:padding="10dp" />
 
@@ -456,6 +460,8 @@
                         android:id="@+id/et_new_pass2_on_settings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/edit_text_border"
                         android:padding="10dp" />
 

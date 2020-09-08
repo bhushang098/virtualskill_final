@@ -57,7 +57,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionName "0.1.0"
-        versionCode 44
+        versionCode 47
 
         vectorDrawables.useSupportLibrary = true
 
@@ -136,8 +136,8 @@ android {
         community {
             dimension "environment"
             applicationId "com.virtualskill"
-            versionCode 44
-            versionName "1.0.45"
+            versionCode 47
+            versionName "1.0.47"
             buildConfigField 'String', 'ENVIRONMENT_DEFAULT', '"production"'
             buildConfigField("String",
                     "TWILIO_ACCESS_TOKEN",

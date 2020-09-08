@@ -375,7 +375,7 @@ public class ClassDetails extends AppCompatActivity {
                     i.putExtra("token", token);
                     Gson gson = new Gson();
                     String userObjStr = gson.toJson(userObj);
-                    String classObjString = gson.toJson(classHostUser);
+                    String classObjString = gson.toJson(classobj);
                     i.putExtra("classObj", classObjString);
                     i.putExtra("userObj", userObjStr);
                     startActivity(i);

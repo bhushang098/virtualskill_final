@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
             tvUpdateProfessor, tvUpdateGender, tvUpdatePass;
 
     CheckBox chkPrivate,chkGraphic,chkAi,chkcn,chkPython;
-    List<String> interests = new ArrayList<String>();
+    String[] interests = new String[5];
 
     String token;
     Data userObj = new Data();
@@ -87,18 +87,18 @@ public class SettingsActivity extends AppCompatActivity {
                 location = etLocation.getText().toString();
                 skill = etSkill.getText().toString();
                 if(chkGraphic.isChecked())
-                    interests.add("Graphics Designing ");
+                    interests[0] ="Graphics Designing ";
 
                 if(chkAi.isChecked())
-                    interests.add("AI");
+                    interests[1]="AI";
 
 
                 if(chkcn.isChecked())
-                    interests.add("Computer Network");
+                    interests[2]="Computer Network";
 
 
                 if(chkPython.isChecked())
-                    interests.add("Programming in Python");
+                    interests[3] = "Programming in Python";
 
 
                 if(location.isEmpty())
@@ -377,6 +377,24 @@ public class SettingsActivity extends AppCompatActivity {
         }
         if(userObj.getSex()==1)
             spinGender.setSelection(1);
+
+        if (userObj.getInterests().isEmpty()) {
+
+        } else {
+            String[] interestsAry = userObj.getInterests().split("\"");
+
+            for (int i = 1; i < interestsAry.length; i++) {
+                if(interestsAry[i].equalsIgnoreCase("Ai"))
+                    chkAi.setChecked(true);
+                if(interestsAry[i].equalsIgnoreCase("Programming in Python"))
+                    chkPython.setChecked(true);
+                if(interestsAry[i].equalsIgnoreCase("Computer Network"))
+                    chkcn.setChecked(true);
+                if(interestsAry[i].equalsIgnoreCase("Graphics Designing"))
+                    chkGraphic.setChecked(true);
+
+            }
+        }
 
 
     }

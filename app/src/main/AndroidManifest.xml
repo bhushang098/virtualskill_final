@@ -28,6 +28,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".subMainPages.PostsPage"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.LoginScreen"></activity>
         <activity
             android:name=".subMainPages.FollowingPage"

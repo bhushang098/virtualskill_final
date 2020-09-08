@@ -41,7 +41,7 @@ public class ConformationDialog {
 
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(R.drawable.ic_baseline_person_24)
+                .setIcon(R.drawable.plcicon)
                 .show();
         return  0;
 

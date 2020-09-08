@@ -17,12 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ProgressBar
-                android:id="@+id/pbReg"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tbOfReg"
@@ -177,6 +172,14 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:layout_marginTop="20dp"
+                android:id="@+id/pbReg"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
 
 
             <Button
