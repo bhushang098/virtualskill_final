@@ -73,6 +73,7 @@ import net.alhazmy13.mediapicker.Video.VideoPicker;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -994,6 +995,8 @@ public class ClassDetails extends AppCompatActivity {
 
         MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
 
+
+
         Call<PpUploadResponse> call = RetrifitClient.getInstance()
                 .getUploadPicApi().uploadClassCover("class_upload_cover/"+classId,token,imageToSend);
 
@@ -1001,6 +1004,11 @@ public class ClassDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<PpUploadResponse> call, Response<PpUploadResponse> response) {
                 Log.d("ClassCover>>",response.raw().toString());
+                try {
+                    Log.d("ClassCoverError>>",response.errorBody().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 progressPopup.dismiss();
 
                 if(response.body()!=null)

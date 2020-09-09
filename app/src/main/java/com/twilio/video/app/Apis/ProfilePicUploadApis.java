@@ -1,7 +1,6 @@
 package com.twilio.video.app.Apis;
 
 import com.twilio.video.app.ApiModals.PpUploadResponse;
-
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Multipart;
@@ -26,7 +25,7 @@ public interface ProfilePicUploadApis {
     );
 
     @Multipart
-    @POST()
+    @POST
     Call<PpUploadResponse> uploadClassCover(
             @Url String classId,
             @Query("token") String token,
