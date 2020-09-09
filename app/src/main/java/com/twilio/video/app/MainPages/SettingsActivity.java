@@ -378,6 +378,27 @@ public class SettingsActivity extends AppCompatActivity {
         if(userObj.getSex()==1)
             spinGender.setSelection(1);
 
+        if (userObj.getInterests().isEmpty()) {
+
+        } else {
+            String[] interestsAry = userObj.getInterests().split("\"");
+
+            for (int i = 1; i < interestsAry.length; i++) {
+                if(interestsAry[1].equalsIgnoreCase("Graphics Designing"))
+                    chkGraphic.setChecked(true);
+
+                if(interestsAry[1].equalsIgnoreCase("Computer Network"))
+                    chkcn.setChecked(true);
+
+                if(interestsAry[1].equalsIgnoreCase("Programming in Python"))
+                    chkPython.setChecked(true);
+
+                if(interestsAry[1].equalsIgnoreCase("Ai"))
+                    chkAi.setChecked(true);
+
+            }
+        }
+
 
     }
 

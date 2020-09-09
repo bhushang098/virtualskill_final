@@ -39,10 +39,26 @@ public class NotificationExtenderExample extends NotificationExtenderService {
         notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent resultIntent;
+        Intent resultIntent = null;
 
         // Create an Intent for the activity you want to start
-        resultIntent  = new Intent(this, ChatScreen.class);
+
+
+        try {
+            if(receivedResult.payload.additionalData!=null)
+            {
+                resultIntent  = new Intent(this, ClassDetails.class);
+                resultIntent.putExtra("classId",receivedResult.payload.additionalData.getString("class_id"));
+                resultIntent.putExtra("status","joined");
+                resultIntent.putExtra("direct","1");
+
+            }else {
+                resultIntent  = new Intent(this, ChatScreen.class);
+            }
+        } catch (JSONException e) {
+            Log.e("NotificationException>",e.toString());
+            e.printStackTrace();
+        }
 
 // Create the TaskStackBuilder and add the intent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

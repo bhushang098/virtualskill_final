@@ -5,37 +5,6 @@
     xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     tools:context="com.twilio.video.app.subMainPages.HostedClasses">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/sh_v_hosted_classes_page"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        shimmer:duration="800">
-
-        <!-- Adding 7 rows of placeholders -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <include layout="@layout/class_item" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-            <include layout="@layout/class_item" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-            <include layout="@layout/class_item" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-            <include layout="@layout/class_item" />
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
     <TextView
         android:visibility="gone"
         android:layout_width="match_parent"
@@ -47,15 +16,61 @@
         android:textColor="#AFEC3838"
         android:gravity="center"
         android:layout_centerInParent="true"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_view_hosted_classes"
+    
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="65dp"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent"
+        android:id="@+id/srl_hosted_classes">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sh_v_hosted_classes_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                shimmer:duration="800">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <include layout="@layout/class_item" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <include layout="@layout/class_item" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <include layout="@layout/class_item" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <include layout="@layout/class_item" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_view_hosted_classes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="65dp"
+                android:scrollbars="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+        
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </RelativeLayout>

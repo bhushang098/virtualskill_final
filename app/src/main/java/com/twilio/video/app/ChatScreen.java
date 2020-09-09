@@ -65,7 +65,6 @@ public class ChatScreen extends AppCompatActivity {
 
         Call<ChatUserResponse> call = RetrifitClient.getInstance().getChatApi()
                 .getChatUsers(token);
-
         call.enqueue(new Callback<ChatUserResponse>() {
             @Override
             public void onResponse(Call<ChatUserResponse> call, Response<ChatUserResponse> response) {

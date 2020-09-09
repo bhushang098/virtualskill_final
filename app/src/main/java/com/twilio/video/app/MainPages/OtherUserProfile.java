@@ -353,6 +353,7 @@ public class OtherUserProfile extends AppCompatActivity {
                     hideKeybaord(v);
                     recyclerView.smoothScrollToPosition(detailedChatList.size());
                     sendmessage(etMessage.getText().toString(), otherUserObj.getId().toString(), mopoup);
+                    etMessage.setText("");
                 }
 
             }
@@ -372,20 +373,27 @@ public class OtherUserProfile extends AppCompatActivity {
         Call<Map> call = RetrifitClient.getInstance().getChatApi()
                 .sendChatMess(token, "u_2_u", message, userId,"1");
 
+        Datum messageObj = new Datum();
+        messageObj.setContent(message);
+        messageObj.setUserId(String.valueOf(hisUserId));
+        messageObj.setBelongsTo(userId);
+        messageObj.setCreatedAt("Now Now");
+        int index  = detailedChatList.size();
+        detailedChatList.add(index,messageObj);
+        chatItemAdapter.notifyItemInserted(index);
+        chatsRecyclerView.smoothScrollToPosition(index);
+
+
         call.enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
                 Log.d("Responnse>>Chat ", response.raw().toString());
                 if (response.body() != null) {
-                    Datum messageObj = new Datum();
-                    messageObj.setContent(message);
-                    messageObj.setUserId(String.valueOf(hisUserId));
-                    messageObj.setBelongsTo(userId);
-                    messageObj.setCreatedAt("Now Now");
-                    int index  = detailedChatList.size();
-                    detailedChatList.add(index,messageObj);
-                    chatItemAdapter.notifyItemInserted(index);
-                    chatsRecyclerView.smoothScrollToPosition(index);
+
+                }else {
+                    detailedChatList.remove(index);
+                    chatItemAdapter.notifyItemRemoved(index);
+                    Toast.makeText(getApplicationContext(), "Can,t Send Message", Toast.LENGTH_SHORT).show();
                 }
             }
 

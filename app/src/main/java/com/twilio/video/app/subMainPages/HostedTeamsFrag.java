@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -54,6 +55,8 @@ public class HostedTeamsFrag extends Fragment {
     private List<Datum> teamDataList = new ArrayList<>();
     TextView tvTeamsEmpty;
     UserObj userObj;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     public HostedTeamsFrag() {
         // Required empty public constructor
@@ -93,12 +96,22 @@ public class HostedTeamsFrag extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_hosted_teams, null);
         revHostedTeams = root.findViewById(R.id.recViewHostedTeams);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_hosted_teams_page);
+        refreshLayout = root.findViewById(R.id.srl_hosted_teams);
         shimmerFrameLayout.startShimmerAnimation();
         loadUser();
         tvTeamsEmpty = root.findViewById(R.id.tv_hosted_teams_item_not_available);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadHostedTeams(settings.getString("token",""));
+        token = settings.getString("token","");
+        loadHostedTeams(token);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                teamDataList.clear();
+                loadHostedTeams(token);
+            }
+        });
         return root;
     }
 
@@ -106,10 +119,18 @@ public class HostedTeamsFrag extends Fragment {
         SharedPreferences settings =getContext().getSharedPreferences("login_preferences",Context.MODE_PRIVATE);
         Gson gson = new Gson();
         userObj = gson.fromJson(settings.getString("UserObj",""), UserObj.class);
+    }
 
+    @Override
+    public void onResume() {
+        loadHostedTeams(token);
+        super.onResume();
     }
 
     private void loadHostedTeams(String token) {
+
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
 
         Call<AvailAbleTeamsResponse> call = RetrifitClient.getInstance()
                 .getTeamsApi().getCreatedTeams(token);
@@ -118,7 +139,8 @@ public class HostedTeamsFrag extends Fragment {
             @Override
             public void onResponse(Call<AvailAbleTeamsResponse> call, Response<AvailAbleTeamsResponse> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
-                shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("TeamResponse>>", response.raw().toString());
                 if(response.body()!=null)
                 {
@@ -126,6 +148,7 @@ public class HostedTeamsFrag extends Fragment {
                     if(teamDataList.size()>0)
                     {
                         // SetAdapter
+                        tvTeamsEmpty.setVisibility(View.INVISIBLE);
                         revHostedTeams.setLayoutManager(new LinearLayoutManager(getContext()));
                         revHostedTeams.setAdapter(new HostedTeamsAdapter(teamDataList,getContext(),userObj));
                     }else {
@@ -137,7 +160,8 @@ public class HostedTeamsFrag extends Fragment {
             @Override
             public void onFailure(Call<AvailAbleTeamsResponse> call, Throwable t) {
                 shimmerFrameLayout.stopShimmerAnimation();
-                shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("Exception>>", t.toString());
 
             }

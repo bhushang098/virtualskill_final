@@ -17,13 +17,13 @@ public class MyNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         new NotificationExtenderExample();
-        Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Service Started", Toast.LENGTH_SHORT).show();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Service Ended", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Service Ended", Toast.LENGTH_SHORT).show();
     }
 }

@@ -15,12 +15,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -45,6 +47,7 @@ import com.twilio.video.app.ApiModals.Creator;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
 import com.twilio.video.app.ApiModals.UserObj;
+import com.twilio.video.app.DetailedChatResponse.DetailedChatResponse;
 import com.twilio.video.app.FormPages.CreateNewSkill;
 import com.twilio.video.app.FormPages.CreateTeamPage;
 import com.twilio.video.app.HomePostModal.Datum;
@@ -55,6 +58,7 @@ import com.twilio.video.app.R;
 import com.twilio.video.app.RetrifitClient;
 import com.twilio.video.app.SingleTeamResponse.Data;
 import com.twilio.video.app.SingleTeamResponse.SingleTeamResponse;
+import com.twilio.video.app.adapter.ChatItemAdapter;
 import com.twilio.video.app.adapter.HomePostsAdapter;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
@@ -64,7 +68,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -102,6 +108,12 @@ public class TeamDetailsPage extends AppCompatActivity {
     PopupWindow progressPopup, mpopup;
     Dialog joinSuccessDialog;
     Button btnOk;
+
+
+    //ForChats
+    List<com.twilio.video.app.DetailedChatResponse.Datum> detailedChatList = new ArrayList<>();
+    ChatItemAdapter chatItemAdapter;
+    RecyclerView chatsRecyclerView;
 
 
 
@@ -657,6 +669,123 @@ public class TeamDetailsPage extends AppCompatActivity {
         Gson json = new Gson();
         user = json.fromJson(settings.getString("UserObj",""),UserObj.class);
 
+        chatItemAdapter = new ChatItemAdapter(detailedChatList,getApplicationContext(),String.valueOf(user.getId()));
+    }
+
+    private void startChat() {
+        Call<DetailedChatResponse> call = RetrifitClient.getInstance()
+                .getChatApi().getDetailedChatList(token, teamId, "skill");
+
+        inflateDetailedMessage(detailedChatList);
+
+        call.enqueue(new Callback<DetailedChatResponse>() {
+            @Override
+            public void onResponse(Call<DetailedChatResponse> call, Response<DetailedChatResponse> response) {
+                Log.d("Chat Response>>", response.raw().toString());
+                if (response.body() != null) {
+                    detailedChatList = response.body().getMessages().getData();
+                    Collections.reverse(detailedChatList);
+                    chatItemAdapter.setMessageList(detailedChatList);
+                    chatsRecyclerView.smoothScrollToPosition(response.body().getMessages().getData().size());
+                    chatItemAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<DetailedChatResponse> call, Throwable t) {
+                Log.d("Exception>>>",t.toString());
+
+            }
+        });
+    }
+
+    private void inflateDetailedMessage(List<com.twilio.video.app.DetailedChatResponse.Datum> data) {
+        // ivSelectedImage.setImageURI(Uri.fromFile(coverImage));
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.chat_details_layout,
+                null); // inflating popup layout
+        PopupWindow mopoup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, true);
+        EditText etMessage = popUpView.findViewById(R.id.et_message);
+        Collections.reverse(data);
+
+        ProgressBar progressBar = popUpView.findViewById(R.id.pb_chat_details);
+        chatsRecyclerView = popUpView.findViewById(R.id.rec_view_detailed_chat_with_user);
+        ImageView ivSend = popUpView.findViewById(R.id.iv_send_chat_message);
+        ImageView ivback = popUpView.findViewById(R.id.iv_toggle_chat_on_popup);
+        mopoup.setAnimationStyle(android.R.style.Animation_Dialog);
+        mopoup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+        chatsRecyclerView.setLayoutManager(new LinearLayoutManager(TeamDetailsPage.this));
+        chatsRecyclerView.setAdapter(chatItemAdapter);
+        chatsRecyclerView.smoothScrollToPosition(data.size());
+
+        ivback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mopoup.dismiss();
+            }
+        });
+
+        ivSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toast.makeText(context, etMessage.getText().toString(), Toast.LENGTH_SHORT).show();
+                if (etMessage.getText().toString().length() > 0)
+                {
+                    hideKeybaord(v);
+                    recyclerView.smoothScrollToPosition(detailedChatList.size());
+                    sendmessage(etMessage.getText().toString(), teamId, mopoup);
+                    etMessage.setText("");
+                }
+
+            }
+        });
+
+        // Creation of popup
+
+    }
+
+    private void hideKeybaord(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+    }
+
+    private void sendmessage(String message, String userId, PopupWindow popuseWindow) {
+
+        Call<Map> call = RetrifitClient.getInstance().getChatApi()
+                .sendChatMess(token, "team", message, userId,"1");
+
+        com.twilio.video.app.DetailedChatResponse.Datum messageObj = new com.twilio.video.app.DetailedChatResponse.Datum();
+        messageObj.setContent(message);
+        messageObj.setUserId(userId);
+        messageObj.setBelongsTo(teamId);
+        messageObj.setCreatedAt("Now Now");
+        int index  = detailedChatList.size();
+        detailedChatList.add(index,messageObj);
+        chatItemAdapter.notifyItemInserted(index);
+        chatsRecyclerView.smoothScrollToPosition(index);
+
+
+        call.enqueue(new Callback<Map>() {
+            @Override
+            public void onResponse(Call<Map> call, Response<Map> response) {
+                Log.d("Responnse>>Chat ", response.raw().toString());
+                if (response.body() != null) {
+
+                }else {
+                    detailedChatList.remove(index);
+                    chatItemAdapter.notifyItemRemoved(index);
+                    Toast.makeText(getApplicationContext(), "Can,t Send Message", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map> call, Throwable t) {
+                Log.d("Failuer>>", t.toString());
+
+            }
+        });
     }
 
     private void setUi() {

@@ -47,8 +47,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.twilio.video.app.ApiModals.ClassJoinLeaveResponse;
-import com.twilio.video.app.ApiModals.Creator;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
+import com.twilio.video.app.ApiModals.PpUploadResponse;
 import com.twilio.video.app.ApiModals.RoomJoinResponse;
 import com.twilio.video.app.ApiModals.UserObj;
 import com.twilio.video.app.FormPages.CreateClassPage;
@@ -75,12 +75,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -131,6 +129,12 @@ public class ClassDetails extends AppCompatActivity {
         joinSuccessDialog = new Dialog(this);
         getsingleClass();
         loadClassPost(classId);
+        if(getIntent().getStringExtra("direct")!=null)
+        {
+                requestPermissions(Integer.parseInt(classId));
+        }
+
+
 
         cvJoinorLeave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -377,7 +381,7 @@ public class ClassDetails extends AppCompatActivity {
                     i.putExtra("token", token);
                     Gson gson = new Gson();
                     String userObjStr = gson.toJson(userObj);
-                    String classObjString = gson.toJson(classHostUser);
+                    String classObjString = gson.toJson(classobj);
                     i.putExtra("classObj", classObjString);
                     i.putExtra("userObj", userObjStr);
                     startActivity(i);
@@ -983,7 +987,6 @@ public class ClassDetails extends AppCompatActivity {
     }
 
     private void changeClassCover() {
-
         startProgressPopup(this);
         mpopup.dismiss();
 
@@ -991,27 +994,31 @@ public class ClassDetails extends AppCompatActivity {
 
         MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
 
-        Call<ResponseBody> call = RetrifitClient.getInstance().getUploadPicApi()
-                .uploadClassCover("class_upload_cover/"+classobj.getEId().toString(),token,imageToSend);
+        Call<PpUploadResponse> call = RetrifitClient.getInstance()
+                .getUploadPicApi().uploadClassCover("class_upload_cover/"+classId,token,imageToSend);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<PpUploadResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-                Log.d("Tag>>>",response.raw().toString());
+            public void onResponse(Call<PpUploadResponse> call, Response<PpUploadResponse> response) {
+                Log.d("ClassCover>>",response.raw().toString());
                 progressPopup.dismiss();
+
                 if(response.body()!=null)
                 {
-                    Toast.makeText(ClassDetails.this, "Cover Changed Successfully", Toast.LENGTH_SHORT).show();
-                    finish();
+                    Toast.makeText(ClassDetails.this, "Cover Uploaded", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(ClassDetails.this, "Unable To Change Cover Image", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            public void onFailure(Call<PpUploadResponse> call, Throwable t) {
+                progressPopup.dismiss();
+                Log.d("Exception>>",t.toString());
             }
         });
+
+
     }
+
 }

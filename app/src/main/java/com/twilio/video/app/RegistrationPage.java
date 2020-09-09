@@ -3,6 +3,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.FoldingCube;
 import com.twilio.video.app.ApiModals.RegResponse;
 import com.twilio.video.app.util.NetworkOperator;
 
@@ -54,6 +57,10 @@ public class RegistrationPage extends AppCompatActivity {
         outhErrorDialog = new Dialog(this);
         setUi();
 
+        Sprite foldingCube = new FoldingCube();
+        foldingCube.setColor(Color.parseColor("#2073CC"));
+        foldingCube.setScale(0.7f);
+        progressBar.setIndeterminateDrawable(foldingCube);
         tvGologin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

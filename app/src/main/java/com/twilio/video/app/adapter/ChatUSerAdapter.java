@@ -215,6 +215,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                 recyclerView.smoothScrollToPosition(detailedChatList.size());
                 // Tost.makeText(context, etMessage.getText().toString(), Toast.LENGTH_SHORT).show();
                 sendmessage(etMessage.getText().toString(),String.valueOf(id),mopoup);
+                etMessage.setText("");
             }
         });
 
@@ -232,6 +233,16 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
 
         Call <Map> call = RetrifitClient.getInstance().getChatApi()
                 .sendChatMess(token,"u_2_u",message,otheruserId,"1");
+        //seem Real Time
+        Datum messageObj = new Datum();
+        messageObj.setContent(message);
+        messageObj.setUserId(userId);
+        messageObj.setBelongsTo(otheruserId);
+        messageObj.setCreatedAt("Now Now");
+        int index  = detailedChatList.size();
+        detailedChatList.add(index,messageObj);
+        chatItemAdapter.notifyItemInserted(index);
+        recyclerView.smoothScrollToPosition(index);
 
         call.enqueue(new Callback<Map>() {
             @Override
@@ -239,17 +250,14 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                 Log.d("Responnse>>Chat ",response.raw().toString());
                 if(response.body()!=null)
                 {
-                    Datum messageObj = new Datum();
-                    messageObj.setContent(message);
-                    messageObj.setUserId(userId);
-                    messageObj.setBelongsTo(otheruserId);
-                    messageObj.setCreatedAt("Now Now");
-                    int index  = detailedChatList.size();
-                    detailedChatList.add(index,messageObj);
-                    chatItemAdapter.notifyItemInserted(index);
-                    recyclerView.smoothScrollToPosition(index);
+
                     //recyclerView.smoothScrollToPosition(newchatist.size());
                     //popuseWindow.dismiss();
+                }else {
+                    //message Not Sent
+                    detailedChatList.remove(index);
+                    chatItemAdapter.notifyItemRemoved(index);
+                    Toast.makeText(context, "Can,t Send Message", Toast.LENGTH_SHORT).show();
                 }
             }
 

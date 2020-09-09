@@ -141,6 +141,7 @@ public class CreateTeamPage extends AppCompatActivity {
                     {
                         Toast.makeText(CreateTeamPage.this, response.message(), Toast.LENGTH_SHORT).show();
                         finish();
+                        finish();
                     }else {
                         Toast.makeText(CreateTeamPage.this, "Error Deleting ", Toast.LENGTH_SHORT).show();
                     }
@@ -207,7 +208,8 @@ public class CreateTeamPage extends AppCompatActivity {
                     if(response.body().getStatus())
                     {
                         Toast.makeText(CreateTeamPage.this, "Team Updated ", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateTeamPage.this, HomePage.class));
+                        //startActivity(new Intent(CreateTeamPage.this, HomePage.class));
+                        finish();
                         finish();
 
                     }else {
@@ -236,7 +238,7 @@ public class CreateTeamPage extends AppCompatActivity {
 
                 if(response!=null)
                 {
-                    Toast.makeText(CreateTeamPage.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateTeamPage.this, "Team made Successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

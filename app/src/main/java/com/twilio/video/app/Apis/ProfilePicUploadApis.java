@@ -2,10 +2,7 @@ package com.twilio.video.app.Apis;
 
 import com.twilio.video.app.ApiModals.PpUploadResponse;
 
-import java.util.Map;
-
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -30,8 +27,8 @@ public interface ProfilePicUploadApis {
 
     @Multipart
     @POST()
-    Call<ResponseBody> uploadClassCover(
-            @Url String url,
+    Call<PpUploadResponse> uploadClassCover(
+            @Url String classId,
             @Query("token") String token,
             @Part MultipartBody.Part image
     );

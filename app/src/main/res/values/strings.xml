@@ -17,7 +17,7 @@
 
     <!--  Notifications  -->
     <string name="room_notification_channel_title">Live lecture</string>
-    <string name="room_notification_title">Ongoing Live Class in %s</string>
+    <string name="room_notification_title">Ongoing Live  %s</string>
     <string name="room_notification_message">Tap to return to the Live Class</string>
 
     <!--  Settings Screen  -->

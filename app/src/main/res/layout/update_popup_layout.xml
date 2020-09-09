@@ -63,11 +63,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="22dp"
+                    android:textSize="21dp"
                     android:padding="5dp"
                     android:layout_gravity="center"
                     android:textColor="@color/colorPrimary"
-                    android:text="New Update Available ! "/>
+                    android:text="New Update Required ! "/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
                     android:textSize="12dp"
                     android:padding="5dp"
                     android:layout_gravity="center"
-                    android:text="Please update to Use Lates features"/>
+                    android:text="Please update to Use Latest Features"/>
 
             </LinearLayout>
 

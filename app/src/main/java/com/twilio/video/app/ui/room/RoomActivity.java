@@ -620,6 +620,7 @@ public class RoomActivity extends BaseActivity {
                     hideKeybaord(v);
                     chatsRecyclerView.smoothScrollToPosition(detailedChatList.size());
                     sendmessage(etMessage.getText().toString(),classId,mopoup);
+                    etMessage.setText("");
                 }
 
             }
@@ -639,21 +640,26 @@ public class RoomActivity extends BaseActivity {
         Call <Map> call = RetrifitClient.getInstance().getChatApi()
                 .sendChatMess(token,"class",message,classId,"1");
 
+        Datum messageObj = new Datum();
+        messageObj.setContent(message);
+        messageObj.setUserId(userId);
+        messageObj.setBelongsTo(classId);
+        messageObj.setCreatedAt("Now Now");
+        int index  = detailedChatList.size();
+        detailedChatList.add(index,messageObj);
+        chatItemAdapter.notifyItemInserted(index);
+        chatsRecyclerView.smoothScrollToPosition(index);
+
         call.enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
                 Log.d("Responnse>>Chat ",response.raw().toString());
                 if(response.body()!=null)
                 {
-                    Datum messageObj = new Datum();
-                    messageObj.setContent(message);
-                    messageObj.setUserId(userId);
-                    messageObj.setBelongsTo(classId);
-                    messageObj.setCreatedAt("Now Now");
-                    int index  = detailedChatList.size();
-                    detailedChatList.add(index,messageObj);
-                    chatItemAdapter.notifyItemInserted(index);
-                    chatsRecyclerView.smoothScrollToPosition(index);
+
+                }else {
+                    detailedChatList.remove(index);
+                    chatItemAdapter.notifyItemRemoved(index);
                 }
             }
 

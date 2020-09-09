@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.JoinedClassResponse.Datum;
@@ -45,6 +46,8 @@ public class JoinedClasses extends Fragment {
    ShimmerFrameLayout shimmerFrameLayout;
     private List<Datum> classesDataList = new ArrayList<>();
     TextView tvEmptyStatus;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -87,27 +90,41 @@ public class JoinedClasses extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_joined_classes, null);
         recJoinedClasses = root.findViewById(R.id.rec_view_joined_classes);
+        refreshLayout = root.findViewById(R.id.srl_joined_classes);
        shimmerFrameLayout = root.findViewById(R.id.sh_v_joined_classes_page);
        shimmerFrameLayout.startShimmerAnimation();
         tvEmptyStatus = root.findViewById(R.id.tv_joined_class_item_not_available);
 
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadJoinedClasses(settings.getString("token",""));
+
+        token = settings.getString("token","");
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                classesDataList.clear();
+                loadJoinedClasses(token);
+            }
+        });
+        loadJoinedClasses(token);
         return root;
     }
 
     private void loadJoinedClasses(String token){
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
         Call<JoinedClassRespones> call = RetrifitClient.getInstance()
                 .getClassesApi().getJoinedClasses(token);
         call.enqueue(new Callback<JoinedClassRespones>() {
             @Override
             public void onResponse(Call<JoinedClassRespones> call, Response<JoinedClassRespones> response) {
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 try{
                     if(response.body() == null){
                         Log.d("Error>>", response.errorBody().string());
-                        shimmerFrameLayout.stopShimmerAnimation();
-                        shimmerFrameLayout.setVisibility(View.GONE);
+
                         //refreshLayout.setRefreshing(false);
                     }else {
                         Log.d("Class Response>>>>>>",response.body().toString());
@@ -130,6 +147,7 @@ public class JoinedClasses extends Fragment {
                     e.printStackTrace();
                     shimmerFrameLayout.stopShimmerAnimation();
                     shimmerFrameLayout.setVisibility(View.GONE);
+                    refreshLayout.setRefreshing(false);
                     //refreshLayout.setRefreshing(false);
                 }
             }
@@ -139,6 +157,7 @@ public class JoinedClasses extends Fragment {
                 // Toast.makeText(AvailableClasses.this, "Error ", Toast.LENGTH_SHORT).show();
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("Exception >>>", t.toString());
                 //refreshLayout.setRefreshing(false);
             }

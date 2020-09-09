@@ -1,10 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     tools:context="com.twilio.video.app.subMainPages.AvailableSkillFrag">
-
 
 
     <TextView
@@ -17,47 +16,62 @@
         android:text="No Skills Available !"
         android:textColor="#BEE04545"
         android:gravity="center"
+        android:layout_gravity="bottom"
         android:layout_centerInParent="true"/>
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/sh_v_available_skill_page"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        shimmer:duration="800">
+        android:layout_height="match_parent"
+        android:id="@+id/srl_available_skills">
 
-        <!-- Adding 7 rows of placeholders -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-            <include layout="@layout/skill_shimmer" />
-            <View
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/sh_v_available_skill_page"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-            <include layout="@layout/skill_shimmer" />
-            <View
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                shimmer:duration="800">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <include layout="@layout/skill_shimmer" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <include layout="@layout/skill_shimmer" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <include layout="@layout/skill_shimmer" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"/>
+                    <include layout="@layout/skill_shimmer" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recViewAvailableSkill"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-            <include layout="@layout/skill_shimmer" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp"/>
-            <include layout="@layout/skill_shimmer" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="65dp"
+                android:scrollbars="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recViewAvailableSkill"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="65dp"
-        android:scrollbars="vertical">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-</FrameLayout>
+</RelativeLayout>

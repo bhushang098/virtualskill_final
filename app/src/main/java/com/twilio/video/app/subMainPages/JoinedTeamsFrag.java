@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.R;
@@ -50,6 +51,8 @@ public class JoinedTeamsFrag extends Fragment {
     private List<Datum> teamDataList = new ArrayList<>();
     TextView tvTeamsEmpty;
     ShimmerFrameLayout shimmerFrameLayout;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     public JoinedTeamsFrag() {
         // Required empty public constructor
@@ -88,18 +91,27 @@ public class JoinedTeamsFrag extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_joined_teams, null);
         revJoinedTeams = root.findViewById(R.id.recViewJoinedTeams);
+        refreshLayout = root.findViewById(R.id.srl_joined_teams);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_joined_teams_page);
         shimmerFrameLayout.startShimmerAnimation();
         tvTeamsEmpty = root.findViewById(R.id.tv_joined_teams_item_not_available);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadJoinedTeams(settings.getString("token",""));
+        token = settings.getString("token","");
+        loadJoinedTeams(token);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                teamDataList.clear();
+                loadJoinedTeams(token);
+            }
+        });
         return root;
     }
 
     private void loadJoinedTeams(String token) {
-
-
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
         Call<AvailAbleTeamsResponse> call = RetrifitClient.getInstance()
                 .getTeamsApi().getJoinedTeams(token);
 
@@ -107,13 +119,15 @@ public class JoinedTeamsFrag extends Fragment {
             @Override
             public void onResponse(Call<AvailAbleTeamsResponse> call, Response<AvailAbleTeamsResponse> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
-                shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("TeamResponse>>", response.raw().toString());
                 if(response.body()!=null)
                 {
                     teamDataList = response.body().getData();
                     if(teamDataList.size()>0)
                     {
+                        tvTeamsEmpty.setVisibility(View.GONE);
                         // SetAdapter
                         revJoinedTeams.setLayoutManager(new LinearLayoutManager(getContext()));
                         revJoinedTeams.setAdapter(new JoinedTeamsAdapter(teamDataList,getContext()));
@@ -126,7 +140,8 @@ public class JoinedTeamsFrag extends Fragment {
             @Override
             public void onFailure(Call<AvailAbleTeamsResponse> call, Throwable t) {
                 shimmerFrameLayout.stopShimmerAnimation();
-                shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                refreshLayout.setRefreshing(false);
+                shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("Exception>>", t.toString());
             }
         });

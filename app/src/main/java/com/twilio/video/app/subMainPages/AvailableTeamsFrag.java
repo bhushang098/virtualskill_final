@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.R;
@@ -50,6 +51,8 @@ public class AvailableTeamsFrag extends Fragment {
    ShimmerFrameLayout shimmerFrameLayout;
     private List<Datum> teamDataList = new ArrayList<>();
     TextView tvTeamsEmpty;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     public AvailableTeamsFrag() {
         // Required empty public constructor
@@ -87,15 +90,29 @@ public class AvailableTeamsFrag extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_available_teams, null);
         revAvailableTeams = root.findViewById(R.id.recViewAvailableTeams);
+        refreshLayout = root.findViewById(R.id.srl_available_teams);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_available_teams_page);
         shimmerFrameLayout.startShimmerAnimation();
         tvTeamsEmpty = root.findViewById(R.id.tv_available_teams_item_not_available);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadAvailableTeams(settings.getString("token",""));
+        token = settings.getString("token","");
+        loadAvailableTeams(token);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                teamDataList.clear();
+                loadAvailableTeams(token);
+            }
+        });
         return root;
     }
     private void loadAvailableTeams(String token) {
+
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+
         Call<AvailAbleTeamsResponse> call = RetrifitClient.getInstance()
                 .getTeamsApi().getAvailableTeams(token);
 
@@ -104,6 +121,7 @@ public class AvailableTeamsFrag extends Fragment {
             public void onResponse(Call<AvailAbleTeamsResponse> call, Response<AvailAbleTeamsResponse> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("TeamResponse>>", response.raw().toString());
                 if(response.body()!=null)
                 {
@@ -121,7 +139,9 @@ public class AvailableTeamsFrag extends Fragment {
 
             @Override
             public void onFailure(Call<AvailAbleTeamsResponse> call, Throwable t) {
+                shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("Exception>>", t.toString());
 
             }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.ApiModals.Creator;
@@ -46,6 +47,8 @@ public class AvailableClasses extends Fragment {
     ShimmerFrameLayout shimmerFrameLayout;
     private List<Datum> classesDataList = new ArrayList<>();
     TextView tvClasssEmply;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -89,27 +92,39 @@ public class AvailableClasses extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_available_classes, null);
         revAvailableClasses = root.findViewById(R.id.recViewAvailableClasses);
+        refreshLayout = root.findViewById(R.id.srl_available_class);
        shimmerFrameLayout  = root.findViewById(R.id.sh_v_available_classes_page);
        shimmerFrameLayout.startShimmerAnimation();
         tvClasssEmply = root.findViewById(R.id.tv_available_class_item_not_available);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadAvailableClasses(settings.getString("token",""));
+        token = settings.getString("token","");
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                classesDataList.clear();
+                loadAvailableClasses(token);
+            }
+        });
+        loadAvailableClasses(token);
         return root;
     }
 
     private void loadAvailableClasses(String token){
-
+shimmerFrameLayout.setVisibility(View.VISIBLE);
+shimmerFrameLayout.startShimmerAnimation();
         Call<Classes> call = RetrifitClient.getInstance()
                 .getClassesApi().getAvailableClasses(token);
         call.enqueue(new Callback<Classes>() {
             @Override
             public void onResponse(Call<Classes> call, Response<Classes> response) {
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 try{
                     if(response.body() == null){
                         Log.d("Error>>", response.errorBody().string());
-                       shimmerFrameLayout.stopShimmerAnimation();
-                       shimmerFrameLayout.setVisibility(View.GONE);
+
                         //refreshLayout.setRefreshing(false);
                     }else {
                         classesDataList = response.body().getData();
@@ -139,7 +154,7 @@ public class AvailableClasses extends Fragment {
                // Toast.makeText(AvailableClasses.this, "Error ", Toast.LENGTH_SHORT).show();
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
-                //refreshLayout.setRefreshing(false);
+                refreshLayout.setRefreshing(false);
             }
         });
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -52,6 +53,8 @@ public class HostedClasses extends Fragment {
     private List<Datum> classesDataList = new ArrayList<>();
     TextView tvEmptyStatus;
     UserObj userObj;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -96,12 +99,21 @@ public class HostedClasses extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_hosted_classes, null);
         revHostedClasses = root.findViewById(R.id.rec_view_hosted_classes);
        shimmerFrameLayout = root.findViewById(R.id.sh_v_hosted_classes_page);
+       refreshLayout  = root.findViewById(R.id.srl_hosted_classes);
        shimmerFrameLayout.startShimmerAnimation();
         tvEmptyStatus = root.findViewById(R.id.tv_hosted_class_item_not_available);
         loadUser();
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadHostedClasses(settings.getString("token",""));
+        token = settings.getString("token","");
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                classesDataList.clear();
+                loadHostedClasses(token);
+            }
+        });
+        loadHostedClasses(token);
 
         return root;
 
@@ -116,16 +128,23 @@ public class HostedClasses extends Fragment {
     }
 
     private void loadHostedClasses(String token){
+
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
+
         Call<CreatedClassRespones> call = RetrifitClient.getInstance()
                 .getClassesApi().getCreatedClasses(token);
         call.enqueue(new Callback<CreatedClassRespones>() {
             @Override
             public void onResponse(Call<CreatedClassRespones> call, Response<CreatedClassRespones> response) {
+                shimmerFrameLayout.stopShimmerAnimation();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
+
                 try{
                     if(response.body() == null){
                         Log.d("Error>>", response.errorBody().string());
-                       shimmerFrameLayout.stopShimmerAnimation();
-                       shimmerFrameLayout.setVisibility(View.GONE);
+
                         //refreshLayout.setRefreshing(false);
                     }else {
                         classesDataList = response.body().getData();
@@ -158,6 +177,7 @@ public class HostedClasses extends Fragment {
                 // Toast.makeText(AvailableClasses.this, "Error ", Toast.LENGTH_SHORT).show();
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 //refreshLayout.setRefreshing(false);
             }
         });

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.twilio.video.app.R;
@@ -51,7 +52,8 @@ public class AvailableSkillFrag extends Fragment {
    ShimmerFrameLayout shimmerFrameLayout;
     private List<Datum> skillDataList = new ArrayList<>();
     TextView tvSkillsEmpty;
-
+    String token;
+    SwipeRefreshLayout refreshLayout;
     public AvailableSkillFrag() {
         // Required empty public constructor
     }
@@ -91,14 +93,25 @@ public class AvailableSkillFrag extends Fragment {
         revAvailableSkills = root.findViewById(R.id.recViewAvailableSkill);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_available_skill_page);
         tvSkillsEmpty = root.findViewById(R.id.tv_available_skill_item_not_available);
+        refreshLayout = root.findViewById(R.id.srl_available_skills);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadAvailableSkills(settings.getString("token",""));
+        token = settings.getString("token","");
+        loadAvailableSkills(token);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                skillDataList.clear();
+                loadAvailableSkills(token);
+            }
+        });
         return root;
     }
 
     private void loadAvailableSkills(String token) {
-
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
         Call<SkillItemResponse> call = RetrifitClient.getInstance()
                 .getSkillApi().getAvailableSkills(token);
         call.enqueue(new Callback<SkillItemResponse>() {
@@ -106,12 +119,14 @@ public class AvailableSkillFrag extends Fragment {
             public void onResponse(Call<SkillItemResponse> call, Response<SkillItemResponse> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("TeamResponse>>", response.raw().toString());
                 if(response.body()!=null)
                 {
                     skillDataList = response.body().getData();
                     if(skillDataList.size()>0)
                     {
+                        tvSkillsEmpty.setVisibility(View.GONE);
                         // SetAdapter
                         revAvailableSkills.setLayoutManager(new LinearLayoutManager(getContext()));
                         revAvailableSkills.setAdapter(new AvailableSkillAdapter(skillDataList,getContext()));
@@ -125,6 +140,7 @@ public class AvailableSkillFrag extends Fragment {
             public void onFailure(Call<SkillItemResponse> call, Throwable t) {
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
                 Log.d("Exception>>", t.toString());
             }
         });

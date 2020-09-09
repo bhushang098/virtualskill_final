@@ -132,7 +132,8 @@ public class CreateNewSkill extends AppCompatActivity {
                     if(response.body().getStatus())
                     {
                         Toast.makeText(CreateNewSkill.this, "Skill Deleted", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateNewSkill.this, HomePage.class));
+                        //startActivity(new Intent(CreateNewSkill.this, HomePage.class));
+                        finish();
                         finish();
                     }else {
                         Toast.makeText(CreateNewSkill.this, "Error Deleting ", Toast.LENGTH_SHORT).show();
@@ -195,7 +196,7 @@ public class CreateNewSkill extends AppCompatActivity {
                     if(response.body().getStatus())
                     {
                         Toast.makeText(CreateNewSkill.this, "Skill Updated Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CreateNewSkill.this, HomePage.class));
+                        //startActivity(new Intent(CreateNewSkill.this, HomePage.class));
                         finish();
                         finish();
                     }else {

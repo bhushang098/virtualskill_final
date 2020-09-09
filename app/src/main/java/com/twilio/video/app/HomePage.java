@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -67,6 +69,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
 import com.twilio.video.app.ApiModals.UserObj;
+import com.twilio.video.app.ChatUserResponse.ChatUserResponse;
 import com.twilio.video.app.Dialogs.ConformationDialog;
 import com.twilio.video.app.HomePostModal.Datum;
 import com.twilio.video.app.HomePostModal.HomePostModal;
@@ -79,6 +82,7 @@ import com.twilio.video.app.MainPages.SkillPage;
 import com.twilio.video.app.MainPages.StudentsUserPage;
 import com.twilio.video.app.MainPages.TeamsPage;
 import com.twilio.video.app.MainPages.UsersPage;
+import com.twilio.video.app.adapter.ChatUSerAdapter;
 import com.twilio.video.app.adapter.HomePostsAdapter;
 import com.twilio.video.app.subMainPages.ClassDetails;
 import com.twilio.video.app.util.NetworkOperator;
@@ -101,13 +105,16 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.nikartm.support.BadgePosition;
+import ru.nikartm.support.ImageBadgeView;
 
 import static tvi.webrtc.ContextUtils.getApplicationContext;
 
 public class HomePage extends AppCompatActivity{
     Toolbar toolbar;
     ImageButton drawerButtion;
-    ImageView ivGoChatScreen,searchButton;
+    ImageView searchButton;
+    ImageBadgeView ivGoChatScreen;
     NavigationView navView;
     private  List<Datum> postDataList = new ArrayList<>();
     private RecyclerView revPostView;
@@ -174,14 +181,24 @@ public class HomePage extends AppCompatActivity{
         setContentView(R.layout.activity_home_page);
         loadPreferences();
         setUi();
-        startbgService();
+       // startbgService();
         postSucessDialog = new Dialog(this);
         setNavHeaderdata();
 
         if(callCheckUpdate);
         checkforUpdate();
         loadHomePosts(token);
+        loadUnreadmesscount();
         toolbar.setTitle("");
+        ivGoChatScreen.setBadgeValue(22)
+                .setBadgeOvalAfterFirst(true)
+                .setBadgeTextSize(10)
+                .setBadgeBackground(getResources().getDrawable(R.drawable.unerad_count_bg))
+                .setMaxBadgeValue(99)
+                .setBadgePosition(BadgePosition.TOP_RIGHT)
+                .setBadgeTextStyle(Typeface.NORMAL)
+                .setShowCounter(true)
+                .setBadgePadding(2);
 
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
@@ -225,6 +242,7 @@ public class HomePage extends AppCompatActivity{
         ivGoChatScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ivGoChatScreen.visibleBadge(false);
                 startActivity(new Intent(HomePage.this,ChatScreen.class));
             }
         });
@@ -562,7 +580,30 @@ public class HomePage extends AppCompatActivity{
                 startActivity(i);
             }
         });
+    }
 
+    private void loadUnreadmesscount() {
+        Call<ChatUserResponse> call = RetrifitClient.getInstance().getChatApi()
+                .getChatUsers(token);
+        call.enqueue(new Callback<ChatUserResponse>() {
+            @Override
+            public void onResponse(Call<ChatUserResponse> call, Response<ChatUserResponse> response) {
+                Log.d(">>>Chat Response", response.raw().toString());
+
+                if(response.body() == null) {
+
+                } else {
+                    ivGoChatScreen.setBadgeValue(response.body().getTotalNew());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatUserResponse> call, Throwable t) {
+                //progressBar.setVisibility(View.GONE);
+                Log.d(">>Exceptopn>>", t.toString());
+            }
+        });
     }
 
     private void checkforUpdate() {
@@ -605,7 +646,7 @@ public class HomePage extends AppCompatActivity{
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        updatePopup = new PopupWindow(popUpView, width-100,
+        updatePopup = new PopupWindow(popUpView, width-10,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         updatePopup.setElevation(10f);
 

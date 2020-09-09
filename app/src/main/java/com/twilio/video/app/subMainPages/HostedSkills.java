@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
@@ -52,6 +53,8 @@ public class HostedSkills extends Fragment {
     TextView tvSkillsEmpty;
     UserObj userObj;
     ShimmerFrameLayout shimmerFrameLayout;
+    String token;
+    SwipeRefreshLayout refreshLayout;
 
 
 
@@ -86,19 +89,36 @@ public class HostedSkills extends Fragment {
         }
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadhostedSkills(token);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_hosted_skills, null);
         revHostedSkills = root.findViewById(R.id.recViewHostedSkill);
+        refreshLayout = root.findViewById(R.id.srl_hosted_skills);
         shimmerFrameLayout = root.findViewById(R.id.sh_v_hosted_skill_page);
         shimmerFrameLayout.startShimmerAnimation();
         loadUser();
         tvSkillsEmpty = root.findViewById(R.id.tv_hosted_skill_item_not_available);
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);
-        loadhostedSkills(settings.getString("token",""));
+        token = settings.getString("token","");
+        loadhostedSkills(token);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                skillDataList.clear();
+                loadhostedSkills(token);
+            }
+        });
         return root;
     }
 
@@ -110,13 +130,15 @@ public class HostedSkills extends Fragment {
 
     private void loadhostedSkills(String token) {
 
+        shimmerFrameLayout.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmerAnimation();
         Call<SkillItemResponse> call = RetrifitClient.getInstance()
                 .getSkillApi().getHostedSkills(token);
 
         call.enqueue(new Callback<SkillItemResponse>() {
             @Override
             public void onResponse(Call<SkillItemResponse> call, Response<SkillItemResponse> response) {
-
+                refreshLayout.setRefreshing(false);
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("TeamResponse>>", response.raw().toString());
@@ -125,10 +147,12 @@ public class HostedSkills extends Fragment {
                     skillDataList = response.body().getData();
                     if(skillDataList.size()>0)
                     {
+                        tvSkillsEmpty.setVisibility(View.GONE);
                         // SetAdapter
                         revHostedSkills.setLayoutManager(new LinearLayoutManager(getContext()));
                         revHostedSkills.setAdapter(new HostedSkillAdapter(skillDataList,getContext(),userObj));
                     }else {
+
                         tvSkillsEmpty.setVisibility(View.VISIBLE);
                     }
                 }
@@ -136,7 +160,7 @@ public class HostedSkills extends Fragment {
 
             @Override
             public void onFailure(Call<SkillItemResponse> call, Throwable t) {
-
+                refreshLayout.setRefreshing(false);
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 Log.d("Exception>>", t.toString());

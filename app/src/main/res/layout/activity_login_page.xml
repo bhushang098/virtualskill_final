@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/edit_text_border"
-                    android:hint="Enter your E Mail"
+                    android:hint="Enter E Mail OR Phone"
                     android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:layout_marginTop="2dp"

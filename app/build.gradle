@@ -54,7 +54,7 @@ android {
 
     defaultConfig {
         applicationId "com.virtualskill"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionName "0.1.0"
         versionCode 44
@@ -66,9 +66,9 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         testInstrumentationRunnerArguments clearPackageData: 'true'
         manifestPlaceholders = [
-                onesignal_app_id               : '4eef5819-abf0-4ce9-b12c-5ab75b51523d',
+                onesignal_app_id :'bca2775a-56ab-4f11-b5bb-fa8cfb69f8cb',
                 // Project number pulled from dashboard, local value is ignored.
-                onesignal_google_project_number: '715356580973'
+                onesignal_google_project_number: '326902701882'
         ]
     }
 
@@ -290,6 +290,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     //Shimmer effect
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    //Unreaded Count
+    implementation 'com.github.nikartm:image-support:1.0.5'
 
 
     internalImplementation "com.microsoft.appcenter:appcenter-distribute:2.5.1"
