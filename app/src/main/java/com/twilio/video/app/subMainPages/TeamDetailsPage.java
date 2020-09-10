@@ -46,6 +46,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.twilio.video.app.ApiModals.Creator;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
+import com.twilio.video.app.ApiModals.PpUploadResponse;
 import com.twilio.video.app.ApiModals.UserObj;
 import com.twilio.video.app.DetailedChatResponse.DetailedChatResponse;
 import com.twilio.video.app.FormPages.CreateNewSkill;
@@ -67,6 +68,7 @@ import net.alhazmy13.mediapicker.Video.VideoPicker;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -117,6 +119,7 @@ public class TeamDetailsPage extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +145,13 @@ public class TeamDetailsPage extends AppCompatActivity {
 
         getSingleTeam();
         loadTeamPosts(teamId);
+
+        cvChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startChat();
+            }
+        });
 
 
            tvHost.setOnClickListener(new View.OnClickListener() {
@@ -668,13 +678,12 @@ public class TeamDetailsPage extends AppCompatActivity {
         token = settings.getString("token", "");
         Gson json = new Gson();
         user = json.fromJson(settings.getString("UserObj",""),UserObj.class);
-
         chatItemAdapter = new ChatItemAdapter(detailedChatList,getApplicationContext(),String.valueOf(user.getId()));
     }
 
     private void startChat() {
         Call<DetailedChatResponse> call = RetrifitClient.getInstance()
-                .getChatApi().getDetailedChatList(token, teamId, "skill");
+                .getChatApi().getDetailedChatList(token, teamId, "team");
 
         inflateDetailedMessage(detailedChatList);
 
@@ -759,7 +768,8 @@ public class TeamDetailsPage extends AppCompatActivity {
         com.twilio.video.app.DetailedChatResponse.Datum messageObj = new com.twilio.video.app.DetailedChatResponse.Datum();
         messageObj.setContent(message);
         messageObj.setUserId(userId);
-        messageObj.setBelongsTo(teamId);
+        messageObj.setBelongsTo(teamId
+        );
         messageObj.setCreatedAt("Now Now");
         int index  = detailedChatList.size();
         detailedChatList.add(index,messageObj);
@@ -788,6 +798,8 @@ public class TeamDetailsPage extends AppCompatActivity {
         });
     }
 
+
+
     private void setUi() {
         tvTeamNAme = findViewById(R.id.tv_team_name);
         tvJoineave = findViewById(R.id.tv_join_leave_team);
@@ -810,7 +822,7 @@ public class TeamDetailsPage extends AppCompatActivity {
         ivSelectedImage = findViewById(R.id.iv_selected_image_team_post);
         ivUnSelectImage = findViewById(R.id.iv_unSelect_image_team_post);
         linLayPickVideo = findViewById(R.id.lin_lay_pick_video_on_team);
-        vvSelectedVideo = findViewById(R.id.vv_selected_video_skill);
+        vvSelectedVideo = findViewById(R.id.vv_selected_video_team_post);
         etYtLink = findViewById(R.id.et_yt_link_team_post);
         linLayPickYtLInk = findViewById(R.id.lin_lay_pick_ytLink_on_team);
         vvSelectedYtVideo = findViewById(R.id.yt_selected_vv_team_post);
@@ -841,8 +853,7 @@ public class TeamDetailsPage extends AppCompatActivity {
         uploadPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToDo Change Skill Cover
-                Toast.makeText(TeamDetailsPage.this, "Yet To eb Added", Toast.LENGTH_SHORT).show();
+                ChangeTeamCover();
             }
         });
 
@@ -850,6 +861,44 @@ public class TeamDetailsPage extends AppCompatActivity {
         // Creation of popup
         mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
         mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+    }
+
+    private void ChangeTeamCover() {
+        startProgressPopup(this);
+        mpopup.dismiss();
+
+        RequestBody image = RequestBody.create(MediaType.parse("multipart/form-data"),coverImageFile);
+
+        MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
+
+
+
+        Call<PpUploadResponse> call = RetrifitClient.getInstance()
+                .getUploadPicApi().uploadTeamCover("team_upload_cover/"+teamId,token,imageToSend);
+
+        call.enqueue(new Callback<PpUploadResponse>() {
+            @Override
+            public void onResponse(Call<PpUploadResponse> call, Response<PpUploadResponse> response) {
+                Log.d("TeamCovere>>",response.raw().toString());
+
+                progressPopup.dismiss();
+
+                if(response.body()!=null)
+                {
+                    if(response.body().getCode()==200)
+                    Toast.makeText(TeamDetailsPage.this, "Cover Uploaded", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(TeamDetailsPage.this, "Unable To Change Cover Image", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PpUploadResponse> call, Throwable t) {
+                progressPopup.dismiss();
+                Log.d("Exception>>",t.toString());
+            }
+        });
     }
 
     public void showSuccessJoinMess(String message) {

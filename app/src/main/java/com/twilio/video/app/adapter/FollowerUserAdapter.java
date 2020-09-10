@@ -128,9 +128,20 @@ FollowerUserAdapter extends  RecyclerView.Adapter<FollowerUserAdapter.FollowerUs
         if(userList.get(position).getFollower().getUserType()==1)
         {
             holder.type.setText("Professor");
+            holder.location.setVisibility(View.GONE);
+            holder.skillActual.setVisibility(View.GONE);
+            holder.skill.setVisibility(View.GONE);
+            holder.ratingBar.setVisibility(View.VISIBLE);
+
         }else
         {
             holder.type.setText("Student");
+            if(userList.get(position).getFollower().getLocation()!=null)
+                holder.location.setText("Location : "+userList.get(position).getFollower().getLocation());
+            if(userList.get(position).getFollower().getSkill()!=null)
+                holder.skillActual.setText(userList.get(position).getFollower().getSkill());
+
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +163,7 @@ FollowerUserAdapter extends  RecyclerView.Adapter<FollowerUserAdapter.FollowerUs
     public class FollowerUserAdapterViewHolder extends RecyclerView.ViewHolder {
 
         ImageView cover,profile;
-        TextView name,status,date,type;
+        TextView name,status,date,type,location,skill,skillActual;
         RatingBar ratingBar;
 
         public FollowerUserAdapterViewHolder(@NonNull View itemView) {
@@ -165,6 +176,9 @@ FollowerUserAdapter extends  RecyclerView.Adapter<FollowerUserAdapter.FollowerUs
             date = itemView.findViewById(R.id.tv_main_user_item_date);
             ratingBar = itemView.findViewById(R.id.rtb_main_user_item);
             type = itemView.findViewById(R.id.tv_user_type_on_main_user_item);
+            location = itemView.findViewById(R.id.tv_user_location_on_main_item);
+            skillActual = itemView.findViewById(R.id.tv_use_skill_actual_on_main_item);
+            skill = itemView.findViewById(R.id.tv_user_skill_on_main_item);
 
         }
     }

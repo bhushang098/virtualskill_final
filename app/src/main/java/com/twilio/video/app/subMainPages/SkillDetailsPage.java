@@ -48,6 +48,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.twilio.video.app.ApiModals.Creator;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
+import com.twilio.video.app.ApiModals.PpUploadResponse;
 import com.twilio.video.app.ApiModals.UserObj;
 import com.twilio.video.app.DetailedChatResponse.DetailedChatResponse;
 import com.twilio.video.app.FormPages.CreateNewSkill;
@@ -875,7 +876,8 @@ public class SkillDetailsPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //ToDo Change Skill Cover
-                Toast.makeText(SkillDetailsPage.this, "Yet To eb Added", Toast.LENGTH_SHORT).show();
+                changESkillCover();
+                //Toast.makeText(SkillDetailsPage.this, "Yet To eb Added", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -883,6 +885,45 @@ public class SkillDetailsPage extends AppCompatActivity {
         // Creation of popup
         mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
         mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+    }
+
+    private void changESkillCover() {
+        startProgressPopup(this);
+        mpopup.dismiss();
+
+        RequestBody image = RequestBody.create(MediaType.parse("image/*"),coverImageFile);
+
+        MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
+
+
+
+        Call<PpUploadResponse> call = RetrifitClient.getInstance()
+                .getUploadPicApi().uploadSkillCover("skill_upload_cover/"+skillId,token,imageToSend);
+
+        call.enqueue(new Callback<PpUploadResponse>() {
+            @Override
+            public void onResponse(Call<PpUploadResponse> call, Response<PpUploadResponse> response) {
+                Log.d("SkillCover>>",response.raw().toString());
+
+                progressPopup.dismiss();
+
+                if(response.body()!=null)
+                {
+                    Log.d("REsponseSkill>>",response.body().getMessage());
+                    if(response.body().getCode()==200)
+                        Toast.makeText(SkillDetailsPage.this, "Cover Uploaded", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(SkillDetailsPage.this, "Unable To Change Cover Image", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PpUploadResponse> call, Throwable t) {
+                progressPopup.dismiss();
+                Log.d("Exception>>",t.toString());
+            }
+        });
     }
 
     public void showSuccessJoinMess(String message) {

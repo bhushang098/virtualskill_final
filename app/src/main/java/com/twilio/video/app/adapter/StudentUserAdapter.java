@@ -132,9 +132,20 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
         if(studentList.get(position).getUserType()==1)
         {
             holder.type.setText("Professor");
+            holder.location.setVisibility(View.GONE);
+            holder.skillActual.setVisibility(View.GONE);
+            holder.skill.setVisibility(View.GONE);
+            holder.ratingBar.setVisibility(View.VISIBLE);
+
         }else
         {
             holder.type.setText("Student");
+            if(studentList.get(position).getLocation()!=null)
+                holder.location.setText("Location : "+studentList.get(position).getLocation());
+            if(studentList.get(position).getSkill()!=null)
+                holder.skillActual.setText(studentList.get(position).getSkill());
+
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +181,7 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
     public class StudentUserAdapterViewHolder extends RecyclerView.ViewHolder {
 
         ImageView cover,profile;
-        TextView name,status,date,type;
+        TextView name,status,date,type,location,skill,skillActual;
         RatingBar ratingBar;
 
         public StudentUserAdapterViewHolder(@NonNull View itemView) {
@@ -182,6 +193,9 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
             date = itemView.findViewById(R.id.tv_main_user_item_date);
             ratingBar = itemView.findViewById(R.id.rtb_main_user_item);
             type = itemView.findViewById(R.id.tv_user_type_on_main_user_item);
+            location = itemView.findViewById(R.id.tv_user_location_on_main_item);
+            skillActual = itemView.findViewById(R.id.tv_use_skill_actual_on_main_item);
+            skill = itemView.findViewById(R.id.tv_user_skill_on_main_item);
         }
 
 

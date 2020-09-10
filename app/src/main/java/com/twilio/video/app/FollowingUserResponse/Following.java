@@ -17,10 +17,10 @@ public class Following {
     private String email;
     @SerializedName("location")
     @Expose
-    private Object location;
+    private String location;
     @SerializedName("skill")
     @Expose
-    private Object skill;
+    private String skill;
     @SerializedName("interests")
     @Expose
     private String interests;
@@ -122,15 +122,15 @@ public class Following {
         return location;
     }
 
-    public void setLocation(Object location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public Object getSkill() {
+    public String getSkill() {
         return skill;
     }
 
-    public void setSkill(Object skill) {
+    public void setSkill(String skill) {
         this.skill = skill;
     }
 

@@ -124,7 +124,6 @@ public class StudentsListFrag extends Fragment {
     }
 
 
-
     private void loadprefs() {
         SharedPreferences settings = getContext().getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);

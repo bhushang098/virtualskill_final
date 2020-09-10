@@ -924,7 +924,6 @@ public class MyProfile extends AppCompatActivity {
         mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
         mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
     }
-
     private void uploadCoverPic() {
 
         startProgressPopup(this);
@@ -938,7 +937,7 @@ public class MyProfile extends AppCompatActivity {
         Call<PpUploadResponse> call;
         if(is_profile_pic)
         {
-            call = RetrifitClient.getInstance().getUploadPicApi().uploadProfilePic(token,imageToSend);
+            call = RetrifitClient.getInstance().getUploadPicApi().uploadProfilePic("upload_pp",token,imageToSend);
         }else {
             call = RetrifitClient.getInstance()
                     .getUploadPicApi().uploadCoverPic(token,imageToSend);
@@ -994,6 +993,7 @@ public class MyProfile extends AppCompatActivity {
             }
         });
     }
+
 
     private  void  startProgressPopup(Context context){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );

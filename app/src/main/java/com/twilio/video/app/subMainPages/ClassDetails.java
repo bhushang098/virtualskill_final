@@ -76,10 +76,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -113,7 +115,8 @@ public class ClassDetails extends AppCompatActivity {
     EditText etCaption, etYtLink;
     YouTubePlayerView vvSelectedYtVideo;
     String content, ytLinkfinal;
-    File coverImageFile, imageFile, videoFile;
+    File coverImageFile;
+    File imageFile, videoFile;
     private boolean is_choosing = false;
     PopupWindow progressPopup, mpopup;
 
@@ -988,45 +991,41 @@ public class ClassDetails extends AppCompatActivity {
     }
 
     private void changeClassCover() {
+
         startProgressPopup(this);
         mpopup.dismiss();
 
-        RequestBody image = RequestBody.create(MediaType.parse("multipart/form-data"),coverImageFile);
+        RequestBody image = RequestBody.create(MediaType.parse("*/*"),coverImageFile);
 
         MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
 
+        // Same Method For Cover And Profile Depending On Booleean Value
+        Call<PpUploadResponse> call;
+
+            call = RetrifitClient.getInstance().getUploadPicApi().uploadClassCover("class_upload_cover/"+classId,token,imageToSend);
 
 
-        Call<PpUploadResponse> call = RetrifitClient.getInstance()
-                .getUploadPicApi().uploadClassCover("class_upload_cover/"+classId,token,imageToSend);
 
         call.enqueue(new Callback<PpUploadResponse>() {
             @Override
             public void onResponse(Call<PpUploadResponse> call, Response<PpUploadResponse> response) {
-                Log.d("ClassCover>>",response.raw().toString());
-                try {
-                    Log.d("ClassCoverError>>",response.errorBody().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                progressPopup.dismiss();
+                Log.d("Response>>",response.raw().toString());
 
+                progressPopup.dismiss();
                 if(response.body()!=null)
                 {
-                    Toast.makeText(ClassDetails.this, "Cover Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClassDetails.this, "Picture Changed Successfully", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(ClassDetails.this, "Unable To Change Cover Image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ClassDetails.this, "Can Not Change Picture", Toast.LENGTH_SHORT).show();
+                    Log.d("Response>>>", response.raw().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<PpUploadResponse> call, Throwable t) {
                 progressPopup.dismiss();
-                Log.d("Exception>>",t.toString());
             }
         });
-
-
     }
 
 }
