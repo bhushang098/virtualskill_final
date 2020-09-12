@@ -15,23 +15,31 @@
     <item
         android:id="@+id/nav_skill"
         android:icon="@drawable/ic_baseline_bookmark_24"
-        android:title="Skills" />
+        android:title="Courses" />
 
 
     <item
         android:id="@+id/nav_teams"
         android:icon="@drawable/ic_baseline_group_24"
         android:title="Teams" />
+
     <item
         android:id="@+id/nav_classes"
         android:icon="@drawable/ic_baseline_desktop_mac_24"
-        android:title="Classes" />
+        android:title="Digital Events" />
+
+    <item
+        android:id="@+id/nav_jobs"
+        android:icon="@drawable/ic_baseline_job_24"
+        android:title="Jobs" />
+
 
     <item
         android:visible="false"
         android:id="@+id/nav_users"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Students" />
+
 
     <item
         android:visible="false"
@@ -40,6 +48,7 @@
         android:title="Professors" />
 
     <group>
+
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_baseline_settings_24"
@@ -47,7 +56,7 @@
 
         <item
             android:id="@+id/log_out"
-            android:icon="@drawable/plcicon"
+            android:icon="@drawable/nex_geno_logo"
             android:title="Log Out" />
 
     </group>

@@ -22,13 +22,19 @@
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="VirtualSkill"
+        android:label="NexGeno"
+        android:largeHeap="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".MainPages.JobDetails"
+            android:theme="@style/AppTheme.LoginScreen" ></activity>
+        <activity
+            android:name=".MainPages.JobsPage"
+            android:theme="@style/AppTheme.LoginScreen" />
         <activity
             android:name=".subMainPages.PostsPage"
-            android:theme="@style/AppTheme.LoginScreen"></activity>
+            android:theme="@style/AppTheme.LoginScreen" />
         <activity
             android:name=".subMainPages.FollowingPage"
             android:theme="@style/AppTheme.LoginScreen" />
@@ -153,10 +159,7 @@
             android:theme="@style/AppTheme.Settings" />
 
         <service android:name=".ui.room.VideoService" />
-
         <service android:name=".MyNotificationService" />
-
-
     </application>
 
 </manifest>

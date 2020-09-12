@@ -119,6 +119,7 @@ shimmerFrameLayout.startShimmerAnimation();
             @Override
             public void onResponse(Call<Classes> call, Response<Classes> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
+                Log.d("REsponse>>>",response.raw().toString());
                 shimmerFrameLayout.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
                 try{

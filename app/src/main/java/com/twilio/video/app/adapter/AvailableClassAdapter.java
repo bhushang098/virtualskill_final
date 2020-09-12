@@ -52,7 +52,7 @@ public class AvailableClassAdapter extends RecyclerView.Adapter<AvailableClassAd
         }else {
             holder.fees.setText("INR:  "+classList.get(position).getFee());
         }
-        holder.classHost.setText("Hosted By  "+classList.get(position).getCreator().getName());
+        //holder.classHost.setText("Hosted By  "+classList.get(position).getCreator().getName());
         holder.date.setText(" " + DateUtil.getDate(classList.get(position).getStartDate())+" - "+DateUtil.getDate(classList.get(position).getEndDate()));
         if(classList.get(position).getRecurringClass()==1)
         {

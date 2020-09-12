@@ -45,7 +45,7 @@ public class AvailableSkillAdapter  extends RecyclerView.Adapter<AvailableSkillA
         else
             holder.tvfee.setText("INR : "+skillDatList.get(position).getFee());
         holder.tvmemeber.setText(1+" Member");
-        holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
+        //holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

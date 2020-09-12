@@ -74,6 +74,7 @@ import com.twilio.video.app.Dialogs.ConformationDialog;
 import com.twilio.video.app.HomePostModal.Datum;
 import com.twilio.video.app.HomePostModal.HomePostModal;
 import com.twilio.video.app.MainPages.ClassesPage;
+import com.twilio.video.app.MainPages.JobsPage;
 import com.twilio.video.app.MainPages.MyProfile;
 import com.twilio.video.app.MainPages.ProUserPage;
 import com.twilio.video.app.MainPages.SearchPage;
@@ -277,24 +278,23 @@ public class HomePage extends AppCompatActivity{
                     case R.id.nav_skill:
                         startActivity(new Intent(HomePage.this, SkillPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
                     case R.id.nav_teams:
                         startActivity(new Intent(HomePage.this, TeamsPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
 
                     case R.id.nav_classes:
                         startActivity(new Intent(HomePage.this, ClassesPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
 
                     case R.id.nav_users:
                         startActivity(new Intent(HomePage.this, UsersPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
                         break;
 
                 }
@@ -348,6 +348,17 @@ public class HomePage extends AppCompatActivity{
                         overridePendingTransition(0, 0);
                         finish();
                         break;
+
+                    case R.id.nav_jobs:
+                        fabHodeNav.setVisibility(View.GONE);
+                        navView.setVisibility(View.INVISIBLE);
+                        Intent i7 = new Intent(HomePage.this, JobsPage.class);
+                        i7.putExtra("token",token);
+                        startActivity(i7);
+                        overridePendingTransition(0, 0);
+                        finish();
+                        break;
+
                     case R.id.nav_users:
                         fabHodeNav.setVisibility(View.GONE);
                         navView.setVisibility(View.INVISIBLE);
@@ -365,8 +376,8 @@ public class HomePage extends AppCompatActivity{
                         overridePendingTransition(0, 0);
                         break;
                     case R.id.log_out:
-                        ConformationDialog.showConformDialog(HomePage.this,"LogOut",
-                                "Do You Really Want To Log Out Of VirtualSkill","log_out");
+                        ConformationDialog.showConformDialog(HomePage.this,"Log Out",
+                                "Do You Really Want To Log Out Of NexGeno ? ","log_out");
                         break;
                     case R.id.nav_users_pro:
                         fabHodeNav.setVisibility(View.GONE);
@@ -593,8 +604,8 @@ public class HomePage extends AppCompatActivity{
                 if(response.body() == null) {
 
                 } else {
+                    if(response.body().getTotalNew()!=null)
                     ivGoChatScreen.setBadgeValue(response.body().getTotalNew());
-
                 }
             }
 
@@ -662,7 +673,7 @@ public class HomePage extends AppCompatActivity{
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String appPackageName = "com.virtualskill"; // getPackageName() from Context or Activity object
+                final String appPackageName = "com.nexgeno"; // getPackageName() from Context or Activity object
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {
@@ -671,15 +682,10 @@ public class HomePage extends AppCompatActivity{
             }
         });
 
-
-
         // Creation of popup
         updatePopup.setAnimationStyle(android.R.style.Animation_Dialog);
         updatePopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
-
     }
-
-
 
     private void setNavHeaderdata() {
         tvUserName.setText(name);
@@ -688,7 +694,7 @@ public class HomePage extends AppCompatActivity{
         if(userObj.getProfilePath()!=null)
         {
             Glide.with(this).
-                    load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/"
+                    load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/"
                             +userObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -707,7 +713,7 @@ public class HomePage extends AppCompatActivity{
 
         if(userObj.getCoverPath()!= null)
         {
-            Glide.with(this).load("https://virtualskill.in/storage/uploads/covers/"+
+            Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/"+
                     userObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override
@@ -835,6 +841,7 @@ public class HomePage extends AppCompatActivity{
         call.enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
+                Log.d("Response>>",response.raw().toString());
                 try{
                     if (response.body()==null)
                     {

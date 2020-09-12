@@ -400,7 +400,7 @@ public class MyProfile extends AppCompatActivity {
         if(userObj.getProfilePath()!=null)
         {
             Glide.with(this).
-                    load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/"
+                    load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/"
                             +userObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -437,7 +437,7 @@ public class MyProfile extends AppCompatActivity {
 
         if (userObj.getCoverPath()!=null)
         {
-            Glide.with(this).load("https://virtualskill.in/storage/uploads/covers/"
+            Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/"
                     +userObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override

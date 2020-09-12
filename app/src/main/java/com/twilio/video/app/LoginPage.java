@@ -137,7 +137,6 @@ public class LoginPage extends AppCompatActivity {
                     playerIdAsFcmToken = userId;
                     addFcm(playerIdAsFcmToken,token);
                 }
-
             }
         });
     }
@@ -150,6 +149,8 @@ public class LoginPage extends AppCompatActivity {
         call.enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
+                Log.d("Response>>",response.raw().toString());
+
                 try{
                     if (response.body()==null)
                     {

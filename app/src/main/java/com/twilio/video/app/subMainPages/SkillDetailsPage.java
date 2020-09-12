@@ -792,7 +792,7 @@ public class SkillDetailsPage extends AppCompatActivity {
 
         if (skillObj.getCoverPath() != null) {
             Glide.with(this)
-                    .load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/skill_covers/" + skillObj.getCoverPath()).listener(new RequestListener<Drawable>() {
+                    .load("https://www.nexgeno.com/storage/uploads/skill_covers/" + skillObj.getCoverPath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     return false;

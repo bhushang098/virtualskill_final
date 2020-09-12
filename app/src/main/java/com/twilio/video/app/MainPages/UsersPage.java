@@ -16,6 +16,7 @@ import com.twilio.video.app.R;
 import com.twilio.video.app.adapter.UsersTabAdapter;
 import com.twilio.video.app.subMainPages.FollowerUsersFrag;
 import com.twilio.video.app.subMainPages.FollowingUsersFrag;
+import com.twilio.video.app.subMainPages.HrListFrag;
 import com.twilio.video.app.subMainPages.ProListFrag;
 import com.twilio.video.app.subMainPages.StudentsListFrag;
 
@@ -47,8 +48,9 @@ public class UsersPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         adapter = new UsersTabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ProListFrag(), "Professors ");
-        adapter.addFragment(new StudentsListFrag(), "Students ");
+        adapter.addFragment(new ProListFrag(), "Experts ");
+        adapter.addFragment(new StudentsListFrag(), "Professionals ");
+        adapter.addFragment(new HrListFrag(),"HR's");
 
 
         viewPager.setAdapter(adapter);

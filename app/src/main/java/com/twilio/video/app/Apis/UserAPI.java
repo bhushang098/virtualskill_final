@@ -44,6 +44,13 @@ public interface UserAPI {
 
     );
 
+    @GET("user_search/hr")
+    Call<SearchStudentResponse> getSearchHrs(
+            @Query("token") String token,
+            @Query("page") String pageNo
+
+    );
+
     @GET()
     Call<SingleUserbyIDResponse> getUSerById(
             @Url String userId,

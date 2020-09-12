@@ -52,9 +52,9 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
         holder.name.setText(userList.get(position).getName());
         if(userList.get(position).getUserType()==1)
         {
-            holder.type.setText("Professor");
+            holder.type.setText("Experts");
         }else {
-            holder.type.setText("Student");
+            holder.type.setText("Professional");
         }
         if(userList.get(position).getUsername()!=null)
         {
@@ -65,7 +65,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
 
         if(userList.get(position).getProfilePath()!=null)
         {
-            Glide.with(context).load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/" +
+            Glide.with(context).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" +
                     userList.get(position).getProfilePath()).
                     listener(new RequestListener<Drawable>() {
                 @Override
@@ -102,7 +102,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
 
         if(userList.get(position).getCoverPath()!=null)
         {
-            Glide.with(context).load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/covers/" + userList.get(position).getCoverPath()).listener(new RequestListener<Drawable>() {
+            Glide.with(context).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" + userList.get(position).getCoverPath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     // holder.progressBar.setVisibility(View.INVISIBLE);

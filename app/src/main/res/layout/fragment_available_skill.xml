@@ -13,7 +13,7 @@
         android:id="@+id/tv_available_skill_item_not_available"
         android:textSize="22dp"
         android:layout_marginTop="100dp"
-        android:text="No Skills Available !"
+        android:text="No Courses Available !"
         android:textColor="#BEE04545"
         android:gravity="center"
         android:layout_gravity="bottom"
@@ -65,7 +65,7 @@
                 android:id="@+id/recViewAvailableSkill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="65dp"
+                android:layout_marginBottom="5dp"
                 android:scrollbars="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>

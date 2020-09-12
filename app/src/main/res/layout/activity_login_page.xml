@@ -53,7 +53,7 @@
             <ImageView
                 android:id="@+id/iv_pcl_icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="140dp"
                 android:layout_marginTop="40dp"
                 android:src="@drawable/plcicon" />
 

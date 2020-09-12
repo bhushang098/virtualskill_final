@@ -38,7 +38,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="2dp"
-                        android:src="@drawable/mobile_icon"/>
+                        android:src="@drawable/plcicon"/>
 
                     <TextView
                         android:layout_width="wrap_content"

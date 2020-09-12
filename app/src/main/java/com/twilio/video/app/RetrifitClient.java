@@ -1,10 +1,9 @@
 package com.twilio.video.app;
 
 
-import android.provider.ContactsContract;
-
 import com.twilio.video.app.Apis.ChatApi;
 import com.twilio.video.app.Apis.ClassesAPI;
+import com.twilio.video.app.Apis.JobsApi;
 import com.twilio.video.app.Apis.NotificationApi;
 import com.twilio.video.app.Apis.OTpApi;
 import com.twilio.video.app.Apis.PostApi;
@@ -31,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrifitClient {
 
-    private static final String BASE_URL = "https://www.virtualskill.in/api/";
+    private static final String BASE_URL = "https://www.nexgeno.com/api/";
     private static RetrifitClient myinstance;
     private Retrofit retrofit;
 
@@ -117,6 +116,11 @@ public class RetrifitClient {
 
     public SearchApi getSearchApi(){
         return  retrofit.create(SearchApi.class);
+    }
+
+    public JobsApi gteJobsApi()
+    {
+        return  retrofit.create(JobsApi.class);
     }
 
     public static OkHttpClient.Builder getUnsafeOkHttpClient(){

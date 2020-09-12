@@ -635,7 +635,7 @@ public class TeamDetailsPage extends AppCompatActivity {
     private void setTeamData() {
         if (teamObj.getCoverPath() != null) {
             Glide.with(this)
-                    .load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/team_covers/" + teamObj.getCoverPath()).listener(new RequestListener<Drawable>() {
+                    .load("https://www.nexgeno.com/storage/uploads/team_covers/" + teamObj.getCoverPath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     return false;

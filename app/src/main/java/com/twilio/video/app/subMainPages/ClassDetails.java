@@ -83,7 +83,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClassDetails extends AppCompatActivity {
+public class
+ClassDetails extends AppCompatActivity {
 
     Class classobj = new Class();
     User classHostUser = new User();
@@ -478,7 +479,7 @@ public class ClassDetails extends AppCompatActivity {
         if(classobj.getCoverPath()!=null)
         {
             Glide.with(this)
-                    .load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/event_covers/"+classobj.getCoverPath()).listener(new RequestListener<Drawable>() {
+                    .load("https://www.nexgeno.com/storage/uploads/event_covers/"+classobj.getCoverPath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     return false;

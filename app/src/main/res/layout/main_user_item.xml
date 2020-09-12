@@ -61,12 +61,39 @@
             android:gravity="center"
             android:padding="3dp"
             android:text="User type"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_location_on_main_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_user_name_on_main_user_item" />
+            tools:layout_editor_absoluteY="132dp" />
 
-<!--//Other User Details-->
+        <!--//Other User Details-->
 
+        <TextView
+            android:text="Location : ......"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_name_on_main_user_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_user_location_on_main_item"/>
+        <TextView
+            android:id="@+id/tv_user_skill_on_main_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skill"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_type_on_main_user_item" />
+
+        <TextView
+            android:id="@+id/tv_use_skill_actual_on_main_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="....."
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_skill_on_main_item" />
         <androidx.cardview.widget.CardView
             android:visibility="gone"
             android:id="@+id/tv_user_type"

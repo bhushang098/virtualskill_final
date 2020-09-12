@@ -118,6 +118,7 @@ public class JoinedClasses extends Fragment {
         call.enqueue(new Callback<JoinedClassRespones>() {
             @Override
             public void onResponse(Call<JoinedClassRespones> call, Response<JoinedClassRespones> response) {
+                Log.d("REsponse>>>",response.raw().toString());
                 shimmerFrameLayout.stopShimmerAnimation();
                 shimmerFrameLayout.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);

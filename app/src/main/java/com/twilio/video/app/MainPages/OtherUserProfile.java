@@ -435,7 +435,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
         if (otherUserObj.getProfilePath() != null) {
             Glide.with(this).
-                    load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/" + otherUserObj.getProfilePath())
+                    load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" + otherUserObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -452,7 +452,7 @@ public class OtherUserProfile extends AppCompatActivity {
         }
 
         if (otherUserObj.getCoverPath() != null) {
-            Glide.with(this).load("https://virtualskill.in/storage/uploads/covers/" +
+            Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/" +
                     otherUserObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override
@@ -487,7 +487,7 @@ public class OtherUserProfile extends AppCompatActivity {
             latoutProRating.setVisibility(View.GONE);
         }
 
-        if (otherUserObj.getInterests().isEmpty()) {
+        if (otherUserObj.getInterests()==null) {
 
         } else {
             String[] interestsAry = otherUserObj.getInterests().split("\"");

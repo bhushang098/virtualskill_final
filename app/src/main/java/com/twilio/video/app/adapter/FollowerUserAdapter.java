@@ -56,7 +56,7 @@ FollowerUserAdapter extends  RecyclerView.Adapter<FollowerUserAdapter.FollowerUs
 
         if(userList.get(position).getFollower().getProfilePath()!=null)
         {
-            Glide.with(context).load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/" +
+            Glide.with(context).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" +
                     userList.get(position).getFollower().getProfilePath()).
                     listener(new RequestListener<Drawable>() {
                         @Override

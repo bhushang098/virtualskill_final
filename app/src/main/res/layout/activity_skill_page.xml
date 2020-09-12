@@ -27,7 +27,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Skills"
+                android:text="Courses"
                 android:padding="5dp"
                 android:gravity="center_vertical"
                 android:textSize="22dp"

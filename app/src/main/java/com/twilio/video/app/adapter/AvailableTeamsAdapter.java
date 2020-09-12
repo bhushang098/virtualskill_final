@@ -43,7 +43,7 @@ public class AvailableTeamsAdapter extends RecyclerView.Adapter<AvailableTeamsAd
         holder.location.setText("Location : "+teamsList.get(position).getLocation());
         // No Field For members holder.members.setText(teamsList.get(position).me());
         // No Joined holder.joined.setText(teamsList.get(position).getName());
-        holder.host.setText("Hosted By : "+teamsList.get(position).getCreated_by().getName());
+       // holder.host.setText("Hosted By : "+teamsList.get(position).getCreated_by().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

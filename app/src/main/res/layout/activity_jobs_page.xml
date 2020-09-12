@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.twilio.video.app.MainPages.JobsPage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            app:titleTextColor="#ffffff"
+            android:id="@+id/tbjobs">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Jobs"
+                    android:padding="5dp"
+                    android:gravity="center_vertical"
+                    android:textSize="22dp"
+                    android:textColor="#ffffff"/>
+
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_search_job"/>
+
+
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/rel_jobs"
+            android:layout_below="@+id/tbjobs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tbl_jobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?actionBarSize"
+                app:tabGravity="fill"
+                app:tabTextColor="#ffffff"
+                app:tabIndicatorColor="#ffffff"
+                app:tabIndicatorHeight="4dp"
+                app:tabBackground="@color/colorPrimary"
+                app:tabMode="fixed">
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:layout_below="@+id/tbl_jobs"
+                android:id="@+id/vpg_jobs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.viewpager.widget.ViewPager>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</FrameLayout>
