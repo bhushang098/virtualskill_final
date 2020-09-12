@@ -443,6 +443,7 @@ public class ClassDetails extends AppCompatActivity {
             url = url+classId+"&user_name="+userObj.getName()+"&phone="+userObj.getPhone()
                     +"&email="+userObj.getEmail();
             i.putExtra("url_pay",url);
+            i.putExtra("uid",userObj.getId());
 
             startActivity(i);
 
@@ -995,14 +996,15 @@ public class ClassDetails extends AppCompatActivity {
         startProgressPopup(this);
         mpopup.dismiss();
 
-        RequestBody image = RequestBody.create(MediaType.parse("*/*"),coverImageFile);
+        RequestBody classId = RequestBody.create(MediaType.parse("multipart/form-data"),classobj.getEId().toString());
+        RequestBody image = RequestBody.create(MediaType.parse("multipart/form-data"),coverImageFile);
 
         MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
-
         // Same Method For Cover And Profile Depending On Booleean Value
         Call<PpUploadResponse> call;
 
-            call = RetrifitClient.getInstance().getUploadPicApi().uploadClassCover("class_upload_cover/"+classId,token,imageToSend);
+
+            call = RetrifitClient.getInstance().getUploadPicApi().uploadClassCover(token,classId,imageToSend);
 
 
 
@@ -1014,6 +1016,8 @@ public class ClassDetails extends AppCompatActivity {
                 progressPopup.dismiss();
                 if(response.body()!=null)
                 {
+                   // Log.d("Response>>",response.body().getMessage());
+                    if(response.body().getCode()==200)
                     Toast.makeText(ClassDetails.this, "Picture Changed Successfully", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(ClassDetails.this, "Can Not Change Picture", Toast.LENGTH_SHORT).show();

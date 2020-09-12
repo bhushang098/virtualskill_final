@@ -891,14 +891,14 @@ public class SkillDetailsPage extends AppCompatActivity {
         startProgressPopup(this);
         mpopup.dismiss();
 
-        RequestBody image = RequestBody.create(MediaType.parse("image/*"),coverImageFile);
+        RequestBody skillId = RequestBody.create(MediaType.parse("multipart/form-data"),getIntent().getStringExtra("skillId"));
+        RequestBody image = RequestBody.create(MediaType.parse("multipart/form-data"),coverImageFile);
 
         MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
 
 
-
         Call<PpUploadResponse> call = RetrifitClient.getInstance()
-                .getUploadPicApi().uploadSkillCover("skill_upload_cover/"+skillId,token,imageToSend);
+                .getUploadPicApi().uploadSkillCover(token,skillId,imageToSend);
 
         call.enqueue(new Callback<PpUploadResponse>() {
             @Override
@@ -909,10 +909,9 @@ public class SkillDetailsPage extends AppCompatActivity {
 
                 if(response.body()!=null)
                 {
-                    Log.d("REsponseSkill>>",response.body().getMessage());
+                    //Log.d("REsponseSkill>>",response.body().getMessage());
                     if(response.body().getCode()==200)
                         Toast.makeText(SkillDetailsPage.this, "Cover Uploaded", Toast.LENGTH_SHORT).show();
-
                 }else {
                     Toast.makeText(SkillDetailsPage.this, "Unable To Change Cover Image", Toast.LENGTH_SHORT).show();
                 }

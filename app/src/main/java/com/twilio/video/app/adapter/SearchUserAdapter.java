@@ -58,7 +58,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Se
         }
         if(userList.get(position).getUsername()!=null)
         {
-         holder.userName.setText(userList.get(position).getUsername());
+         holder.userName.setText("@"+userList.get(position).getUsername());
         }else {
             holder.userName.setText("@UserName");
         }

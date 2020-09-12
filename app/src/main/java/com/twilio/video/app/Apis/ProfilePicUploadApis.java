@@ -2,12 +2,9 @@ package com.twilio.video.app.Apis;
 
 import com.twilio.video.app.ApiModals.PpUploadResponse;
 
-import java.util.Map;
-
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -36,26 +33,37 @@ public interface ProfilePicUploadApis {
             "Accept: image/*",
             "Accept-Encoding: gzip",
     })
-    @POST
+    @POST("class_upload_cover")
     Call<PpUploadResponse> uploadClassCover(
-            @Url String classId,
             @Query("token") String token,
+            @Part("id") RequestBody classId,
             @Part MultipartBody.Part image
     );
 
     @Multipart
-    @POST
+    @Headers({
+            "Accept: image/*",
+            "Accept-Encoding: gzip",
+    })
+
+
+    @POST("team_upload_cover")
     Call<PpUploadResponse> uploadTeamCover(
-            @Url String tramId,
             @Query("token") String token,
+            @Part("id") RequestBody teamId,
             @Part MultipartBody.Part image
     );
 
     @Multipart
-    @POST
+    @Headers({
+            "Accept: image/*",
+            "Accept-Encoding: gzip",
+    })
+
+    @POST("skill_upload_cover")
     Call<PpUploadResponse> uploadSkillCover(
-            @Url String skillId,
             @Query("token") String token,
+            @Part("id") RequestBody skillId,
             @Part MultipartBody.Part image
     );
 }

@@ -1,14 +1,17 @@
 package com.twilio.video.app;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +22,7 @@ import com.github.ybq.android.spinkit.style.FoldingCube;
 public class WebViewPage extends AppCompatActivity {
     WebView webView;
     ProgressBar progressBar;
+    String skillAndClassId,uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +33,12 @@ public class WebViewPage extends AppCompatActivity {
         foldingCube.setScale(0.7f);
         progressBar.setIndeterminateDrawable(foldingCube);
         setWebView();
+        skillAndClassId  = getIntent().getStringExtra("url_pay").split("=")[1];
+        uid = getIntent().getStringExtra("uid");
         webView.loadUrl(getIntent().getStringExtra("url_pay"));
+
+
+
     }
 
     private void setWebView() {
@@ -46,6 +55,7 @@ public class WebViewPage extends AppCompatActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 progressBar.setVisibility(View.VISIBLE);
                 Handler handler = new Handler();
+                Log.d("Pay_Url>>",url);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -58,6 +68,20 @@ public class WebViewPage extends AppCompatActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                if(url.equalsIgnoreCase("https://virtualskill.in/api/pay-success/"+skillAndClassId+"/"+uid))
+                {
+                    Toast.makeText(WebViewPage.this, "Payment Successful", Toast.LENGTH_SHORT).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(WebViewPage.this,HomePage.class));
+                        }
+                    },100);
+                }
+
+
+
                 super.onPageFinished(view, url);
             }
         });

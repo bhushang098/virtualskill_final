@@ -85,7 +85,6 @@ public class ChatScreen extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ChatUserResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);

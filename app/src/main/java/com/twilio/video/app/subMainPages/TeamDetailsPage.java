@@ -767,7 +767,7 @@ public class TeamDetailsPage extends AppCompatActivity {
 
         com.twilio.video.app.DetailedChatResponse.Datum messageObj = new com.twilio.video.app.DetailedChatResponse.Datum();
         messageObj.setContent(message);
-        messageObj.setUserId(userId);
+        messageObj.setUserId(user.getId().toString());
         messageObj.setBelongsTo(teamId
         );
         messageObj.setCreatedAt("Now Now");
@@ -775,7 +775,6 @@ public class TeamDetailsPage extends AppCompatActivity {
         detailedChatList.add(index,messageObj);
         chatItemAdapter.notifyItemInserted(index);
         chatsRecyclerView.smoothScrollToPosition(index);
-
 
         call.enqueue(new Callback<Map>() {
             @Override
@@ -867,14 +866,13 @@ public class TeamDetailsPage extends AppCompatActivity {
         startProgressPopup(this);
         mpopup.dismiss();
 
+        RequestBody teamId = RequestBody.create(MediaType.parse("multipart/form-data"),getIntent().getStringExtra("teamId"));
         RequestBody image = RequestBody.create(MediaType.parse("multipart/form-data"),coverImageFile);
 
         MultipartBody.Part imageToSend = MultipartBody.Part.createFormData("image",coverImageFile.getName(), image);
 
-
-
         Call<PpUploadResponse> call = RetrifitClient.getInstance()
-                .getUploadPicApi().uploadTeamCover("team_upload_cover/"+teamId,token,imageToSend);
+                .getUploadPicApi().uploadTeamCover(token,teamId,imageToSend);
 
         call.enqueue(new Callback<PpUploadResponse>() {
             @Override
@@ -899,6 +897,7 @@ public class TeamDetailsPage extends AppCompatActivity {
                 Log.d("Exception>>",t.toString());
             }
         });
+
     }
 
     public void showSuccessJoinMess(String message) {

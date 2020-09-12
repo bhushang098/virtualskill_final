@@ -2,6 +2,7 @@ package com.twilio.video.app.Apis;
 
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
+import com.twilio.video.app.ApiModals.PostLikeResponse;
 import com.twilio.video.app.HomePostModal.HomePostModal;
 import com.twilio.video.app.UpdatePostResponse;
 
@@ -69,5 +70,12 @@ public interface PostApi {
             @Query("type") String type,
             @Query("wall_id") String wallId
 
+    );
+
+    @FormUrlEncoded
+    @POST("posts/like")
+    Call<PostLikeResponse> likePost(
+            @Query("token") String token,
+            @Field("id") String id
     );
 }

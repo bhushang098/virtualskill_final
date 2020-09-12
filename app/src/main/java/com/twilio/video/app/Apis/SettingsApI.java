@@ -68,4 +68,13 @@ public interface SettingsApI {
     Call<Map<String,Integer>> hasUpdate(
             @Query("token") String token
     );
+
+    @FormUrlEncoded
+    @POST("add/rating")
+    Call<MakeClassResponse>  setProRating(
+            @Query("token") String token,
+            @Field("teacher_id") String teacherId,
+            @Field("rating") String rating,
+            @Field("review") String review
+    );
 }

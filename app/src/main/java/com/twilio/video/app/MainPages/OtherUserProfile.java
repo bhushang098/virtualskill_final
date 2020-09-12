@@ -275,16 +275,54 @@ public class OtherUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ratingBar.getRating() < 1.0f) {
-                    Toast.makeText(OtherUserProfile.this, "Please Gave Rating First", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtherUserProfile.this, "Please Give Rating First", Toast.LENGTH_SHORT).show();
                 } else {
                     if (etReview.getText().toString().length() > 0) {
-                        //TODO Set Pro Rating Call APi
+
+                        setproRatingByAPi(otherUserObj.getId().toString(),
+                                ratingBar.getRating(),etReview.getText().toString().trim(),mopoup);
+
+
 
                     } else {
                         Toast.makeText(OtherUserProfile.this, "Please Say something About " + otherUserObj.getName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+        });
+
+    }
+
+    private void setproRatingByAPi(String teacherId, float rating, String review, PopupWindow mopoup) {
+
+
+        Call<MakeClassResponse> call = RetrifitClient.getInstance()
+                .getSettingsApi().setProRating(token,teacherId,String.valueOf(rating),review);
+
+        call.enqueue(new Callback<MakeClassResponse>() {
+
+            @Override
+            public void onResponse(Call<MakeClassResponse> call, Response<MakeClassResponse> response) {
+                Log.d("Response>>",response.raw().toString());
+                if(response.body()!=null)
+                {
+                    if(response.body().getStatus())
+                    {
+
+                        Toast.makeText(OtherUserProfile.this, "Rating Added", Toast.LENGTH_SHORT).show();
+                        mopoup.dismiss();
+                    }else {
+                        Toast.makeText(OtherUserProfile.this, "Can Not Add Rating", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MakeClassResponse> call, Throwable t) {
+                Log.d("Exception>>",t.toString());
+
+            }
+
         });
 
     }

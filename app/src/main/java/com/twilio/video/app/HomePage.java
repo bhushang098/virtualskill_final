@@ -278,24 +278,24 @@ public class HomePage extends AppCompatActivity{
                     case R.id.nav_skill:
                         startActivity(new Intent(HomePage.this, SkillPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
                     case R.id.nav_teams:
                         startActivity(new Intent(HomePage.this, TeamsPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
 
                     case R.id.nav_classes:
                         startActivity(new Intent(HomePage.this, ClassesPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
 
                     case R.id.nav_users:
                         startActivity(new Intent(HomePage.this, UsersPage.class));
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
 
                 }

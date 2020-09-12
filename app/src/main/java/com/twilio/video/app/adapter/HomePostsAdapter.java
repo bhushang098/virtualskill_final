@@ -38,6 +38,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
+import com.twilio.video.app.ApiModals.PostLikeResponse;
 import com.twilio.video.app.HomePostModal.Comment;
 import com.twilio.video.app.HomePostModal.Datum;
 import com.twilio.video.app.HomePostModal.Like;
@@ -48,6 +49,7 @@ import com.twilio.video.app.UpdatePostResponse;
 import com.twilio.video.app.util.TimeService;
 
 import org.jetbrains.annotations.NotNull;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -99,6 +101,8 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
     public void onBindViewHolder(@NonNull HomePostsAdapter.HomePostAdapterViewHolder holder, int position) {
 
 
+
+
         Glide.with(context).load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/" + postList.get(position).getProfilePath()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -122,8 +126,10 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         }
         List<Integer> likeeduser = new ArrayList<>();
         likeeduser = getLikedUSerIds(postList.get(position).getLikes());
+
         if (likeeduser.contains(userId)) {
             holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_24);
+            holder.likeView.setTag("Liked");
         }
 
         if (userId == postList.get(position).getUserId()) {
@@ -131,6 +137,31 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         } else {
             holder.menuImage.setVisibility(View.GONE);
         }
+
+        holder.likeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.likeView.getTag().equals("Liked"))
+                {
+                    holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    holder.likeView.setTag("UnLiked");
+                    int likesNo = Integer.parseInt(holder.noOfLikes.getText().toString());
+                    likesNo--;
+                    holder.noOfLikes.setText(String.valueOf(likesNo));
+                    likePostByApi(postList.get(position).getPostId().toString());
+
+                }else
+                {
+                    holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    holder.likeView.setTag("Liked");
+                    int likesNo = Integer.parseInt(holder.noOfLikes.getText().toString());
+                    likesNo++;
+                    holder.noOfLikes.setText(String.valueOf(likesNo));
+                    likePostByApi(postList.get(position).getPostId().toString());
+
+                }
+            }
+        });
 
         // pop Up Menu To delete And update Post
         holder.menuImage.setOnClickListener(new View.OnClickListener() {
@@ -311,6 +342,24 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             }
         });
 
+    }
+
+    private void likePostByApi(String postId) {
+
+        Call<PostLikeResponse> call = RetrifitClient
+                .getInstance().getPostApi().likePost(token,postId);
+
+        call.enqueue(new Callback<PostLikeResponse>() {
+            @Override
+            public void onResponse(Call<PostLikeResponse> call, Response<PostLikeResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<PostLikeResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void navToCreator(Datum postData) {
