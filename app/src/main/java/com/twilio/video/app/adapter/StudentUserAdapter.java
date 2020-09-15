@@ -131,10 +131,14 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
         holder.type.setVisibility(View.VISIBLE);
         if(studentList.get(position).getUserType()==1)
         {
-            holder.type.setText("Professor");
             holder.location.setVisibility(View.GONE);
-            holder.skillActual.setVisibility(View.GONE);
+            holder.type.setText("Professor");
+            holder.name.setGravity(View.FOCUS_LEFT);
+            holder.type.setGravity(View.FOCUS_LEFT);
             holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
+            if(studentList.get(position).getSkill()!=null)
+                holder.skillActual.setText("Skill : "+studentList.get(position).getSkill());
             holder.ratingBar.setVisibility(View.VISIBLE);
 
         }else
@@ -144,8 +148,6 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
                 holder.location.setText("Location : "+studentList.get(position).getLocation());
             if(studentList.get(position).getSkill()!=null)
                 holder.skillActual.setText(studentList.get(position).getSkill());
-
-
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

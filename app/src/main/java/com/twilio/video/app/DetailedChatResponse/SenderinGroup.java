@@ -1,11 +1,10 @@
 
-package com.twilio.video.app.SingelUSerByIDResponse;
+package com.twilio.video.app.DetailedChatResponse;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class SenderinGroup {
 
     @SerializedName("id")
     @Expose
@@ -18,13 +17,13 @@ public class Data {
     private String email;
     @SerializedName("fcm_token")
     @Expose
-    private String fcmToken;
+    private Object fcmToken;
     @SerializedName("location")
     @Expose
-    private String location;
+    private Object location;
     @SerializedName("skill")
     @Expose
-    private String skill;
+    private Object skill;
     @SerializedName("interests")
     @Expose
     private String interests;
@@ -69,7 +68,7 @@ public class Data {
     private Integer _private;
     @SerializedName("birthday")
     @Expose
-    private String birthday;
+    private Object birthday;
     @SerializedName("sex")
     @Expose
     private Integer sex;
@@ -78,16 +77,16 @@ public class Data {
     private String phone;
     @SerializedName("bio")
     @Expose
-    private String bio;
+    private Object bio;
     @SerializedName("profile_path")
     @Expose
-    private String profilePath;
+    private Object profilePath;
     @SerializedName("username")
     @Expose
     private String username;
     @SerializedName("cover_path")
     @Expose
-    private String coverPath;
+    private Object coverPath;
     @SerializedName("is_phone_verified")
     @Expose
     private Integer isPhoneVerified;
@@ -97,32 +96,6 @@ public class Data {
     @SerializedName("gender")
     @Expose
     private Integer gender;
-    @SerializedName("following")
-    @Expose
-    private List<Following> following = null;
-    @SerializedName("follower")
-    @Expose
-    private List<Follower> follower = null;
-
-    @SerializedName("rating")
-    @Expose
-    private String rating;
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public Integer get_private() {
-        return _private;
-    }
-
-    public void set_private(Integer _private) {
-        this._private = _private;
-    }
 
     public Integer getId() {
         return id;
@@ -148,27 +121,27 @@ public class Data {
         this.email = email;
     }
 
-    public String getFcmToken() {
+    public Object getFcmToken() {
         return fcmToken;
     }
 
-    public void setFcmToken(String fcmToken) {
+    public void setFcmToken(Object fcmToken) {
         this.fcmToken = fcmToken;
     }
 
-    public String getLocation() {
+    public Object getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Object location) {
         this.location = location;
     }
 
-    public String getSkill() {
+    public Object getSkill() {
         return skill;
     }
 
-    public void setSkill(String skill) {
+    public void setSkill(Object skill) {
         this.skill = skill;
     }
 
@@ -284,11 +257,11 @@ public class Data {
         this._private = _private;
     }
 
-    public String getBirthday() {
+    public Object getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Object birthday) {
         this.birthday = birthday;
     }
 
@@ -308,19 +281,19 @@ public class Data {
         this.phone = phone;
     }
 
-    public String getBio() {
+    public Object getBio() {
         return bio;
     }
 
-    public void setBio(String bio) {
+    public void setBio(Object bio) {
         this.bio = bio;
     }
 
-    public String getProfilePath() {
+    public Object getProfilePath() {
         return profilePath;
     }
 
-    public void setProfilePath(String profilePath) {
+    public void setProfilePath(Object profilePath) {
         this.profilePath = profilePath;
     }
 
@@ -332,11 +305,11 @@ public class Data {
         this.username = username;
     }
 
-    public String getCoverPath() {
+    public Object getCoverPath() {
         return coverPath;
     }
 
-    public void setCoverPath(String coverPath) {
+    public void setCoverPath(Object coverPath) {
         this.coverPath = coverPath;
     }
 
@@ -362,22 +335,6 @@ public class Data {
 
     public void setGender(Integer gender) {
         this.gender = gender;
-    }
-
-    public List<Following> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(List<Following> following) {
-        this.following = following;
-    }
-
-    public List<Follower> getFollower() {
-        return follower;
-    }
-
-    public void setFollower(List<Follower> follower) {
-        this.follower = follower;
     }
 
 }

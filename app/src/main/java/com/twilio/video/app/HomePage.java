@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,6 +77,7 @@ import com.twilio.video.app.HomePostModal.Datum;
 import com.twilio.video.app.HomePostModal.HomePostModal;
 import com.twilio.video.app.MainPages.ClassesPage;
 import com.twilio.video.app.MainPages.MyProfile;
+import com.twilio.video.app.MainPages.NotificationsPage;
 import com.twilio.video.app.MainPages.ProUserPage;
 import com.twilio.video.app.MainPages.SearchPage;
 import com.twilio.video.app.MainPages.SettingsActivity;
@@ -115,7 +117,7 @@ public class HomePage extends AppCompatActivity{
     Toolbar toolbar;
     ImageButton drawerButtion;
     ImageView searchButton;
-    ImageBadgeView ivGoChatScreen;
+    ImageBadgeView ivGoChatScreen,goNotiPage;
     NavigationView navView;
     private  List<Datum> postDataList = new ArrayList<>();
     private RecyclerView revPostView;
@@ -140,6 +142,8 @@ public class HomePage extends AppCompatActivity{
     private TextView errorMessage;
     boolean callCheckUpdate = true;
     int versioncode =1;
+
+    FrameLayout mainFramelayout;
 
     //For Header
     ImageView ivCoverOnheader,civprofileOnHeader;
@@ -185,6 +189,7 @@ public class HomePage extends AppCompatActivity{
        // startbgService();
         postSucessDialog = new Dialog(this);
         setNavHeaderdata();
+        mainFramelayout.getForeground().setAlpha(0);
 
         if(callCheckUpdate);
         checkforUpdate();
@@ -226,8 +231,6 @@ public class HomePage extends AppCompatActivity{
             public void onRefresh() {
                 clearSelecetMedia();
                 loadHomePosts(token);
-
-
             }
         });
         onSwipeTouchListener = new OnSwipeTouchListener(this, findViewById(R.id.flHome));
@@ -248,6 +251,14 @@ public class HomePage extends AppCompatActivity{
             }
         });
 
+        goNotiPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomePage.this, NotificationsPage.class);
+                        i.putExtra("token",token);
+                startActivity(i);
+            }
+        });
         drawerButtion.setOnClickListener(new View.OnClickListener() {
             @SuppressLint({"WrongConstant", "RestrictedApi"})
             @Override
@@ -647,7 +658,7 @@ public class HomePage extends AppCompatActivity{
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        updatePopup = new PopupWindow(popUpView, width-10,
+        updatePopup = new PopupWindow(popUpView, width-50,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         updatePopup.setElevation(10f);
 
@@ -750,6 +761,8 @@ public class HomePage extends AppCompatActivity{
         ivGoChatScreen = findViewById(R.id.iv_go_chat_screen);
         errorMessage = findViewById(R.id.errormessage);
         searchButton = findViewById(R.id.iv_search_icon);
+        goNotiPage = findViewById(R.id.iv_go_note_screen);
+        mainFramelayout = findViewById(R.id.flHome);
 //
         NavigationView navigationView = (NavigationView)
                 findViewById(R.id.drawer_main_navigation);

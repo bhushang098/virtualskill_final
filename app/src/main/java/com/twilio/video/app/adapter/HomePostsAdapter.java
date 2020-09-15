@@ -305,7 +305,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                 View popUpView = inflater.inflate(R.layout.detailed_media_view_layout,
                         null); // inflating popup layout
                 mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                        ViewGroup.LayoutParams.MATCH_PARENT, true);
                 ImageView image = popUpView.findViewById(R.id.iv_detailed_image);
                 ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_poup);
                 ivCross.setOnClickListener(new View.OnClickListener() {

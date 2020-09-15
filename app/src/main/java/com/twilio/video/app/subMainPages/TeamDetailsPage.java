@@ -660,7 +660,7 @@ public class TeamDetailsPage extends AppCompatActivity {
             }).into(ivCover);
         }
         tvTeamNAme.setText(teamObj.getName());
-        tvmembers.setText("5 Members");
+        tvmembers.setText(getIntent().getStringExtra("memberCount")+" Members");
         tvAbout.setText(teamObj.getAbout());
         tvTeamNameTb.setText(teamObj.getName());
         if(user.getId()== Integer.parseInt(teamObj.getCreatorId())){

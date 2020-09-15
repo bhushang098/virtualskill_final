@@ -1,14 +1,10 @@
 
-package com.twilio.video.app.SkillItemResponse;
+package com.twilio.video.app.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.twilio.video.app.ApiModals.Creator;
-import com.twilio.video.app.TeamResponse.MemberObj;
 
-import java.util.List;
-
-public class Datum {
+public class ExtrasInChatList {
 
     @SerializedName("id")
     @Expose
@@ -19,6 +15,9 @@ public class Datum {
     @SerializedName("fee")
     @Expose
     private String fee;
+    @SerializedName("profile_path")
+    @Expose
+    private Object profilePath;
     @SerializedName("who_can_post")
     @Expose
     private String whoCanPost;
@@ -43,32 +42,6 @@ public class Datum {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("index_id")
-    @Expose
-    private Integer indexId;
-    @SerializedName("skill_id")
-    @Expose
-    private Integer skillId;
-    @SerializedName("follower_id")
-    @Expose
-    private Integer followerId;
-
-    @SerializedName("creator")
-    @Expose
-    private Creator creator;
-
-    @SerializedName("followers")
-    @Expose
-    private List<MemberObj> followers;
-
-    public List<MemberObj> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<MemberObj> followers) {
-        this.followers = followers;
-    }
-
 
     public Integer getId() {
         return id;
@@ -92,6 +65,14 @@ public class Datum {
 
     public void setFee(String fee) {
         this.fee = fee;
+    }
+
+    public Object getProfilePath() {
+        return profilePath;
+    }
+
+    public void setProfilePath(Object profilePath) {
+        this.profilePath = profilePath;
     }
 
     public String getWhoCanPost() {
@@ -158,35 +139,4 @@ public class Datum {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getIndexId() {
-        return indexId;
-    }
-
-    public void setIndexId(Integer indexId) {
-        this.indexId = indexId;
-    }
-
-    public Integer getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(Integer skillId) {
-        this.skillId = skillId;
-    }
-
-    public Integer getFollowerId() {
-        return followerId;
-    }
-
-    public void setFollowerId(Integer followerId) {
-        this.followerId = followerId;
-    }
-
-    public Creator getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Creator creator) {
-        this.creator = creator;
-    }
 }

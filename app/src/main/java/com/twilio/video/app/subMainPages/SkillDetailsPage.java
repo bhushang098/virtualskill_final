@@ -133,7 +133,10 @@ public class SkillDetailsPage extends AppCompatActivity {
         skillId = getIntent().getStringExtra("skillId");
         status = getIntent().getStringExtra("status");
         Gson json = new Gson();
+        if(getIntent().getStringExtra("skillHost")!=null)
         skillHostUser = json.fromJson(getIntent().getStringExtra("skillHost"),Creator.class);
+        else
+            skillHostUser = new Creator();
         if (status.equalsIgnoreCase("Created")) {
             tvJoinLeave.setText("Change Cover");
             cvEditSkill.setVisibility(View.VISIBLE);
@@ -726,14 +729,14 @@ public class SkillDetailsPage extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
     }
 
-    private void sendmessage(String message, String userId, PopupWindow popuseWindow) {
+    private void sendmessage(String message, String skillId, PopupWindow popuseWindow) {
 
         Call<Map> call = RetrifitClient.getInstance().getChatApi()
-                .sendChatMess(token, "skill", message, userId,"1");
+                .sendChatMess(token, "skill", message, skillId,"1");
 
         com.twilio.video.app.DetailedChatResponse.Datum messageObj = new com.twilio.video.app.DetailedChatResponse.Datum();
         messageObj.setContent(message);
-        messageObj.setUserId(userId);
+        messageObj.setUserId(thisUSerObj.getId().toString());
         messageObj.setBelongsTo(skillId);
         messageObj.setCreatedAt("Now Now");
         int index  = detailedChatList.size();
@@ -814,7 +817,7 @@ public class SkillDetailsPage extends AppCompatActivity {
            tvSkillfees.setText("INR : "+ skillObj.getFee());
        }
         tvSkillName.setText(skillObj.getName());
-        tvMembers.setText("5 Members");
+        tvMembers.setText(getIntent().getStringExtra("memCount")+" Members");
         tvTimestamp.setText(skillObj.getCreatedAt().split(" ")[0]);
         if(skillHostUser!=null)
         tvHost.setText("Hosted By : " + skillHostUser.getName());

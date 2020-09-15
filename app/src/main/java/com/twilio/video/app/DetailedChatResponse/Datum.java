@@ -38,6 +38,18 @@ public class Datum {
     @Expose
     private List<Object> likes = null;
 
+    @SerializedName("sender")
+    @Expose
+    private SenderinGroup senderinGroup ;
+
+    public SenderinGroup getSenderinGroup() {
+        return senderinGroup;
+    }
+
+    public void setSenderinGroup(SenderinGroup senderinGroup) {
+        this.senderinGroup = senderinGroup;
+    }
+
     public Integer getId() {
         return id;
     }

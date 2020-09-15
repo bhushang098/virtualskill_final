@@ -1,5 +1,6 @@
 package com.twilio.video.app.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -29,13 +30,18 @@ import com.twilio.video.app.DetailedChatResponse.Datum;
 import com.twilio.video.app.DetailedChatResponse.DetailedChatResponse;
 import com.twilio.video.app.R;
 import com.twilio.video.app.RetrifitClient;
+import com.twilio.video.app.util.TimeService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +66,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
         chatItemAdapter = new ChatItemAdapter(detailedChatList, context, userId);
     }
 
+
     @NonNull
     @Override
     public ChatUSerAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,6 +80,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
     public void onBindViewHolder(@NonNull ChatUSerAdapterViewHolder holder, int position) {
 
         if (userList.get(position).getBelongsType().equalsIgnoreCase("u_2_u")) {
+
             if (userList.get(position).getSender().getId().toString().equalsIgnoreCase(userId)) {
 
                 holder.userName.setText(userList.get(position).getReceiver().getName());
@@ -114,37 +122,58 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                                 }
                             }).into(holder.userdp);
                 } else {
-
                     holder.userdp.setImageResource(R.drawable.profile_picture);
                 }
 
             }
         }else {
             holder.userName.setText(userList.get(position).getSender().getName());
-            if (userList.get(position).getSender().getProfile_path() != null) {
-                Glide.with(context).load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/"
-                        + userList.get(position).getSender().getProfile_path())
-                        .listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                return false;
-                            }
+//            if (userList.get(position).getSender().getProfile_path() != null) {
+//                Glide.with(context).load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/"
+//                        + userList.get(position).getSender().getProfile_path())
+//                        .listener(new RequestListener<Drawable>() {
+//                            @Override
+//                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                                return false;
+//                            }
+//
+//                            @Override
+//                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                                // holder.progressBar.setVisibility(View.INVISIBLE);
+//
+//                                return false;
+//                            }
+//                        }).into(holder.userdp);
+//            } else {
+                holder.userdp.setImageResource(R.drawable.group_chat);
+                if(userList.get(position).getBelongsType().equalsIgnoreCase("skill"))
+                {
+                    if(userList.get(position).getReceiver_skill()!=null)
+                    holder.userName.setText(userList.get(position).getReceiver_skill().getName());
+                    else
+                        holder.userName.setText(userList.get(position).getReceiver().getName());
+                }else
+                {
+                    if(userList.get(position).getReceiver_team()!=null)
+                        holder.userName.setText(userList.get(position).getReceiver_team().getName());
+                    else
+                        holder.userName.setText(userList.get(position).getReceiver().getName());
+                }
 
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                // holder.progressBar.setVisibility(View.INVISIBLE);
-
-                                return false;
-                            }
-                        }).into(holder.userdp);
-            } else {
-                holder.userdp.setImageResource(R.drawable.profile_picture);
-            }
+//                holder.chatType.setVisibility(View.VISIBLE);
+//                holder.chatType.setText(userList.get(position).getBelongsType());
+           // }
         }
 
 
         holder.message.setText(userList.get(position).getContent());
-        holder.timeStamp.setText(userList.get(position).getUpdatedAt().split(" ")[1]);
+
+        try {
+            long time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(userList.get(position).getCreatedAt()).getTime();
+            holder.timeStamp.setText(new TimeService().getTimeAgo(time, System.currentTimeMillis()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +189,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                                                 .toString()
                                         , userList.get(position).getBelongsType());
                         inflateDetailedMessage(detailedChatList, userList.get(position).getReceiver().getId()
-                                , userList.get(position).getReceiver().getName());
+                                , userList.get(position).getReceiver().getName(),userList.get(position).getBelongsType());
                     } else {
                         call = RetrifitClient.getInstance()
 
@@ -169,26 +198,24 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                                         , userList.get(position).getBelongsType());
 
                         inflateDetailedMessage(detailedChatList, userList.get(position).getSender().getId()
-                                , userList.get(position).getSender().getName());
+                                , userList.get(position).getSender().getName(),userList.get(position).getBelongsType());
 
                     }
                 }else {
 
                     call = RetrifitClient.getInstance()
 
-                            .getChatApi().getDetailedChatList(token, userList.get(position).getSender().getId()
-                                            .toString()
+                            .getChatApi().getDetailedChatList(token, userList.get(position).getBelongsTo()
                                     , userList.get(position).getBelongsType());
 
-                    inflateDetailedMessage(detailedChatList, userList.get(position).getSender().getId()
-                            , userList.get(position).getSender().getName());
+                    inflateDetailedMessage(detailedChatList, Integer.parseInt(userList.get(position).getBelongsTo())
+                            , userList.get(position).getSender().getName(),userList.get(position).getBelongsType());
                 }
-
 
                 call.enqueue(new Callback<DetailedChatResponse>() {
                     @Override
                     public void onResponse(Call<DetailedChatResponse> call, Response<DetailedChatResponse> response) {
-                        Log.d("Response>>",response.raw().toString());
+                        Log.d("Chat_DetailResponse>>",response.raw().toString());
                         if(response.body()!=null)
                         {
                             detailedChatList = response.body().getMessages().getData();
@@ -212,6 +239,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
 
     }
 
+
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -222,8 +250,9 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
         return position;
     }
 
-    private void inflateDetailedMessage(List<Datum> data, Integer id, String name) {
+    private void inflateDetailedMessage(List<Datum> data, Integer othersId, String name,String belongsType) {
         // ivSelectedImage.setImageURI(Uri.fromFile(coverImage));
+        callSeenApi(belongsType,othersId.toString());
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.chat_details_layout,
                 null); // inflating popup layout
@@ -245,6 +274,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
             @Override
             public void onClick(View v) {
                 mopoup.dismiss();
+                detailedChatList.clear();
             }
         });
 
@@ -254,7 +284,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                 hideKeybaord(v);
                 recyclerView.smoothScrollToPosition(detailedChatList.size());
                 // Tost.makeText(context, etMessage.getText().toString(), Toast.LENGTH_SHORT).show();
-                sendmessage(etMessage.getText().toString(), String.valueOf(id), mopoup);
+                sendmessage(etMessage.getText().toString(), String.valueOf(othersId), mopoup,belongsType);
                 etMessage.setText("");
             }
         });
@@ -264,15 +294,37 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
 
     }
 
+
+    private void callSeenApi(String belongsType, String chatId) {
+        Call<ResponseBody> call = RetrifitClient.getInstance()
+                .getChatApi().seenMessage("seen/"+belongsType+"/"+chatId,token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("Response>>>",response.raw().toString());
+
+                if(response.raw().code()==200)
+                    Log.d("Seen API Called ? :", "True");
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("EXception>>", t.toString());
+            }
+        });
+    }
+
     private void hideKeybaord(View v) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
     }
 
-    private void sendmessage(String message, String otheruserId, PopupWindow popuseWindow) {
+    private void sendmessage(String message, String otheruserId, PopupWindow popuseWindow,String belongsType) {
 
         Call<Map> call = RetrifitClient.getInstance().getChatApi()
-                .sendChatMess(token, "u_2_u", message, otheruserId, "1");
+                .sendChatMess(token, belongsType, message, otheruserId, "1");
         //seem Real Time
         Datum messageObj = new Datum();
         messageObj.setContent(message);
@@ -322,6 +374,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
             userName = itemView.findViewById(R.id.tv_user_name_on_chat_user_list);
             timeStamp = itemView.findViewById(R.id.tv_mess_time_stamp_on_chat_user_list);
             message = itemView.findViewById(R.id.tv_last_message_on_chat_list_user);
+
         }
     }
 }

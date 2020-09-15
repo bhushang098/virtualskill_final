@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_margin="8dp"
+    android:background="@drawable/edit_text_border"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="2dp"
+        android:src="@drawable/profile_picture"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_noti_message"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:padding="3dp"
+            android:text="notificatioion Message"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_noti_time"
+            android:textSize="14dp"
+            android:layout_marginLeft="10dp"
+            android:padding="3dp"
+            android:text="notificatioion Timing"/>
+    </LinearLayout>
+</LinearLayout>

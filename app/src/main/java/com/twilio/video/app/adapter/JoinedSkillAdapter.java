@@ -45,7 +45,8 @@ public class JoinedSkillAdapter extends RecyclerView.Adapter<JoinedSkillAdapter.
             holder.tvfee.setText("Free Skill");
         else
             holder.tvfee.setText("INR : "+skillDatList.get(position).getFee());
-        holder.tvmemeber.setText(1+" Member");
+        holder.tvmemeber.setText(String.valueOf(skillDatList.get(position).
+                getFollowers().size()+1)+" Member");
         holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +58,8 @@ public class JoinedSkillAdapter extends RecyclerView.Adapter<JoinedSkillAdapter.
                 Gson json = new Gson();
                 String strHost = json.toJson(skillDatList.get(position).getCreator());
                 i.putExtra("skillHost",strHost);
+                i.putExtra("memCount",String.valueOf(skillDatList.get(position).
+                        getFollowers().size()+1));
                 context.startActivity(i);
             }
         });

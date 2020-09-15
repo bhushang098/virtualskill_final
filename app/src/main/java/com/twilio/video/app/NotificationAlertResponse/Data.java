@@ -1,12 +1,11 @@
 
-package com.twilio.video.app.CreatedClassResponse;
+package com.twilio.video.app.NotificationAlertResponse;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.twilio.video.app.ClassesModal.ClassMemberObj;
 
-public class CreatedClassRespones {
+public class Data {
 
     @SerializedName("current_page")
     @Expose
@@ -44,18 +43,6 @@ public class CreatedClassRespones {
     @SerializedName("total")
     @Expose
     private Integer total;
-
-    @SerializedName("followers")
-    @Expose
-    private List<ClassMemberObj> followers;
-
-    public List<ClassMemberObj> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<ClassMemberObj> followers) {
-        this.followers = followers;
-    }
 
     public Integer getCurrentPage() {
         return currentPage;

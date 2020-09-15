@@ -41,7 +41,7 @@ public class AvailableTeamsAdapter extends RecyclerView.Adapter<AvailableTeamsAd
 
         holder.teamName.setText(teamsList.get(position).getName());
         holder.location.setText("Location : "+teamsList.get(position).getLocation());
-        // No Field For members holder.members.setText(teamsList.get(position).me());
+        holder.members.setText(String.valueOf(teamsList.get(position).getFollowers().size())+" : Members");
         // No Joined holder.joined.setText(teamsList.get(position).getName());
         holder.host.setText("Hosted By : "+teamsList.get(position).getCreated_by().getName());
 
@@ -52,6 +52,7 @@ public class AvailableTeamsAdapter extends RecyclerView.Adapter<AvailableTeamsAd
                 Gson json = new Gson();
                 String strHost = json.toJson(teamsList.get(position).getCreated_by());
                 i.putExtra("teamHost",strHost);
+                i.putExtra("memberCount",String.valueOf(teamsList.get(position).getFollowers().size()));
                 i.putExtra("status","Available");
                 i.putExtra("teamId", teamsList.get(position).getTeamIds().toString());
                 context.startActivity(i);

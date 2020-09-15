@@ -26,9 +26,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".MainPages.NotificationsPage"
+            android:theme="@style/AppTheme.LoginScreen"></activity>
         <activity
             android:name=".subMainPages.PostsPage"
-            android:theme="@style/AppTheme.LoginScreen"></activity>
+            android:theme="@style/AppTheme.LoginScreen" />
         <activity
             android:name=".subMainPages.FollowingPage"
             android:theme="@style/AppTheme.LoginScreen" />
@@ -106,6 +108,7 @@
             android:name=".HomePage"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:theme="@style/AppTheme.LoginScreen"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".LoginPage"
@@ -153,10 +156,7 @@
             android:theme="@style/AppTheme.Settings" />
 
         <service android:name=".ui.room.VideoService" />
-
         <service android:name=".MyNotificationService" />
-
-
     </application>
 
 </manifest>

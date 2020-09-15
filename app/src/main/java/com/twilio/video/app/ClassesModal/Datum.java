@@ -5,6 +5,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.twilio.video.app.ApiModals.Creator;
 
+import java.util.List;
+
 public class Datum {
 
     @SerializedName("follower_id")
@@ -62,6 +64,18 @@ public class Datum {
     @SerializedName("creator")
     @Expose
     private Creator creator;
+
+    @SerializedName("followers")
+    @Expose
+    private List<ClassMemberObj> followers;
+
+    public List<ClassMemberObj> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<ClassMemberObj> followers) {
+        this.followers = followers;
+    }
 
     public Integer getFollowerId() {
         return followerId;

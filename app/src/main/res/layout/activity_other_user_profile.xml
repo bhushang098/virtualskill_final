@@ -224,6 +224,7 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/lin_lay_other_user_pro_rating"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
@@ -232,47 +233,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
-                <ImageView
 
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
+                <RatingBar
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rtv_other"/>
 
                 <androidx.cardview.widget.CardView
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -281,15 +256,19 @@
                     app:cardCornerRadius="2dp">
 
                     <TextView
+                        android:layout_gravity="center"
+
+                        android:id="@+id/tv_rating_others"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:padding="2dp"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
                         android:text="Five Star"
                         android:textColor="#ffffff" />
 
                 </androidx.cardview.widget.CardView>
 
                 <ImageView
+                    android:layout_weight="1"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/iv_edit_pro_rating"
                     android:layout_width="20dp"

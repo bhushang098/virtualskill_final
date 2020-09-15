@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +89,9 @@ public class OtherUserProfile extends AppCompatActivity {
     List<Datum> detailedChatList = new ArrayList<>();
     ChatItemAdapter chatItemAdapter;
     RecyclerView chatsRecyclerView;
+
+    RatingBar ratingBar;
+    TextView tvRating;
 
     private void loadPreferences() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME,
@@ -223,7 +227,7 @@ public class OtherUserProfile extends AppCompatActivity {
                         {
                             tvFollowToggle.setText("UnFollow");
                         }
-                        setOtherUserData();
+                        setOtherUserData(response.body().getRating());
 
                     }
                 }
@@ -466,10 +470,12 @@ public class OtherUserProfile extends AppCompatActivity {
         tvFollowToggle = findViewById(R.id.tv_follow_toggle);
         recyclerView = findViewById(R.id.rec_v_other_user_profile);
         tvNoPost = findViewById(R.id.tv_no_post_otheris);
+        ratingBar = findViewById(R.id.rtv_other);
+        tvRating =findViewById(R.id.tv_rating_others);
 
     }
 
-    private void setOtherUserData() {
+    private void setOtherUserData(String rating) {
 
         if (otherUserObj.getProfilePath() != null) {
             Glide.with(this).
@@ -520,9 +526,20 @@ public class OtherUserProfile extends AppCompatActivity {
             ivGender.setImageResource(R.drawable.female);
         }
         tvUserNameOnTb.setText(otherUserObj.getName());
-        if (otherUserObj.getUserType() == 0) {
-            cvCompany.setVisibility(View.GONE);
-            latoutProRating.setVisibility(View.GONE);
+        if(otherUserObj.getUserType()==1)
+        {
+            latoutProRating.setVisibility(View.VISIBLE);
+            if(rating==null)
+            {
+                tvRating.setText("Not Rated");
+                ratingBar.setIsIndicator(true);
+                ratingBar.setClickable(false);
+            }else {
+                ratingBar.setRating(Float.parseFloat(rating));
+                ratingBar.setIsIndicator(true);
+                ratingBar.setClickable(false);
+                tvRating.setText(rating+" Stars");
+            }
         }
 
         if (otherUserObj.getInterests().isEmpty()) {

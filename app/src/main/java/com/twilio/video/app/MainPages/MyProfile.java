@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.PopupWindow;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -120,6 +121,9 @@ public class MyProfile extends AppCompatActivity {
     private boolean is_profile_pic = false;
 
     ShimmerFrameLayout shimmerFrameLayout;
+    //Ratings
+    RatingBar ratingBar;
+    TextView tvRating;
 
 
     //Data
@@ -392,7 +396,7 @@ public class MyProfile extends AppCompatActivity {
         vvSelectedYtVideo.release();
     }
 
-    private void setUserData()
+    private void setUserData(String rating)
     {
 
         shimmerFrameLayout.stopShimmerAnimation();
@@ -501,7 +505,17 @@ public class MyProfile extends AppCompatActivity {
             }
         }
         if(userObj.getUserType()==1)
+        {
             latoutProRating.setVisibility(View.VISIBLE);
+            if(userObj.getRating()==null)
+            {
+                tvRating.setText("Not Rated");
+            }else {
+                ratingBar.setRating(Float.parseFloat(rating));
+                ratingBar.setIsIndicator(true);
+                tvRating.setText(rating+" Stars");
+            }
+        }
     }
 
 
@@ -572,7 +586,7 @@ public class MyProfile extends AppCompatActivity {
                         userObj = response.body().getData();
                         followerList = response.body().getData().getFollower();
                         followingsList = response.body().getData().getFollowing();
-                        setUserData();
+                        setUserData(response.body().getRating());
                     }
 
                 }catch (Exception e){
@@ -624,6 +638,8 @@ public class MyProfile extends AppCompatActivity {
         gender = findViewById(R.id.tv_user_gender_on_profile);
         phone = findViewById(R.id.tv_user_phone_on_profile);
         skill = findViewById(R.id.tv_user_skill);
+        ratingBar  = findViewById(R.id.rtv_self);
+        tvRating = findViewById(R.id.tv_rating_self);
 
         changeCoverView = findViewById(R.id.cv_change_cover_pic);
         tvPostNo = findViewById(R.id.tv_post_no);

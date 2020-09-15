@@ -3,6 +3,7 @@ package com.twilio.video.app.ChatUserResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.twilio.video.app.model.ExtrasInChatList;
 
 public class Message {
 
@@ -42,6 +43,32 @@ public class Message {
     @SerializedName("sender")
     @Expose
     private Sender sender;
+
+    @SerializedName("receiver_skill")
+    @Expose
+    private ExtrasInChatList receiver_skill;
+
+
+    @SerializedName("receiver_team")
+    @Expose
+    private ExtrasInChatList receiver_team;
+
+
+    public ExtrasInChatList getReceiver_skill() {
+        return receiver_skill;
+    }
+
+    public void setReceiver_skill(ExtrasInChatList receiver_skill) {
+        this.receiver_skill = receiver_skill;
+    }
+
+    public ExtrasInChatList getReceiver_team() {
+        return receiver_team;
+    }
+
+    public void setReceiver_team(ExtrasInChatList receiver_team) {
+        this.receiver_team = receiver_team;
+    }
 
     public Integer getId() {
         return id;

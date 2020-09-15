@@ -44,7 +44,8 @@ public class AvailableSkillAdapter  extends RecyclerView.Adapter<AvailableSkillA
         holder.tvfee.setText("Free Skill");
         else
             holder.tvfee.setText("INR : "+skillDatList.get(position).getFee());
-        holder.tvmemeber.setText(1+" Member");
+        holder.tvmemeber.setText(String.valueOf(skillDatList.get(position).
+                getFollowers().size())+" Member");
         holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,8 @@ public class AvailableSkillAdapter  extends RecyclerView.Adapter<AvailableSkillA
                 Gson json = new Gson();
                 String strHost = json.toJson(skillDatList.get(position).getCreator());
                 i.putExtra("skillHost",strHost);
+                i.putExtra("memCount",String.valueOf(skillDatList.get(position).
+                        getFollowers().size()));
                 context.startActivity(i);
             }
         });

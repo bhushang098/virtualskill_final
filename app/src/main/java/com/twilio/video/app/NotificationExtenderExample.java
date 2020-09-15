@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -47,13 +48,30 @@ public class NotificationExtenderExample extends NotificationExtenderService {
         try {
             if(receivedResult.payload.additionalData!=null)
             {
-                resultIntent  = new Intent(this, ClassDetails.class);
-                resultIntent.putExtra("classId",receivedResult.payload.additionalData.getString("class_id"));
-                resultIntent.putExtra("status","joined");
-                resultIntent.putExtra("direct","1");
+
+                if(receivedResult.payload.additionalData.getString("type")
+                        .equalsIgnoreCase("skill_query")||receivedResult.payload.additionalData.getString("type")
+                        .equalsIgnoreCase("team_query"))
+                {
+                    resultIntent  = new Intent(this, ChatScreen.class);
+                }else
+                {
+                    if(receivedResult.payload.additionalData.getString("class_id")!=null)
+                    {
+                        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.notification);
+                        mediaPlayer.start();
+                        mediaPlayer.setLooping(false);
+                        resultIntent  = new Intent(this, ClassDetails.class);
+                        resultIntent.putExtra("classId",receivedResult.payload.additionalData.getString("class_id"));
+                        resultIntent.putExtra("status","joined");
+                        resultIntent.putExtra("direct","1");
+                    }
+                }
 
             }else {
+
                 resultIntent  = new Intent(this, ChatScreen.class);
+
             }
         } catch (JSONException e) {
             Log.e("NotificationException>",e.toString());

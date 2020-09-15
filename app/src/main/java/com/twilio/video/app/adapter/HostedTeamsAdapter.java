@@ -41,7 +41,7 @@ public class HostedTeamsAdapter extends RecyclerView.Adapter<HostedTeamsAdapter.
     public void onBindViewHolder(@NonNull HostedTeamsAdapterViewHolder holder, int position) {
         holder.teamName.setText(teamsList.get(position).getName());
         holder.location.setText("Location : "+teamsList.get(position).getLocation());
-        // No Field For members holder.members.setText(teamsList.get(position).me());
+        holder.members.setText(String.valueOf(teamsList.get(position).getFollowers().size())+" : Members");
         // No Joined holder.joined.setText(teamsList.get(position).getName());
          holder.host.setText("Hosted By :"+userObj.getName());
 
@@ -50,6 +50,7 @@ public class HostedTeamsAdapter extends RecyclerView.Adapter<HostedTeamsAdapter.
             public void onClick(View v) {
                 Intent i = new Intent(context, TeamDetailsPage.class);
                 i.putExtra("status","Created");
+                i.putExtra("memberCount",String.valueOf(teamsList.get(position).getFollowers().size()));
                 i.putExtra("teamId", teamsList.get(position).getId().toString());
                 context.startActivity(i);
             }

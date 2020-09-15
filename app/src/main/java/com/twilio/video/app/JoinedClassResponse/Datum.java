@@ -4,6 +4,9 @@ package com.twilio.video.app.JoinedClassResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.twilio.video.app.ApiModals.Creator;
+import com.twilio.video.app.ClassesModal.ClassMemberObj;
+
+import java.util.List;
 
 public class Datum {
 
@@ -73,6 +76,18 @@ public class Datum {
     @SerializedName("creator")
     @Expose
     private Creator creator;
+
+    @SerializedName("followers")
+    @Expose
+    private List<ClassMemberObj> followers;
+
+    public List<ClassMemberObj> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<ClassMemberObj> followers) {
+        this.followers = followers;
+    }
 
     public Integer getEId() {
         return eId;

@@ -15,6 +15,7 @@
         app:title="Your Profile"/>
 
     <com.facebook.shimmer.ShimmerFrameLayout
+
         android:layout_below="@+id/tb_my_profile"
         android:id="@+id/sh_v_my_profile"
         android:layout_width="match_parent"
@@ -107,9 +108,9 @@
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/civ_profile_pic"
                             android:layout_marginLeft="10dp"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/welcome_image"/>
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/profile_picture"/>
 
                         <androidx.cardview.widget.CardView
                             android:layout_marginLeft="20dp"
@@ -133,9 +134,6 @@
 
                     </LinearLayout>
 
-
-
-
                 </RelativeLayout>
 
 
@@ -152,44 +150,15 @@
                 android:orientation="horizontal"
                 android:padding="3dp">
 
-                <ImageView
-
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
+                <RatingBar
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rtv_self"/>
 
 
                 <androidx.cardview.widget.CardView
@@ -202,6 +171,7 @@
                     app:cardCornerRadius="2dp">
 
                     <TextView
+                        android:id="@+id/tv_rating_self"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
