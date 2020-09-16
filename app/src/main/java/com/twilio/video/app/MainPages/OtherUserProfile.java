@@ -145,7 +145,7 @@ public class OtherUserProfile extends AppCompatActivity {
                             {
                                 if(tvFollowToggle.getText().toString()
                                         .equalsIgnoreCase("Follow")){
-                                    tvFollowToggle.setText("UnFollow");
+                                    tvFollowToggle.setText("Unfollow");
                                 }else
                                 {
                                     tvFollowToggle.setText("Follow");

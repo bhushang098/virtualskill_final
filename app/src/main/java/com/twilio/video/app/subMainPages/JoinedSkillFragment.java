@@ -118,7 +118,7 @@ public class JoinedSkillFragment extends Fragment {
             @Override
             public void onResponse(Call<SkillItemResponse> call, Response<SkillItemResponse> response) {
                 shimmerFrameLayout.stopShimmerAnimation();
-                shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
                 Log.d("TeamResponse>>", response.raw().toString());
                 if(response.body()!=null)
@@ -139,7 +139,7 @@ public class JoinedSkillFragment extends Fragment {
             @Override
             public void onFailure(Call<SkillItemResponse> call, Throwable t) {
                 shimmerFrameLayout.stopShimmerAnimation();
-                shimmerFrameLayout.setVisibility(View.INVISIBLE);
+                shimmerFrameLayout.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
                 Log.d("Exception>>", t.toString());
             }
