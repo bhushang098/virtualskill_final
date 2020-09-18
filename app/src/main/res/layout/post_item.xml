@@ -135,15 +135,13 @@
                     android:src="@drawable/welcome_image"
                     android:visibility="gone" />
 
-
-
-
                 <com.potyvideo.library.AndExoPlayerView
+                    android:visibility="gone"
                     android:id="@+id/vv_on_post"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     app:andexo_full_screen="true"
-                    app:andexo_play_when_ready="true"
+                    app:andexo_play_when_ready="false"
                     app:andexo_show_controller="true"
                     tools:ignore="MissingConstraints" />
 

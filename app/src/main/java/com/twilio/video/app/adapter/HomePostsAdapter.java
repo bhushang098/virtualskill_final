@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -229,12 +230,13 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             String vidUrl = "http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
                     +postList.get(position).getDUploadedFiles().get(0).getFilePath();
             holder.videoView.setVisibility(View.VISIBLE);
+            holder.videoView.setSource(vidUrl);
 
            // holder.videoView.setForeground(context.getResources().getDrawable(R.drawable.noti_bg_highlite));
         }
         if (postList.get(position).getYoutubeLink() != null) {
-            holder.ytVidView.setVisibility(View.VISIBLE);
 
+            holder.ytVidView.setVisibility(View.VISIBLE);
             holder.ytVidView.initializeWithWebUi(new YouTubePlayerListener() {
                 @Override
                 public void onReady(@NotNull YouTubePlayer youTubePlayer) {
@@ -289,13 +291,24 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
         }
 
-        holder.videoView.setOnClickListener(new View.OnClickListener() {
+        holder.videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
+                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
                 showVidPopup("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
                         +postList.get(position).getDUploadedFiles().get(0).getFilePath());
+                return true;
             }
         });
+
+//        holder.videoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
+//                showVidPopup("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
+//                        +postList.get(position).getDUploadedFiles().get(0).getFilePath());
+//            }
+//        });
 
         holder.recComments.setLayoutManager(new LinearLayoutManager(context));
         holder.recComments.setAdapter(new CommentsAdapter(postList.get(position).getComments(), context, userId));

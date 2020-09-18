@@ -41,7 +41,6 @@
 
         </LinearLayout>
 
-
         <com.potyvideo.library.AndExoPlayerView
             android:id="@+id/detailed_video_view_popup"
             android:layout_width="match_parent"
