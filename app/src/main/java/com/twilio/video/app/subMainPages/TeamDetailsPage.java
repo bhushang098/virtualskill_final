@@ -683,7 +683,7 @@ public class TeamDetailsPage extends AppCompatActivity {
 
     private void startChat() {
         Call<DetailedChatResponse> call = RetrifitClient.getInstance()
-                .getChatApi().getDetailedChatList(token, teamId, "team");
+                .getChatApi().getDetailedChatList(token, teamId, "group");
 
         inflateDetailedMessage(detailedChatList);
 
@@ -763,7 +763,7 @@ public class TeamDetailsPage extends AppCompatActivity {
     private void sendmessage(String message, String userId, PopupWindow popuseWindow) {
 
         Call<Map> call = RetrifitClient.getInstance().getChatApi()
-                .sendChatMess(token, "team", message, userId,"1");
+                .sendChatMess(token, "group", message, teamId,"1");
 
         com.twilio.video.app.DetailedChatResponse.Datum messageObj = new com.twilio.video.app.DetailedChatResponse.Datum();
         messageObj.setContent(message);

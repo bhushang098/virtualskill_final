@@ -26,8 +26,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainPages.NotificationsPage"
-            android:theme="@style/AppTheme.LoginScreen"></activity>
+        <activity android:name=".subMainPages.DetailedVidView"
+            android:theme="@style/AppTheme.LoginScreen" ></activity>
+        <activity
+            android:name=".MainPages.NotificationsPage"
+            android:theme="@style/AppTheme.LoginScreen" />
         <activity
             android:name=".subMainPages.PostsPage"
             android:theme="@style/AppTheme.LoginScreen" />
@@ -107,8 +110,8 @@
         <activity
             android:name=".HomePage"
             android:configChanges="screenSize|orientation|keyboardHidden"
-            android:theme="@style/AppTheme.LoginScreen"
             android:launchMode="singleTop"
+            android:theme="@style/AppTheme.LoginScreen"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".LoginPage"

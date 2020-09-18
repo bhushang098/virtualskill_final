@@ -22,6 +22,7 @@ import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OSNotificationReceivedResult;
 import com.onesignal.OneSignal;
+import com.twilio.video.app.MainPages.NotificationsPage;
 import com.twilio.video.app.subMainPages.ClassDetails;
 
 import org.json.JSONException;
@@ -69,9 +70,7 @@ public class NotificationExtenderExample extends NotificationExtenderService {
                 }
 
             }else {
-
-                resultIntent  = new Intent(this, ChatScreen.class);
-
+                resultIntent  = new Intent(this, NotificationsPage.class);
             }
         } catch (JSONException e) {
             Log.e("NotificationException>",e.toString());

@@ -398,7 +398,6 @@ public class MyProfile extends AppCompatActivity {
 
     private void setUserData(String rating)
     {
-
         shimmerFrameLayout.stopShimmerAnimation();
         shimmerFrameLayout.setVisibility(View.GONE);
         if(userObj.getProfilePath()!=null)
@@ -513,7 +512,7 @@ public class MyProfile extends AppCompatActivity {
             }else {
                 ratingBar.setRating(Float.parseFloat(rating));
                 ratingBar.setIsIndicator(true);
-                tvRating.setText(rating+" Stars");
+                tvRating.setText(rating);
             }
         }
     }
@@ -586,7 +585,14 @@ public class MyProfile extends AppCompatActivity {
                         userObj = response.body().getData();
                         followerList = response.body().getData().getFollower();
                         followingsList = response.body().getData().getFollowing();
-                        setUserData(response.body().getRating());
+                        if(response.body().getRating()==null)
+                        {
+                            setUserData(null);
+                        }else {
+                            int temp =  new Double(response.body().getRating()).intValue();
+                            setUserData(String.valueOf(temp));
+                        }
+
                     }
 
                 }catch (Exception e){

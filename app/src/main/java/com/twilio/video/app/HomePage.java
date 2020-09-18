@@ -85,6 +85,7 @@ import com.twilio.video.app.MainPages.SkillPage;
 import com.twilio.video.app.MainPages.StudentsUserPage;
 import com.twilio.video.app.MainPages.TeamsPage;
 import com.twilio.video.app.MainPages.UsersPage;
+import com.twilio.video.app.NotificationAlertResponse.NotificationAlerrtResponse;
 import com.twilio.video.app.adapter.ChatUSerAdapter;
 import com.twilio.video.app.adapter.HomePostsAdapter;
 import com.twilio.video.app.subMainPages.ClassDetails;
@@ -178,6 +179,7 @@ public class HomePage extends AppCompatActivity{
 
     private void startbgService() {
         startService(new Intent(HomePage.this,MyNotificationService.class));
+
     }
 
     @Override
@@ -195,8 +197,20 @@ public class HomePage extends AppCompatActivity{
         checkforUpdate();
         loadHomePosts(token);
         loadUnreadmesscount();
+        loadNotificatonCount();
         toolbar.setTitle("");
-        ivGoChatScreen.setBadgeValue(22)
+
+        ivGoChatScreen.setBadgeValue(0)
+                .setBadgeOvalAfterFirst(true)
+                .setBadgeTextSize(10)
+                .setBadgeBackground(getResources().getDrawable(R.drawable.unerad_count_bg))
+                .setMaxBadgeValue(99)
+                .setBadgePosition(BadgePosition.TOP_RIGHT)
+                .setBadgeTextStyle(Typeface.NORMAL)
+                .setShowCounter(true)
+                .setBadgePadding(2);
+
+        goNotiPage.setBadgeValue(0)
                 .setBadgeOvalAfterFirst(true)
                 .setBadgeTextSize(10)
                 .setBadgeBackground(getResources().getDrawable(R.drawable.unerad_count_bg))
@@ -590,6 +604,29 @@ public class HomePage extends AppCompatActivity{
                 Intent i = new Intent(HomePage.this, SearchPage.class);
                 i.putExtra("token",token);
                 startActivity(i);
+            }
+        });
+    }
+
+    private void loadNotificatonCount() {
+        Call<NotificationAlerrtResponse> call = RetrifitClient
+                .getInstance().getNotificationApi().getNotificationList(token);
+
+        call.enqueue(new Callback<NotificationAlerrtResponse>() {
+            @Override
+            public void onResponse(Call<NotificationAlerrtResponse> call, Response<NotificationAlerrtResponse> response) {
+                Log.d(">>>Chat Response", response.raw().toString());
+
+                if(response.body() == null) {
+
+                } else {
+                    goNotiPage.setBadgeValue(response.body().getTotal_new());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificationAlerrtResponse> call, Throwable t) {
+                Log.d(">>Exceptopn>>", t.toString());
             }
         });
     }

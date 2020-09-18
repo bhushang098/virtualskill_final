@@ -91,7 +91,7 @@ public class OtherUserProfile extends AppCompatActivity {
     RecyclerView chatsRecyclerView;
 
     RatingBar ratingBar;
-    TextView tvRating;
+    TextView tvRating,tvSkillOthers;
 
     private void loadPreferences() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME,
@@ -225,9 +225,15 @@ public class OtherUserProfile extends AppCompatActivity {
                         shimmerFrameLayout.setVisibility(View.GONE);
                         if(response.body().getIs_following()==1)
                         {
-                            tvFollowToggle.setText("UnFollow");
+                            tvFollowToggle.setText("Unfollow");
                         }
-                        setOtherUserData(response.body().getRating());
+                        if(response.body().getRating()==null)
+                        {
+                            setOtherUserData(null);
+                        }else {
+                            int temp =  new Double(response.body().getRating()).intValue();
+                            setOtherUserData(String.valueOf(temp));
+                        }
 
                     }
                 }
@@ -342,6 +348,7 @@ public class OtherUserProfile extends AppCompatActivity {
             public void onResponse(Call<DetailedChatResponse> call, Response<DetailedChatResponse> response) {
                 Log.d("Chat Response>>", response.raw().toString());
                 if (response.body() != null) {
+                    detailedChatList.clear();
                     detailedChatList = response.body().getMessages().getData();
                     Collections.reverse(detailedChatList);
                     chatItemAdapter.setMessageList(detailedChatList);
@@ -472,6 +479,7 @@ public class OtherUserProfile extends AppCompatActivity {
         tvNoPost = findViewById(R.id.tv_no_post_otheris);
         ratingBar = findViewById(R.id.rtv_other);
         tvRating =findViewById(R.id.tv_rating_others);
+        tvSkillOthers = findViewById(R.id.tv_skill_others);
 
     }
 
@@ -538,9 +546,14 @@ public class OtherUserProfile extends AppCompatActivity {
                 ratingBar.setRating(Float.parseFloat(rating));
                 ratingBar.setIsIndicator(true);
                 ratingBar.setClickable(false);
-                tvRating.setText(rating+" Stars");
+                tvRating.setText(rating);
             }
         }
+
+        if(otherUserObj.getSkill()==null)
+            tvSkillOthers.setVisibility(View.GONE);
+        else
+            tvSkillOthers.setText("Skill : "+otherUserObj.getSkill());
 
         if (otherUserObj.getInterests().isEmpty()) {
 

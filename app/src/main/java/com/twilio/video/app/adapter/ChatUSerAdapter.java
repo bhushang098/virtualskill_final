@@ -148,20 +148,15 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
                 holder.userdp.setImageResource(R.drawable.group_chat);
                 if(userList.get(position).getBelongsType().equalsIgnoreCase("skill"))
                 {
-                    if(userList.get(position).getReceiver_skill()!=null)
-                    holder.userName.setText(userList.get(position).getReceiver_skill().getName());
-                    else
-                        holder.userName.setText(userList.get(position).getReceiver().getName());
+
+                    holder.userName.setText(userList.get(position).getSkill_name());
+
                 }else
                 {
-                    if(userList.get(position).getReceiver_team()!=null)
-                        holder.userName.setText(userList.get(position).getReceiver_team().getName());
-                    else
-                        holder.userName.setText(userList.get(position).getReceiver().getName());
+                        holder.userName.setText(userList.get(position).getTeam_name());
                 }
-
-//                holder.chatType.setVisibility(View.VISIBLE);
-//                holder.chatType.setText(userList.get(position).getBelongsType());
+                holder.chatType.setVisibility(View.VISIBLE);
+               holder.chatType.setText(userList.get(position).getBelongsType());
            // }
         }
 
@@ -366,7 +361,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
 
     public class ChatUSerAdapterViewHolder extends RecyclerView.ViewHolder {
         CircleImageView userdp;
-        TextView userName, message, timeStamp;
+        TextView userName, message, timeStamp,chatType;
 
         public ChatUSerAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -374,6 +369,7 @@ public class ChatUSerAdapter extends RecyclerView.Adapter<ChatUSerAdapter.ChatUS
             userName = itemView.findViewById(R.id.tv_user_name_on_chat_user_list);
             timeStamp = itemView.findViewById(R.id.tv_mess_time_stamp_on_chat_user_list);
             message = itemView.findViewById(R.id.tv_last_message_on_chat_list_user);
+            chatType = itemView.findViewById(R.id.tv_chat_type);
 
         }
     }

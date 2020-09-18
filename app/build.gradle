@@ -56,8 +56,8 @@ android {
         applicationId "com.virtualskill"
         minSdkVersion 21
         targetSdkVersion 29
-        versionName "0.1.53"
-        versionCode 53
+        versionName "0.1.55"
+        versionCode 55
 
         vectorDrawables.useSupportLibrary = true
 
@@ -136,8 +136,8 @@ android {
         community {
             dimension "environment"
             applicationId "com.virtualskill"
-            versionCode 53
-            versionName "1.0.53"
+            versionCode 55
+            versionName "1.0.55"
             buildConfigField 'String', 'ENVIRONMENT_DEFAULT', '"production"'
             buildConfigField("String",
                     "TWILIO_ACCESS_TOKEN",
@@ -275,6 +275,7 @@ dependencies {
     // Youtube Player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     implementation 'com.devbrackets.android:exomedia:4.3.0'
+    implementation 'com.github.HamidrezaAmz:MagicalExoPlayer:1.0.15'
 
     //Loading BAr
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'

@@ -38,6 +38,18 @@ public class Datum {
     @Expose
     private String additional_id;
 
+    @SerializedName("seen")
+    @Expose
+    private Integer seen;
+
+    public Integer getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Integer seen) {
+        this.seen = seen;
+    }
+
     public String getAdditional_id() {
         return additional_id;
     }

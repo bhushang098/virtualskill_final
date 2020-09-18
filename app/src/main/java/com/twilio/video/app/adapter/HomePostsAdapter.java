@@ -2,8 +2,13 @@ package com.twilio.video.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,28 +20,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.devbrackets.android.exomedia.listener.OnPreparedListener;
-import com.devbrackets.android.exomedia.ui.widget.VideoView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+import com.potyvideo.library.AndExoPlayerView;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.PostLikeResponse;
 import com.twilio.video.app.HomePostModal.Comment;
@@ -46,14 +54,15 @@ import com.twilio.video.app.MainPages.OtherUserProfile;
 import com.twilio.video.app.R;
 import com.twilio.video.app.RetrifitClient;
 import com.twilio.video.app.UpdatePostResponse;
+import com.twilio.video.app.subMainPages.DetailedVidView;
 import com.twilio.video.app.util.TimeService;
 
 import org.jetbrains.annotations.NotNull;
-import org.ocpsoft.prettytime.PrettyTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,6 +71,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.HomePostAdapterViewHolder> {
 
@@ -97,6 +107,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull HomePostsAdapter.HomePostAdapterViewHolder holder, int position) {
 
@@ -215,17 +226,11 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             }).into(holder.mediaView);
         }
         if (postList.get(position).getHasVideo() == 1) {
+            String vidUrl = "http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
+                    +postList.get(position).getDUploadedFiles().get(0).getFilePath();
             holder.videoView.setVisibility(View.VISIBLE);
-            holder.videoView.setVideoURI(Uri.parse("https://www.virtualskill.in/storage/uploads/posts/"
-                    + postList.get(position).getDUploadedFiles().get(0).getFilePath()));
-            holder.videoView.setOnPreparedListener(new OnPreparedListener() {
-                @Override
-                public void onPrepared() {
-                    holder.videoView.pause();
-                }
-            });
 
-
+           // holder.videoView.setForeground(context.getResources().getDrawable(R.drawable.noti_bg_highlite));
         }
         if (postList.get(position).getYoutubeLink() != null) {
             holder.ytVidView.setVisibility(View.VISIBLE);
@@ -283,6 +288,14 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             }, true);
 
         }
+
+        holder.videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVidPopup("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
+                        +postList.get(position).getDUploadedFiles().get(0).getFilePath());
+            }
+        });
 
         holder.recComments.setLayoutManager(new LinearLayoutManager(context));
         holder.recComments.setAdapter(new CommentsAdapter(postList.get(position).getComments(), context, userId));
@@ -344,6 +357,36 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
     }
 
+    private void showVidPopup(String filePath) {
+//        Intent i = new Intent(
+//                context, DetailedVidView.class
+//        );
+//        i.putExtra("vid_file",filePath);
+//        context.startActivity(i);
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.detailed_video_view,
+                null); // inflating popup layout
+        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, true);
+        ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_comment_popup);
+
+        AndExoPlayerView vidView = popUpView.findViewById(R.id.detailed_video_view_popup);
+        vidView.setSource(filePath);
+
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mpopup.dismiss();
+                vidView.stopPlayer();
+            }
+        });
+
+        // Creation of popup
+        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+    }
+
     private void likePostByApi(String postId) {
 
         Call<PostLikeResponse> call = RetrifitClient
@@ -369,6 +412,11 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         i.putExtra("other_user_id", postData.getUserId().toString());
         context.startActivity(i);
 
+    }
+
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
+    {
+        return ThumbnailUtils.createVideoThumbnail(videoPath, MINI_KIND);
     }
 
     private void showCommentOpoup(List<Comment> comments, int position) {
@@ -505,13 +553,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             video.setVisibility(View.VISIBLE);
             video.setVideoURI(Uri.parse("https://www.virtualskill.in/storage/uploads/posts/"
                     + datum.getDUploadedFiles().get(0).getFilePath()));
-            video.setOnPreparedListener(new OnPreparedListener() {
-                @Override
-                public void onPrepared() {
-                    video.pause();
-                }
-            });
-
+            video.setMediaController(new MediaController(context));
 
         }
         if (datum.getYoutubeLink() != null) {
@@ -627,6 +669,16 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return postList.size();
     }
@@ -637,7 +689,8 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         CircleImageView userProfile;
         ProgressBar progressBar;
         ImageView mediaView, likeView, menuImage;
-        VideoView videoView;
+        // Makeing iv for ThumbNail
+        AndExoPlayerView videoView;
         YouTubePlayerView ytVidView;
         RecyclerView recComments;
         LinearLayout linLayWriteComment, linlayuserNameanstimesHao;

@@ -49,10 +49,34 @@ public class Message {
     private ExtrasInChatList receiver_skill;
 
 
+
     @SerializedName("receiver_team")
     @Expose
     private ExtrasInChatList receiver_team;
 
+    @SerializedName("skill_name")
+    @Expose
+    private String skill_name;
+
+    @SerializedName("team_name")
+    @Expose
+    private String team_name;
+
+    public String getSkill_name() {
+        return skill_name;
+    }
+
+    public void setSkill_name(String skill_name) {
+        this.skill_name = skill_name;
+    }
+
+    public String getTeam_name() {
+        return team_name;
+    }
+
+    public void setTeam_name(String team_name) {
+        this.team_name = team_name;
+    }
 
     public ExtrasInChatList getReceiver_skill() {
         return receiver_skill;

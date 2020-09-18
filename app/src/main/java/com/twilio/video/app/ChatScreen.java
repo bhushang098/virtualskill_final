@@ -21,6 +21,8 @@ import com.twilio.video.app.ChatUserResponse.Message;
 import com.twilio.video.app.adapter.ChatUSerAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -75,6 +77,12 @@ public class ChatScreen extends AppCompatActivity {
 
                 } else {
                     userList = response.body().getMessages();
+                    Collections.sort(userList, new Comparator<Message>() {
+                        @Override
+                        public int compare(Message o1, Message o2) {
+                            return o2.getUpdatedAt().compareTo(o2.getUpdatedAt());
+                        }
+                    });
                     if (userList.size() > 0) {
                         tvChatStatus.setVisibility(View.GONE);
                         //toDo render Users

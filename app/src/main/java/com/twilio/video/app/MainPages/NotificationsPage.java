@@ -35,10 +35,9 @@ public class NotificationsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications_page);
-        token = getIntent().getStringExtra("token");
+       // token = getIntent().getStringExtra("token");
         loadprefs();
         setUi();
-        loadNotifications();
 
     }
 
@@ -47,7 +46,8 @@ public class NotificationsPage extends AppCompatActivity {
                 Context.MODE_PRIVATE);
        Gson json = new Gson();
        hisId = json.fromJson(settings.getString("UserObj",""), UserObj.class).getId().toString();
-
+    token = settings.getString("token","");
+        loadNotifications();
 
     }
 
@@ -63,7 +63,6 @@ public class NotificationsPage extends AppCompatActivity {
                 if(response.body()!=null)
                 {
                     notiList = response.body().getData().getData();
-                    Collections.reverse(notiList);
                     recyclerView.setLayoutManager(new LinearLayoutManager(NotificationsPage.this));
                     recyclerView.setAdapter(new NotificationAlertAdapter(notiList, NotificationsPage.this, hisId, token));
                 }

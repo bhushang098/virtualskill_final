@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/window_blur"
+    app:cardElevation="5dp"
+    android:orientation="vertical"
+    android:padding="5dp"
+    app:cardBackgroundColor="#C0000003"
+    app:cardCornerRadius="2dp">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite"
+                android:layout_marginRight="20dp"
+                android:text="Close" />
+
+            <ImageView
+                android:id="@+id/iv_cancle_video_popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_baseline_highlight_off_24" />
+
+        </LinearLayout>
+
+
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/detailed_video_view_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:andexo_full_screen="true"
+            app:andexo_play_when_ready="true"
+            app:andexo_show_controller="true"
+            app:andexo_resize_mode="Fit" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

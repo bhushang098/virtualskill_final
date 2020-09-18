@@ -1,41 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_margin="8dp"
-    android:background="@drawable/edit_text_border"
+<LinearLayout android:layout_margin="8dp"
+    android:background="@drawable/noti_bg_seen"
     android:padding="10dp"
     android:orientation="horizontal"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="2dp"
-        android:src="@drawable/profile_picture"/>
+    <androidx.cardview.widget.CardView
+        app:cardElevation="5dp"
+        app:cardCornerRadius="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="2"
-        >
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_noti_message"
-            android:textSize="20dp"
-            android:layout_marginLeft="10dp"
-            android:padding="3dp"
-            android:text="notificatioion Message"/>
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                android:src="@drawable/profile_picture"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_noti_time"
-            android:textSize="14dp"
-            android:layout_marginLeft="10dp"
-            android:padding="3dp"
-            android:text="notificatioion Timing"/>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_noti_message"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="3dp"
+                    android:text="notificatioion Message"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_noti_time"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="3dp"
+                    android:text="notificatioion Timing"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
 </LinearLayout>

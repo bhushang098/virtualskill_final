@@ -821,6 +821,8 @@ public class SkillDetailsPage extends AppCompatActivity {
         tvTimestamp.setText(skillObj.getCreatedAt().split(" ")[0]);
         if(skillHostUser!=null)
         tvHost.setText("Hosted By : " + skillHostUser.getName());
+        if(getIntent().getStringExtra("status").equalsIgnoreCase("created"))
+            tvHost.setText("Hosted By : " + thisUSerObj.getName());
         tvInfo.setText(skillObj.getAbout());
         tvSkillNameOnTb.setText(skillObj.getName());
 

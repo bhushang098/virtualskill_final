@@ -12,6 +12,17 @@ public class NotificationAlerrtResponse {
     @SerializedName("data")
     @Expose
     private Data data;
+    @SerializedName("new")
+    @Expose
+    private Integer total_new;
+
+    public Integer getTotal_new() {
+        return total_new;
+    }
+
+    public void setTotal_new(Integer total_new) {
+        this.total_new = total_new;
+    }
 
     public Boolean getStatus() {
         return status;
