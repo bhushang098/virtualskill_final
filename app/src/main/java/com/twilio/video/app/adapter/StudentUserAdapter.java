@@ -24,6 +24,7 @@ import com.twilio.video.app.MainPages.MyProfile;
 import com.twilio.video.app.MainPages.OtherUserProfile;
 import com.twilio.video.app.R;
 import com.twilio.video.app.SearchStudentResponse.Datum;
+import com.twilio.video.app.model.Rating;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
         this.studentList = studentList;
         this.token = token;
         this.hisUid = hisUid;
-        ;    }
+    }
 
 
 
@@ -96,7 +97,7 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
 
         if(studentList.get(position).getCoverPath()!=null)
         {
-            Glide.with(context).load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/covers/"
+            Glide.with(context).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/"
                     + studentList.get(position).getCoverPath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -131,20 +132,46 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
         holder.type.setVisibility(View.VISIBLE);
         if(studentList.get(position).getUserType()==1)
         {
-            holder.type.setText("Professor");
             holder.location.setVisibility(View.GONE);
-            holder.skillActual.setVisibility(View.GONE);
+            holder.type.setText("Professor");
+            holder.name.setGravity(View.FOCUS_LEFT);
+            holder.type.setGravity(View.FOCUS_LEFT);
             holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
+            if(studentList.get(position).getSkill()!=null)
+                holder.skillActual.setText("Skill : "+studentList.get(position).getSkill());
             holder.ratingBar.setVisibility(View.VISIBLE);
+
 
         }else
         {
             holder.type.setText("Student");
             if(studentList.get(position).getLocation()!=null)
                 holder.location.setText("Location : "+studentList.get(position).getLocation());
+            holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
             if(studentList.get(position).getSkill()!=null)
-                holder.skillActual.setText(studentList.get(position).getSkill());
+                holder.skillActual.setText("Skill : "+studentList.get(position).getSkill());
         }
+
+
+
+        if(studentList.get(position).getRatings().size()==0)
+        {
+            holder.ratingBar.setIsIndicator(true);
+            holder.ratingBar.setClickable(false);
+
+        }else {
+
+            holder.ratingBar.setRating(Float.parseFloat(
+                    getAvgRating(studentList.get(position).getRatings())));
+            holder.ratingBar.setIsIndicator(true);
+            holder.ratingBar.setClickable(false);
+        }
+
+
+        if(studentList.get(position).getIs_hr()==1)
+            holder.type.setText("Hr");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +197,16 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
         this.studentList = list;
     }
 
+    private String getAvgRating(List<Rating> ratings) {
+
+        int total = 0;
+        for (Rating rating:ratings
+        ) {
+            total += rating.getRating();
+        }
+
+        return String.valueOf(total/ratings.size());
+    }
 
     @Override
     public int getItemCount() {

@@ -73,6 +73,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -120,6 +122,8 @@ public class SkillDetailsPage extends AppCompatActivity {
     Button btnOk;
     UserObj thisUSerObj = new UserObj();
     Creator skillHostUser = new Creator();
+    CardView cvPostUtils;
+    TextView tvPOstNotAvailable;
 
 
     @Override
@@ -137,10 +141,15 @@ public class SkillDetailsPage extends AppCompatActivity {
             tvJoinLeave.setText("Change Cover");
             cvEditSkill.setVisibility(View.VISIBLE);
             tvHost.setText("Hosted By : "+thisUSerObj.getName());
+            cvPostUtils.setVisibility(View.VISIBLE);
         }
 
         if (status.equalsIgnoreCase("Joined"))
+        {
+            cvPostUtils.setVisibility(View.VISIBLE);
             tvJoinLeave.setText("Leave");
+        }
+
 
         getSingleSkill();
         loadSkillPost(skillId);
@@ -285,8 +294,8 @@ public class SkillDetailsPage extends AppCompatActivity {
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4) {
                     vvSelectedYtVideo.setVisibility(View.VISIBLE);
@@ -402,6 +411,8 @@ public class SkillDetailsPage extends AppCompatActivity {
 
                     }else {
                         postDataList = response.body().getPosts().getData();
+                        if(postDataList.size()>0)
+                            tvPOstNotAvailable.setVisibility(View.GONE);
                         recyclerView.setLayoutManager(new LinearLayoutManager(SkillDetailsPage.this));
                         recyclerView.setAdapter(new HomePostsAdapter(postDataList,SkillDetailsPage.this,thisUSerObj.getId(),token));
 //                        shimmerFrameLayout.stopShimmerAnimation();
@@ -428,7 +439,7 @@ public class SkillDetailsPage extends AppCompatActivity {
 
     private void paySkill() {
         Intent i = new Intent(SkillDetailsPage.this, WebViewPage.class);
-        String url = "https://virtualskill.in/api/pay?type=skill&id=";
+        String url = "https://nexgeno.com/api/pay?type=skill&id=";
        url = url+skillId+"&user_name="+thisUSerObj.getName()+"&phone="+thisUSerObj.getPhone()
                 +"&email="+thisUSerObj.getEmail();
        i.putExtra("url_pay",url);
@@ -614,13 +625,14 @@ public class SkillDetailsPage extends AppCompatActivity {
                         //Toast.makeText(SkillDetailsPage.this, response.message(), Toast.LENGTH_SHORT).show();
                         if (tvJoinLeave.getText().equals("Join"))
                         {
+                            cvPostUtils.setVisibility(View.VISIBLE);
                             tvJoinLeave.setText("Leave");
                             Toast.makeText(SkillDetailsPage.this, "Skill Joined ", Toast.LENGTH_SHORT).show();
                         }
-
                         else{
                             Toast.makeText(SkillDetailsPage.this, "Skill Left", Toast.LENGTH_SHORT).show();
                             tvJoinLeave.setText("Join");
+                            cvPostUtils.setVisibility(View.GONE);
                         }
 
                     }
@@ -630,9 +642,19 @@ public class SkillDetailsPage extends AppCompatActivity {
             @Override
             public void onFailure(Call<MakeClassResponse> call, Throwable t) {
                 Log.d("Error>>", t.toString());
-
             }
         });
+    }
+
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
 
     private void loadPrefs() {
@@ -813,7 +835,7 @@ public class SkillDetailsPage extends AppCompatActivity {
            tvSkillfees.setText("INR : "+ skillObj.getFee());
        }
         tvSkillName.setText(skillObj.getName());
-        tvMembers.setText("5 Members");
+        tvMembers.setText(getIntent().getStringExtra("memCount")+" Members");
         tvTimestamp.setText(skillObj.getCreatedAt().split(" ")[0]);
         if(skillHostUser!=null)
         tvHost.setText("Hosted By : " + skillHostUser.getName());
@@ -851,6 +873,10 @@ public class SkillDetailsPage extends AppCompatActivity {
         linLayPickYtLInk = findViewById(R.id.lin_lay_pick_ytLink);
         vvSelectedYtVideo = findViewById(R.id.yt_selected_vv_skill);
         etCaption = findViewById(R.id.et_caption_skill);
+
+        cvPostUtils = findViewById(R.id.cv_card_post_utils);
+        tvPOstNotAvailable = findViewById(R.id.tv_skill_post_not_available);
+
 
     }
     private void showPopup() {

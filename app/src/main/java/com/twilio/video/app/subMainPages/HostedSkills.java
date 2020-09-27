@@ -152,7 +152,6 @@ public class HostedSkills extends Fragment {
                         revHostedSkills.setLayoutManager(new LinearLayoutManager(getContext()));
                         revHostedSkills.setAdapter(new HostedSkillAdapter(skillDataList,getContext(),userObj));
                     }else {
-
                         tvSkillsEmpty.setVisibility(View.VISIBLE);
                     }
                 }

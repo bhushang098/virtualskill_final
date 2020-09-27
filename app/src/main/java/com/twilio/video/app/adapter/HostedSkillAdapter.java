@@ -46,7 +46,8 @@ public class HostedSkillAdapter extends RecyclerView.Adapter<HostedSkillAdapter.
             holder.tvfee.setText("Free Skill");
         else
             holder.tvfee.setText("INR : "+skillDatList.get(position).getFee());
-        holder.tvmemeber.setText(1+" Member");
+        holder.tvmemeber.setText(String.valueOf(skillDatList.get(position).
+              getFollowers_count())+" Member");
         holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +57,8 @@ public class HostedSkillAdapter extends RecyclerView.Adapter<HostedSkillAdapter.
                 Intent i = new Intent(context, SkillDetailsPage.class);
                 i.putExtra("status","Created");
                 i.putExtra("skillId",skillDatList.get(position).getId().toString());
+                i.putExtra("memCount",String.valueOf(skillDatList.get(position).
+                       getFollowers_count()));
                 context.startActivity(i);
             }
         });

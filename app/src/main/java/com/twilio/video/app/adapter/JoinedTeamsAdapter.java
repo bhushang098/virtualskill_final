@@ -40,9 +40,9 @@ public class JoinedTeamsAdapter extends RecyclerView.Adapter<JoinedTeamsAdapter.
 
         holder.teamName.setText(teamsList.get(position).getName());
         holder.location.setText("Location : "+teamsList.get(position).getLocation());
-        // No Field For members holder.members.setText(teamsList.get(position).me());
+        holder.members.setText(String.valueOf(teamsList.get(position).getFollowers_count())+" : Members");
         // No Joined holder.joined.setText(teamsList.get(position).getName());
-         holder.host.setText("Hosted By :"+teamsList.get(position).getCreated_by().getName());
+        holder.host.setText("Hosted By : "+teamsList.get(position).getCreated_by().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +52,9 @@ public class JoinedTeamsAdapter extends RecyclerView.Adapter<JoinedTeamsAdapter.
                 String strHost = json.toJson(teamsList.get(position).getCreated_by());
                 i.putExtra("teamHost",strHost);
                 i.putExtra("status","Joined");
-                i.putExtra("teamId", teamsList.get(position).getTeamId().toString());
+                i.putExtra("memberCount",String.valueOf(teamsList.get(position)
+                        .getFollowers_count()));
+                i.putExtra("teamId", teamsList.get(position).getId().toString());
                 context.startActivity(i);
             }
         });

@@ -168,7 +168,7 @@
                     android:textColorHint="@color/lobbyColorAccent"
                     android:layout_width="match_parent"
                     android:inputType="textPassword"
-                    android:hint="Conform Password"
+                    android:hint="Confirm Password"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>

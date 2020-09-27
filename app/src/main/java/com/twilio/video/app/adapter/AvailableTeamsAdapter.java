@@ -41,9 +41,9 @@ public class AvailableTeamsAdapter extends RecyclerView.Adapter<AvailableTeamsAd
 
         holder.teamName.setText(teamsList.get(position).getName());
         holder.location.setText("Location : "+teamsList.get(position).getLocation());
-        // No Field For members holder.members.setText(teamsList.get(position).me());
+        holder.members.setText(String.valueOf(teamsList.get(position).getFollowers_count())+" : Members");
         // No Joined holder.joined.setText(teamsList.get(position).getName());
-       // holder.host.setText("Hosted By : "+teamsList.get(position).getCreated_by().getName());
+        holder.host.setText("Hosted By : "+teamsList.get(position).getCreated_by().getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +54,8 @@ public class AvailableTeamsAdapter extends RecyclerView.Adapter<AvailableTeamsAd
                 i.putExtra("teamHost",strHost);
                 i.putExtra("status","Available");
                 i.putExtra("teamId", teamsList.get(position).getTeamIds().toString());
+                i.putExtra("memberCount",String.valueOf(teamsList.get(position)
+                        .getFollowers_count()));
                 context.startActivity(i);
             }
         });

@@ -131,7 +131,7 @@ public class FindJobsFrag extends Fragment {
                         tvJobsEmpty.setVisibility(View.GONE);
                         // SetAdapter
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setAdapter(new FindJobsAdapter(JobDataList,getContext(),token));
+                        recyclerView.setAdapter(new FindJobsAdapter(JobDataList,getContext(),token,"not_applied"));
                     }else {
                         tvJobsEmpty.setVisibility(View.VISIBLE);
                     }

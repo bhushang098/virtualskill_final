@@ -61,6 +61,7 @@
                 android:padding="10dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -97,99 +98,67 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_alignBottom="@+id/iv_profile_background"
-                        android:orientation="horizontal">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/civ_profile_pic"
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/welcome_image"/>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_marginLeft="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="wrap_content"
-                            android:padding="5dp"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/tv_user_name_on_profile"
-                                android:padding="5dp"
-                                android:textStyle="bold"
-                                android:textSize="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" Demo Name"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-
-
 
                 </RelativeLayout>
 
 
             </androidx.cardview.widget.CardView>
 
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_below="@+id/cv_profile_background_image"
+                android:id="@+id/civ_profile_pic"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="-35dp"
+                android:elevation="5dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/profile_picture"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_name_self"
+                android:layout_below="@+id/civ_profile_pic"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_user_name_on_profile"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:textSize="14dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Demo Name"/>
+
+            </androidx.cardview.widget.CardView>
+
             <!--//Star RAting View-->
+
             <LinearLayout
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_below="@+id/cv_profile_background_image"
+                android:layout_below="@+id/cv_profile_company"
                 android:id="@+id/lin_lay_rating_view_my_profile"
                 android:orientation="horizontal"
                 android:padding="3dp">
 
-                <ImageView
-
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_baseline_star_24" />
+                <RatingBar
+                    android:theme="@style/RatingBar"
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:scaleX="0.4"
+                    android:scaleY="0.4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rtv_self"/>
 
 
                 <androidx.cardview.widget.CardView
@@ -202,6 +171,7 @@
                     app:cardCornerRadius="2dp">
 
                     <TextView
+                        android:id="@+id/tv_rating_self"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -219,7 +189,7 @@
                 android:id="@+id/cv_profile_company"
                 android:layout_marginTop="15dp"
                 app:cardElevation="2dp"
-                android:layout_below="@+id/lin_lay_rating_view_my_profile"
+                android:layout_below="@+id/cv_name_self"
                 app:cardCornerRadius="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

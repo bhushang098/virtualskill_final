@@ -75,6 +75,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -101,6 +103,7 @@ ClassDetails extends AppCompatActivity {
     String status = "";
     String ytVidId = "";
     ImageView ivClassCover;
+    CardView cvPostUtils;
     boolean ytPlayerInitialized = false;
     RecyclerView recyclerView;
     private List<Datum> postDataList = new ArrayList<>();
@@ -116,6 +119,7 @@ ClassDetails extends AppCompatActivity {
     File coverImageFile, imageFile, videoFile;
     private boolean is_choosing = false;
     PopupWindow progressPopup, mpopup;
+    TextView tvPostNotAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +138,13 @@ ClassDetails extends AppCompatActivity {
         {
                 requestPermissions(Integer.parseInt(classId));
         }
+
+        if(status.equalsIgnoreCase("Created")||
+                status.equalsIgnoreCase("Joined"))
+        {
+            cvPostUtils.setVisibility(View.VISIBLE);
+        }
+
 
 
 
@@ -267,8 +278,8 @@ ClassDetails extends AppCompatActivity {
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4) {
                     vvSelectedYtVideo.setVisibility(View.VISIBLE);
@@ -410,6 +421,10 @@ ClassDetails extends AppCompatActivity {
 
                     }else {
                         postDataList = response.body().getPosts().getData();
+                        if(postDataList.size()>0)
+                        {
+                            tvPostNotAvailable.setVisibility(View.GONE);
+                        }
                         recyclerView.setLayoutManager(new LinearLayoutManager(ClassDetails.this));
                         recyclerView.setAdapter(new HomePostsAdapter(postDataList,ClassDetails.this,userObj.getId(),token));
 //                        shimmerFrameLayout.stopShimmerAnimation();
@@ -436,13 +451,23 @@ ClassDetails extends AppCompatActivity {
     private void payClass() {
 
             Intent i = new Intent(ClassDetails.this, WebViewPage.class);
-            String url = "https://virtualskill.in/api/pay?type=class&id=";
+            String url = "https://nexgeno.com/api/pay?type=class&id=";
             url = url+classId+"&user_name="+userObj.getName()+"&phone="+userObj.getPhone()
                     +"&email="+userObj.getEmail();
             i.putExtra("url_pay",url);
 
             startActivity(i);
 
+    }
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
 
     private void getsingleClass() {
@@ -707,7 +732,16 @@ ClassDetails extends AppCompatActivity {
                         if (response.body().getStatus() == true) {
                             Toast.makeText(ClassDetails.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                             if (tvJoinLeaveClass.getText().equals("Join"))
-                                tvJoinLeaveClass.setText("Leave");
+                            {
+                               tvJoinLeaveClass.setText("Leave");
+                                if(cvPostUtils.getVisibility()==View.VISIBLE)
+                                {
+                                    cvPostUtils.setVisibility(View.GONE);
+                                }else {
+                                    cvPostUtils.setVisibility(View.VISIBLE);
+                                }
+                            }
+
                             progressBar.setVisibility(View.GONE);
 
                             if(response.body().getMessage().equalsIgnoreCase("Success"))
@@ -802,6 +836,7 @@ ClassDetails extends AppCompatActivity {
         cvJoinorLeave = findViewById(R.id.cv_join_leave_class);
         progressBar = findViewById(R.id.pb_class_details);
         ivClassCover = findViewById(R.id.iv_class_cover);
+        cvPostUtils  = findViewById(R.id.cv_card_post_utils_on_class_details);
         // Post Utils
         linLayPickImage = findViewById(R.id.lin_lay_pick_image_in_class);
         linLayPickVideo = findViewById(R.id.lin_lay_pick_video_on_class);
@@ -818,6 +853,7 @@ ClassDetails extends AppCompatActivity {
         // till
         tvClassNameOnToolBar = findViewById(R.id.tv_class_name_on_toolBar);
         tvBookSeat = findViewById(R.id.tv_book_seat_on_class_details);
+        tvPostNotAvailable = findViewById(R.id.tv_class_post_nt_available);
 
     }
 

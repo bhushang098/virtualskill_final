@@ -41,11 +41,13 @@ public class AvailableSkillAdapter  extends RecyclerView.Adapter<AvailableSkillA
 
         holder.tvSkillName.setText(skillDatList.get(position).getName());
         if(skillDatList.get(position).getFee().equalsIgnoreCase("0"))
-        holder.tvfee.setText("Free Skill");
+            holder.tvfee.setText("Free Skill");
         else
             holder.tvfee.setText("INR : "+skillDatList.get(position).getFee());
-        holder.tvmemeber.setText(1+" Member");
-        //holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
+        holder.tvmemeber.setText(String.valueOf(skillDatList.get(position).
+                getFollowers_count()+" Member"));
+        holder.tvhost.setText(" Hosted By : "+skillDatList.get(position).getCreator().getName());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,8 @@ public class AvailableSkillAdapter  extends RecyclerView.Adapter<AvailableSkillA
                 i.putExtra("skillId",skillDatList.get(position).getId().toString());
                 Gson json = new Gson();
                 String strHost = json.toJson(skillDatList.get(position).getCreator());
+                i.putExtra("memCount",String.valueOf(skillDatList.get(position).
+                       getFollowers_count()));
                 i.putExtra("skillHost",strHost);
                 context.startActivity(i);
             }

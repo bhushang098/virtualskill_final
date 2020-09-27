@@ -2,8 +2,11 @@ package com.twilio.video.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,6 +40,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+import com.potyvideo.library.AndExoPlayerView;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.PostLikeResponse;
 import com.twilio.video.app.HomePostModal.Comment;
@@ -46,6 +50,7 @@ import com.twilio.video.app.MainPages.OtherUserProfile;
 import com.twilio.video.app.R;
 import com.twilio.video.app.RetrifitClient;
 import com.twilio.video.app.UpdatePostResponse;
+import com.twilio.video.app.subMainPages.DetailedVidView;
 import com.twilio.video.app.util.TimeService;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,6 +59,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -215,18 +221,23 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             }).into(holder.mediaView);
         }
         if (postList.get(position).getHasVideo() == 1) {
-            holder.videoView.setVisibility(View.VISIBLE);
-            holder.videoView.setVideoURI(Uri.parse("https://www.virtualskill.in/storage/uploads/posts/"
-                    + postList.get(position).getDUploadedFiles().get(0).getFilePath()));
-            holder.videoView.setOnPreparedListener(new OnPreparedListener() {
-                @Override
-                public void onPrepared() {
-                    holder.videoView.pause();
-                }
-            });
 
+            String vidUrl = "https://www.nexgeno.com/storage/uploads/posts/"
+                    +postList.get(position).getDUploadedFiles().get(0).getFilePath();
+            holder.ivPlayImg.setVisibility(View.VISIBLE);
+            holder.videoView.setVisibility(View.VISIBLE);
+            holder.videoView.setSource(vidUrl);
 
         }
+
+        holder.ivPlayImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showVidPopup("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
+                        + postList.get(position).getDUploadedFiles().get(0).getFilePath());
+            }
+        });
+
         if (postList.get(position).getYoutubeLink() != null) {
             holder.ytVidView.setVisibility(View.VISIBLE);
 
@@ -298,6 +309,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             }
         });
 
+
         holder.mediaView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,7 +317,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                 View popUpView = inflater.inflate(R.layout.detailed_media_view_layout,
                         null); // inflating popup layout
                 mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                        ViewGroup.LayoutParams.MATCH_PARENT, true);
                 ImageView image = popUpView.findViewById(R.id.iv_detailed_image);
                 ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_poup);
                 ivCross.setOnClickListener(new View.OnClickListener() {
@@ -342,6 +354,25 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             }
         });
 
+    }
+
+    private void showVidPopup(String filePath) {
+        Intent i = new Intent(
+                context, DetailedVidView.class
+        );
+        i.putExtra("vid_file",filePath);
+        context.startActivity(i);
+
+    }
+
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
+    {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+
+        retriever.setDataSource(videoPath, new HashMap<String, String>());
+
+        Bitmap image = retriever.getFrameAtTime(200, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+        return image;
     }
 
     private void likePostByApi(String postId) {
@@ -480,7 +511,8 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         if (datum.getContent() != null) {
             etCaption.setText(datum.getContent());
         }
-        VideoView video = popUpView.findViewById(R.id.vv_update_post);
+
+        ImageView video = popUpView.findViewById(R.id.vv_update_post);
         YouTubePlayerView ytVid = popUpView.findViewById(R.id.ytVv_update_post);
         ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_update_post);
         Button uploadPic = popUpView.findViewById(R.id.btn_update_post);
@@ -503,14 +535,14 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         }
         if (datum.getHasVideo() == 1) {
             video.setVisibility(View.VISIBLE);
-            video.setVideoURI(Uri.parse("https://www.virtualskill.in/storage/uploads/posts/"
-                    + datum.getDUploadedFiles().get(0).getFilePath()));
-            video.setOnPreparedListener(new OnPreparedListener() {
-                @Override
-                public void onPrepared() {
-                    video.pause();
-                }
-            });
+//            video.setVideoURI(Uri.parse("https://www.nexgeno.com/storage/uploads/posts/"
+//                    + datum.getDUploadedFiles().get(0).getFilePath()));
+//            video.setOnPreparedListener(new OnPreparedListener() {
+//                @Override
+//                public void onPrepared() {
+//                    video.pause();
+//                }
+//            });
 
 
         }
@@ -637,7 +669,8 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         CircleImageView userProfile;
         ProgressBar progressBar;
         ImageView mediaView, likeView, menuImage;
-        VideoView videoView;
+        ImageView ivPlayImg;
+        AndExoPlayerView videoView;
         YouTubePlayerView ytVidView;
         RecyclerView recComments;
         LinearLayout linLayWriteComment, linlayuserNameanstimesHao;
@@ -659,7 +692,29 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             menuImage = itemView.findViewById(R.id.iv_post_menu);
             videoView = itemView.findViewById(R.id.vv_on_post);
             ytVidView = itemView.findViewById(R.id.ytVv_on_post);
+            ivPlayImg = itemView.findViewById(R.id.iv_play_img);
             linlayuserNameanstimesHao = itemView.findViewById(R.id.lin_lay_u_name_on_post_item);
+        }
+    }
+
+    private class LoadThumbInBg extends AsyncTask<String ,Integer,Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+
+            retriever.setDataSource(strings[0], new HashMap<String, String>());
+
+            Bitmap image = retriever.getFrameAtTime(200, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+            return image;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+// receive progress updates from doInBackground
+        }
+
+        protected void onPostExecute(Bitmap result) {
+// update the UI after background processes completes
         }
     }
 }

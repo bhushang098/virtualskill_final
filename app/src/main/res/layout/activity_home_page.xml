@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
+    android:foreground="@drawable/window_blur"
     tools:context="com.twilio.video.app.HomePage">
 
         <RelativeLayout
@@ -46,14 +47,24 @@
                         android:text=""
                         android:layout_weight="3"/>
 
+
+
                     <ImageView
-                        android:layout_marginRight="10dp"
                         android:layout_gravity="end"
                         android:id="@+id/iv_search_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:padding="4dp"
                         app:srcCompat="@drawable/ic_baseline_search_24"/>
+
+
+                    <ru.nikartm.support.ImageBadgeView
+                        android:layout_gravity="end"
+                        android:id="@+id/iv_go_note_screen"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="4dp"
+                        app:srcCompat="@drawable/ic_baseline_notifications_active_24"/>
 
                     <ru.nikartm.support.ImageBadgeView
                         android:layout_gravity="end"

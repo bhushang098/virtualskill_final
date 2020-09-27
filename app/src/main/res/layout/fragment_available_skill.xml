@@ -65,7 +65,7 @@
                 android:id="@+id/recViewAvailableSkill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="65dp"
                 android:scrollbars="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>

@@ -68,7 +68,7 @@ public class SkillPage extends AppCompatActivity {
 
 
         setUi();
-        toolbar.setTitle("Skills");
+        toolbar.setTitle("Courses");
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         setSupportActionBar(toolbar);
         if (userObj.getCanCreateClass() == 0) {

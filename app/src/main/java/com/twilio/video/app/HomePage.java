@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,6 +67,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+import com.twilio.video.BuildConfig;
 import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
 import com.twilio.video.app.ApiModals.UserObj;
@@ -76,6 +78,7 @@ import com.twilio.video.app.HomePostModal.HomePostModal;
 import com.twilio.video.app.MainPages.ClassesPage;
 import com.twilio.video.app.MainPages.JobsPage;
 import com.twilio.video.app.MainPages.MyProfile;
+import com.twilio.video.app.MainPages.NotificationsPage;
 import com.twilio.video.app.MainPages.ProUserPage;
 import com.twilio.video.app.MainPages.SearchPage;
 import com.twilio.video.app.MainPages.SettingsActivity;
@@ -83,6 +86,7 @@ import com.twilio.video.app.MainPages.SkillPage;
 import com.twilio.video.app.MainPages.StudentsUserPage;
 import com.twilio.video.app.MainPages.TeamsPage;
 import com.twilio.video.app.MainPages.UsersPage;
+import com.twilio.video.app.NotificationAlertResponse.NotificationAlerrtResponse;
 import com.twilio.video.app.adapter.ChatUSerAdapter;
 import com.twilio.video.app.adapter.HomePostsAdapter;
 import com.twilio.video.app.subMainPages.ClassDetails;
@@ -115,7 +119,7 @@ public class HomePage extends AppCompatActivity{
     Toolbar toolbar;
     ImageButton drawerButtion;
     ImageView searchButton;
-    ImageBadgeView ivGoChatScreen;
+    ImageBadgeView ivGoChatScreen,goNotiPage;
     NavigationView navView;
     private  List<Datum> postDataList = new ArrayList<>();
     private RecyclerView revPostView;
@@ -140,6 +144,8 @@ public class HomePage extends AppCompatActivity{
     private TextView errorMessage;
     boolean callCheckUpdate = true;
     int versioncode =1;
+
+    FrameLayout mainFramelayout;
 
     //For Header
     ImageView ivCoverOnheader,civprofileOnHeader;
@@ -182,16 +188,29 @@ public class HomePage extends AppCompatActivity{
         setContentView(R.layout.activity_home_page);
         loadPreferences();
         setUi();
-       // startbgService();
+        // startbgService();
         postSucessDialog = new Dialog(this);
         setNavHeaderdata();
+        mainFramelayout.getForeground().setAlpha(0);
 
         if(callCheckUpdate);
         checkforUpdate();
         loadHomePosts(token);
         loadUnreadmesscount();
+        loadNotificatonCount();
         toolbar.setTitle("");
-        ivGoChatScreen.setBadgeValue(22)
+
+        ivGoChatScreen.setBadgeValue(0)
+                .setBadgeOvalAfterFirst(true)
+                .setBadgeTextSize(10)
+                .setBadgeBackground(getResources().getDrawable(R.drawable.unerad_count_bg))
+                .setMaxBadgeValue(99)
+                .setBadgePosition(BadgePosition.TOP_RIGHT)
+                .setBadgeTextStyle(Typeface.NORMAL)
+                .setShowCounter(true)
+                .setBadgePadding(2);
+
+        goNotiPage.setBadgeValue(0)
                 .setBadgeOvalAfterFirst(true)
                 .setBadgeTextSize(10)
                 .setBadgeBackground(getResources().getDrawable(R.drawable.unerad_count_bg))
@@ -226,8 +245,6 @@ public class HomePage extends AppCompatActivity{
             public void onRefresh() {
                 clearSelecetMedia();
                 loadHomePosts(token);
-
-
             }
         });
         onSwipeTouchListener = new OnSwipeTouchListener(this, findViewById(R.id.flHome));
@@ -248,6 +265,14 @@ public class HomePage extends AppCompatActivity{
             }
         });
 
+        goNotiPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomePage.this, NotificationsPage.class);
+                i.putExtra("token",token);
+                startActivity(i);
+            }
+        });
         drawerButtion.setOnClickListener(new View.OnClickListener() {
             @SuppressLint({"WrongConstant", "RestrictedApi"})
             @Override
@@ -295,6 +320,7 @@ public class HomePage extends AppCompatActivity{
                     case R.id.nav_users:
                         startActivity(new Intent(HomePage.this, UsersPage.class));
                         overridePendingTransition(0, 0);
+
                         break;
 
                 }
@@ -328,7 +354,7 @@ public class HomePage extends AppCompatActivity{
                         i4.putExtra("token",token);
                         startActivity(i4);
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
                     case R.id.nav_teams:
                         fabHodeNav.setVisibility(View.GONE);
@@ -337,7 +363,7 @@ public class HomePage extends AppCompatActivity{
                         i5.putExtra("token",token);
                         startActivity(i5);
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
                     case R.id.nav_classes:
                         fabHodeNav.setVisibility(View.GONE);
@@ -346,19 +372,8 @@ public class HomePage extends AppCompatActivity{
                         i3.putExtra("token",token);
                         startActivity(i3);
                         overridePendingTransition(0, 0);
-                        finish();
-                        break;
 
-                    case R.id.nav_jobs:
-                        fabHodeNav.setVisibility(View.GONE);
-                        navView.setVisibility(View.INVISIBLE);
-                        Intent i7 = new Intent(HomePage.this, JobsPage.class);
-                        i7.putExtra("token",token);
-                        startActivity(i7);
-                        overridePendingTransition(0, 0);
-                        finish();
                         break;
-
                     case R.id.nav_users:
                         fabHodeNav.setVisibility(View.GONE);
                         navView.setVisibility(View.INVISIBLE);
@@ -375,9 +390,19 @@ public class HomePage extends AppCompatActivity{
                         startActivity(i);
                         overridePendingTransition(0, 0);
                         break;
+
+                    case R.id.nav_jobs:
+                        fabHodeNav.setVisibility(View.GONE);
+                        navView.setVisibility(View.INVISIBLE);
+                        Intent i8 = new Intent(HomePage.this, JobsPage.class);
+                        startActivity(i8);
+                        overridePendingTransition(0, 0);
+                        break;
+
                     case R.id.log_out:
-                        ConformationDialog.showConformDialog(HomePage.this,"Log Out",
-                                "Do You Really Want To Log Out Of NexGeno ? ","log_out");
+                        ConformationDialog conformationDialog = new ConformationDialog(HomePage.this);
+                        conformationDialog.showConformDialog(HomePage.this,"LogOut",
+                                "Do You Really Want To Log Out Of NexGeno","log_out");
                         break;
                     case R.id.nav_users_pro:
                         fabHodeNav.setVisibility(View.GONE);
@@ -388,7 +413,7 @@ public class HomePage extends AppCompatActivity{
                         startActivity(ii);
                         overridePendingTransition(0, 0);
                         break;
-                       // Toast.makeText(HomePage.this, "Settings",Toast.LENGTH_SHORT).show();break;
+                    // Toast.makeText(HomePage.this, "Settings",Toast.LENGTH_SHORT).show();break;
                     default:
                         return true;
                 }
@@ -593,6 +618,29 @@ public class HomePage extends AppCompatActivity{
         });
     }
 
+    private void loadNotificatonCount() {
+        Call<NotificationAlerrtResponse> call = RetrifitClient
+                .getInstance().getNotificationApi().getNotificationList(token);
+
+        call.enqueue(new Callback<NotificationAlerrtResponse>() {
+            @Override
+            public void onResponse(Call<NotificationAlerrtResponse> call, Response<NotificationAlerrtResponse> response) {
+                Log.d(">>>Chat Response", response.raw().toString());
+
+                if(response.body() == null) {
+
+                } else {
+                    goNotiPage.setBadgeValue(response.body().getTotal_new());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificationAlerrtResponse> call, Throwable t) {
+                Log.d(">>Exceptopn>>", t.toString());
+            }
+        });
+    }
+
     private void loadUnreadmesscount() {
         Call<ChatUserResponse> call = RetrifitClient.getInstance().getChatApi()
                 .getChatUsers(token);
@@ -604,8 +652,8 @@ public class HomePage extends AppCompatActivity{
                 if(response.body() == null) {
 
                 } else {
-                    if(response.body().getTotalNew()!=null)
                     ivGoChatScreen.setBadgeValue(response.body().getTotalNew());
+
                 }
             }
 
@@ -627,15 +675,15 @@ public class HomePage extends AppCompatActivity{
             @Override
             public void onResponse(Call<Map<String,Integer>> call, Response<Map<String,Integer>> response) {
                 Log.d("Response>>",response.raw().toString());
-              versioncode = BuildConfig.VERSION_CODE;
+                versioncode = BuildConfig.VERSION_CODE;
 
-              if(response.body()!=null)
-              {
-                  if(versioncode<response.body().get("code")) {
+                if(response.body()!=null)
+                {
+                    if(versioncode<response.body().get("code")) {
                         showUpdatePopup();
-                  }
+                    }
 
-              }
+                }
 
             }
 
@@ -657,7 +705,7 @@ public class HomePage extends AppCompatActivity{
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        updatePopup = new PopupWindow(popUpView, width-10,
+        updatePopup = new PopupWindow(popUpView, width-50,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         updatePopup.setElevation(10f);
 
@@ -682,10 +730,15 @@ public class HomePage extends AppCompatActivity{
             }
         });
 
+
+
         // Creation of popup
         updatePopup.setAnimationStyle(android.R.style.Animation_Dialog);
         updatePopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
     }
+
+
 
     private void setNavHeaderdata() {
         tvUserName.setText(name);
@@ -755,6 +808,8 @@ public class HomePage extends AppCompatActivity{
         ivGoChatScreen = findViewById(R.id.iv_go_chat_screen);
         errorMessage = findViewById(R.id.errormessage);
         searchButton = findViewById(R.id.iv_search_icon);
+        goNotiPage = findViewById(R.id.iv_go_note_screen);
+        mainFramelayout = findViewById(R.id.flHome);
 //
         NavigationView navigationView = (NavigationView)
                 findViewById(R.id.drawer_main_navigation);
@@ -809,7 +864,7 @@ public class HomePage extends AppCompatActivity{
                             mShimmerViewContainer.setVisibility(View.GONE);
                         }else {
                             // Token Is Expired Or Invalid
-                                loginByApi(UnameValue,PasswordValue);
+                            loginByApi(UnameValue,PasswordValue);
                             mShimmerViewContainer.stopShimmerAnimation();
                             mShimmerViewContainer.setVisibility(View.GONE);
                         }
@@ -841,12 +896,11 @@ public class HomePage extends AppCompatActivity{
         call.enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
-                Log.d("Response>>",response.raw().toString());
                 try{
                     if (response.body()==null)
                     {
                         if(response.errorBody()==null){
-                           // progressBar.setVisibility(View.INVISIBLE);
+                            // progressBar.setVisibility(View.INVISIBLE);
                         }else {
                             //showAuthError();
                         }
@@ -863,7 +917,7 @@ public class HomePage extends AppCompatActivity{
 
                         }else {
                             //progressBar.setVisibility(View.INVISIBLE);
-                           // showAuthError();
+                            // showAuthError();
                         }
                     }
 
@@ -876,8 +930,8 @@ public class HomePage extends AppCompatActivity{
 
             @Override
             public void onFailure(Call<Map> call, Throwable t) {
-               // progressBar.setVisibility(View.INVISIBLE);
-               // showAuthError();
+                // progressBar.setVisibility(View.INVISIBLE);
+                // showAuthError();
             }
         });
     }
@@ -1132,7 +1186,7 @@ public class HomePage extends AppCompatActivity{
 
 }
 
- class OnSwipeTouchListener implements View.OnTouchListener {
+class OnSwipeTouchListener implements View.OnTouchListener {
     private final GestureDetector gestureDetector;
     Context context;
 

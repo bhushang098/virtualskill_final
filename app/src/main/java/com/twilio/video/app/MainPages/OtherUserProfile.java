@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,6 +90,9 @@ public class OtherUserProfile extends AppCompatActivity {
     ChatItemAdapter chatItemAdapter;
     RecyclerView chatsRecyclerView;
 
+    RatingBar ratingBar;
+    TextView tvRating,tvSkillOthers;
+
     private void loadPreferences() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
@@ -141,7 +145,7 @@ public class OtherUserProfile extends AppCompatActivity {
                             {
                                 if(tvFollowToggle.getText().toString()
                                         .equalsIgnoreCase("Follow")){
-                                    tvFollowToggle.setText("UnFollow");
+                                    tvFollowToggle.setText("Unfollow");
                                 }else
                                 {
                                     tvFollowToggle.setText("Follow");
@@ -221,9 +225,15 @@ public class OtherUserProfile extends AppCompatActivity {
                         shimmerFrameLayout.setVisibility(View.GONE);
                         if(response.body().getIs_following()==1)
                         {
-                            tvFollowToggle.setText("UnFollow");
+                            tvFollowToggle.setText("Unfollow");
                         }
-                        setOtherUserData();
+                        if(response.body().getRating()==null)
+                        {
+                            setOtherUserData(null);
+                        }else {
+                            int temp =  new Double(response.body().getRating()).intValue();
+                            setOtherUserData(String.valueOf(temp));
+                        }
 
                     }
                 }
@@ -275,16 +285,54 @@ public class OtherUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ratingBar.getRating() < 1.0f) {
-                    Toast.makeText(OtherUserProfile.this, "Please Gave Rating First", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OtherUserProfile.this, "Please Give Rating First", Toast.LENGTH_SHORT).show();
                 } else {
                     if (etReview.getText().toString().length() > 0) {
-                        //TODO Set Pro Rating Call APi
+
+                        setproRatingByAPi(otherUserObj.getId().toString(),
+                                ratingBar.getRating(),etReview.getText().toString().trim(),mopoup);
+
+
 
                     } else {
                         Toast.makeText(OtherUserProfile.this, "Please Say something About " + otherUserObj.getName(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
+        });
+
+    }
+
+    private void setproRatingByAPi(String teacherId, float rating, String review, PopupWindow mopoup) {
+
+
+        Call<MakeClassResponse> call = RetrifitClient.getInstance()
+                .getSettingsApi().setProRating(token,teacherId,String.valueOf(rating),review);
+
+        call.enqueue(new Callback<MakeClassResponse>() {
+
+            @Override
+            public void onResponse(Call<MakeClassResponse> call, Response<MakeClassResponse> response) {
+                Log.d("Response>>",response.raw().toString());
+                if(response.body()!=null)
+                {
+                    if(response.body().getStatus())
+                    {
+
+                        Toast.makeText(OtherUserProfile.this, "Rating Added", Toast.LENGTH_SHORT).show();
+                        mopoup.dismiss();
+                    }else {
+                        Toast.makeText(OtherUserProfile.this, "Can Not Add Rating", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MakeClassResponse> call, Throwable t) {
+                Log.d("Exception>>",t.toString());
+
+            }
+
         });
 
     }
@@ -300,6 +348,7 @@ public class OtherUserProfile extends AppCompatActivity {
             public void onResponse(Call<DetailedChatResponse> call, Response<DetailedChatResponse> response) {
                 Log.d("Chat Response>>", response.raw().toString());
                 if (response.body() != null) {
+                    detailedChatList.clear();
                     detailedChatList = response.body().getMessages().getData();
                     Collections.reverse(detailedChatList);
                     chatItemAdapter.setMessageList(detailedChatList);
@@ -383,11 +432,10 @@ public class OtherUserProfile extends AppCompatActivity {
         chatItemAdapter.notifyItemInserted(index);
         chatsRecyclerView.smoothScrollToPosition(index);
 
-
         call.enqueue(new Callback<Map>() {
             @Override
             public void onResponse(Call<Map> call, Response<Map> response) {
-                Log.d("Responnse>>Chat ", response.raw().toString());
+                Log.d("Responnse>>Chat", response.raw().toString());
                 if (response.body() != null) {
 
                 }else {
@@ -428,10 +476,13 @@ public class OtherUserProfile extends AppCompatActivity {
         tvFollowToggle = findViewById(R.id.tv_follow_toggle);
         recyclerView = findViewById(R.id.rec_v_other_user_profile);
         tvNoPost = findViewById(R.id.tv_no_post_otheris);
+        ratingBar = findViewById(R.id.rtv_other);
+        tvRating =findViewById(R.id.tv_rating_others);
+        tvSkillOthers = findViewById(R.id.tv_skill_others);
 
     }
 
-    private void setOtherUserData() {
+    private void setOtherUserData(String rating) {
 
         if (otherUserObj.getProfilePath() != null) {
             Glide.with(this).
@@ -482,10 +533,26 @@ public class OtherUserProfile extends AppCompatActivity {
             ivGender.setImageResource(R.drawable.female);
         }
         tvUserNameOnTb.setText(otherUserObj.getName());
-        if (otherUserObj.getUserType() == 0) {
-            cvCompany.setVisibility(View.GONE);
-            latoutProRating.setVisibility(View.GONE);
+        if(otherUserObj.getUserType()==1)
+        {
+            latoutProRating.setVisibility(View.VISIBLE);
+            if(rating==null)
+            {
+                tvRating.setText("Not Rated");
+                ratingBar.setIsIndicator(true);
+                ratingBar.setClickable(false);
+            }else {
+                ratingBar.setRating(Float.parseFloat(rating));
+                ratingBar.setIsIndicator(true);
+                ratingBar.setClickable(false);
+                tvRating.setText(rating);
+            }
         }
+
+        if(otherUserObj.getSkill()==null)
+            tvSkillOthers.setVisibility(View.GONE);
+        else
+            tvSkillOthers.setText("Skill : "+otherUserObj.getSkill());
 
         if (otherUserObj.getInterests()==null) {
 
@@ -514,24 +581,22 @@ public class OtherUserProfile extends AppCompatActivity {
 
         cardview.setRadius(5);
 
-        cardview.setPadding(15, 2, 15, 2);
+        // cardview.setPadding(15, 2, 15, 2);
         cardview.setForegroundGravity(Gravity.CENTER);
 
-        cardview.setCardBackgroundColor(R.color.cardDarkBackground);
         cardview.setCardElevation(5);
 
         TextView textview = new TextView(this);
 
         textview.setLayoutParams(layoutparams);
 
-
         textview.setText(s);
-
         textview.setTextSize(14);
 
         textview.setTextColor(Color.WHITE);
+        textview.setBackgroundColor(R.color.cardDarkBackground);
 
-        textview.setPadding(25, 2, 25, 2);
+        textview.setPadding(25, 5, 25, 5);
 
         textview.setGravity(Gravity.CENTER);
 
@@ -540,7 +605,6 @@ public class OtherUserProfile extends AppCompatActivity {
             layoutInterests.addView(cardview);
             layoutInterests.addView(new TextView(this));
         }
-
 
     }
 

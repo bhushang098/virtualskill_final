@@ -1,26 +1,19 @@
 package com.twilio.video.app.MainPages;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
 import com.twilio.video.app.R;
-import com.twilio.video.app.SingleUserResponse.Data;
 import com.twilio.video.app.adapter.SkillTabsAdapter;
 import com.twilio.video.app.subMainPages.AppliedJobsFrag;
-import com.twilio.video.app.subMainPages.AvailableSkillFrag;
 import com.twilio.video.app.subMainPages.FindJobsFrag;
-import com.twilio.video.app.subMainPages.HostedSkills;
-import com.twilio.video.app.subMainPages.JoinedSkillFragment;
 import com.twilio.video.app.util.NetworkOperator;
 
 public class JobsPage extends AppCompatActivity {

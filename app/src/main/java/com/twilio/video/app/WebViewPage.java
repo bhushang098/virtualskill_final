@@ -50,7 +50,7 @@ public class WebViewPage extends AppCompatActivity {
                     @Override
                     public void run() {
                         webView.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 },1000);
                 super.onPageStarted(view, url, favicon);

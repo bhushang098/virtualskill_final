@@ -93,7 +93,7 @@ public class FollowersUserAdapter2 extends RecyclerView.Adapter<FollowersUserAda
 
         if(userList.get(position).getFollower().getCoverPath()!=null)
         {
-            Glide.with(context).load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/covers/"
+            Glide.with(context).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/"
                     + userList.get(position).getFollower().getCoverPath()).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

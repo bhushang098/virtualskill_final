@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -47,6 +48,9 @@ public class NotificationExtenderExample extends NotificationExtenderService {
         try {
             if(receivedResult.payload.additionalData!=null)
             {
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.notification);
+                mediaPlayer.start();
+                mediaPlayer.setLooping(false);
                 resultIntent  = new Intent(this, ClassDetails.class);
                 resultIntent.putExtra("classId",receivedResult.payload.additionalData.getString("class_id"));
                 resultIntent.putExtra("status","joined");
@@ -80,7 +84,7 @@ public class NotificationExtenderExample extends NotificationExtenderService {
         notificationBuilder.setContentText(receivedResult.payload.body);
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setContentIntent(resultPendingIntent);
-        notificationBuilder.setSound(defaultSoundUri);//a resource for your custom small icon
+        //notificationBuilder.setSound(defaultSoundUri);//a resource for your custom small icon
 //the "title" value you sent in your notification
 //ditto
 //dismisses the notification on click

@@ -1,33 +1,29 @@
 
-package com.twilio.video.app.TeamResponse;
+package com.twilio.video.app.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.twilio.video.app.ApiModals.Creator;
 
-public class Datum {
+public class ExtrasInChatList {
 
-    @SerializedName("team_ids")
-    @Expose
-    private Integer teamIds;
     @SerializedName("id")
     @Expose
     private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("location")
+    @SerializedName("fee")
     @Expose
-    private String location;
+    private String fee;
+    @SerializedName("profile_path")
+    @Expose
+    private Object profilePath;
     @SerializedName("who_can_post")
     @Expose
     private String whoCanPost;
     @SerializedName("who_can_see")
     @Expose
     private String whoCanSee;
-    @SerializedName("who_can_message")
-    @Expose
-    private String whoCanMessage;
     @SerializedName("creator_id")
     @Expose
     private String creatorId;
@@ -46,35 +42,6 @@ public class Datum {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("team_id")
-    @Expose
-    private Integer teamId;
-    @SerializedName("follower_id")
-    @Expose
-    private Integer followerId;
-
-    @SerializedName("created_by")
-    @Expose
-    private Creator created_by;
-    @SerializedName("followers_count")
-    @Expose
-    private Integer followers_count;
-
-    public Integer getFollowers_count() {
-        return followers_count;
-    }
-
-    public void setFollowers_count(Integer followers_count) {
-        this.followers_count = followers_count;
-    }
-
-    public Integer getTeamIds() {
-        return teamIds;
-    }
-
-    public void setTeamIds(Integer teamIds) {
-        this.teamIds = teamIds;
-    }
 
     public Integer getId() {
         return id;
@@ -92,12 +59,20 @@ public class Datum {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getFee() {
+        return fee;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setFee(String fee) {
+        this.fee = fee;
+    }
+
+    public Object getProfilePath() {
+        return profilePath;
+    }
+
+    public void setProfilePath(Object profilePath) {
+        this.profilePath = profilePath;
     }
 
     public String getWhoCanPost() {
@@ -114,14 +89,6 @@ public class Datum {
 
     public void setWhoCanSee(String whoCanSee) {
         this.whoCanSee = whoCanSee;
-    }
-
-    public String getWhoCanMessage() {
-        return whoCanMessage;
-    }
-
-    public void setWhoCanMessage(String whoCanMessage) {
-        this.whoCanMessage = whoCanMessage;
     }
 
     public String getCreatorId() {
@@ -172,27 +139,4 @@ public class Datum {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
-    }
-
-    public Integer getFollowerId() {
-        return followerId;
-    }
-
-    public void setFollowerId(Integer followerId) {
-        this.followerId = followerId;
-    }
-
-    public Creator getCreated_by() {
-        return created_by;
-    }
-
-    public void setCreated_by(Creator created_by) {
-        this.created_by = created_by;
-    }
 }

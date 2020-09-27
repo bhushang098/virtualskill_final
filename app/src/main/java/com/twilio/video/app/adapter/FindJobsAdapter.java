@@ -22,11 +22,13 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.FindJo
     List<Datum> jobDataList;
     Context context;
     String token;
+    String status;
 
-    public FindJobsAdapter(List<Datum> jobDataList, Context context, String token) {
+    public FindJobsAdapter(List<Datum> jobDataList, Context context, String token,String status) {
         this.jobDataList = jobDataList;
         this.context = context;
         this.token = token;
+        this.status = status;
     }
 
     @NonNull
@@ -59,6 +61,7 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.FindJo
                 Intent i = new Intent(context, JobDetails.class);
                 Gson json = new Gson();
                 String JobobjStr = json.toJson(jobDataList.get(position));
+                i.putExtra("status",status);
                 i.putExtra("jobObj",JobobjStr);
                 context.startActivity(i);
             }

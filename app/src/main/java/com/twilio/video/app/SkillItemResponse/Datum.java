@@ -4,6 +4,9 @@ package com.twilio.video.app.SkillItemResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.twilio.video.app.ApiModals.Creator;
+import com.twilio.video.app.TeamResponse.MemberObj;
+
+import java.util.List;
 
 public class Datum {
 
@@ -53,7 +56,18 @@ public class Datum {
     @SerializedName("creator")
     @Expose
     private Creator creator;
+    @SerializedName("followers_count")
+    @Expose
+    private String followers_count;
 
+
+    public String getFollowers_count() {
+        return followers_count;
+    }
+
+    public void setFollowers_count(String followers_count) {
+        this.followers_count = followers_count;
+    }
 
     public Integer getId() {
         return id;

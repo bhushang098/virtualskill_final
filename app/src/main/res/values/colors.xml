@@ -35,4 +35,8 @@
     <color name="colorWhite">#ffffff</color>
 
     <color name="shimmerBackground">#dddddd</color>
+
+    <color name="ratingNormal">#51504E</color>
+    <color name="ratingActive">#FFC107</color>
+
 </resources>

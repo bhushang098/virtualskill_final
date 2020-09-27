@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:padding="5dp"
     app:cardCornerRadius="2dp">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -67,14 +68,13 @@
                 android:src="@drawable/welcome_image"
                 android:visibility="gone" />
 
-            <com.devbrackets.android.exomedia.ui.widget.VideoView
+            <ImageView
                 android:id="@+id/vv_update_post"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:layout_margin="20dp"
                 android:visibility="gone"
-                android:background="#ffffff"
-                app:useDefaultControls="true"/>
+                android:background="#ffffff"/>
 
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:layout_width="match_parent"

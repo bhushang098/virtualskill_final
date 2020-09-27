@@ -71,6 +71,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -108,6 +110,8 @@ public class TeamDetailsPage extends AppCompatActivity {
     PopupWindow progressPopup, mpopup;
     Dialog joinSuccessDialog;
     Button btnOk;
+    CardView cvPostUtils;
+    TextView tvPostNotAvailable;
 
 
     //ForChats
@@ -132,13 +136,18 @@ public class TeamDetailsPage extends AppCompatActivity {
         teamId = getIntent().getStringExtra("teamId");
         status = getIntent().getStringExtra("status");
         if (status.equalsIgnoreCase("Created")) {
+            cvPostUtils.setVisibility(View.VISIBLE);
             tvJoineave.setText("Change Cover");
             cvEdit.setVisibility(View.VISIBLE);
             tvHost.setText("Hosted By : "+user.getName());
         }
 
         if (status.equalsIgnoreCase("Joined"))
+        {
+            cvPostUtils.setVisibility(View.VISIBLE);
             tvJoineave.setText("Leave");
+        }
+
 
         getSingleTeam();
         loadTeamPosts(teamId);
@@ -273,8 +282,8 @@ public class TeamDetailsPage extends AppCompatActivity {
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4) {
                     vvSelectedYtVideo.setVisibility(View.VISIBLE);
@@ -388,6 +397,8 @@ public class TeamDetailsPage extends AppCompatActivity {
 
                     }else {
                         postDataList = response.body().getPosts().getData();
+                        if(postDataList.size()>0)
+                            tvPostNotAvailable.setVisibility(View.GONE);
                         recyclerView.setLayoutManager(new LinearLayoutManager(TeamDetailsPage.this));
                         recyclerView.setAdapter(new HomePostsAdapter(postDataList,TeamDetailsPage.this,user.getId(),token));
 //                        shimmerFrameLayout.stopShimmerAnimation();
@@ -427,10 +438,12 @@ public class TeamDetailsPage extends AppCompatActivity {
                              if (tvJoineave.getText().equals("Join"))
                              {
                                  tvJoineave.setText("Leave");
+                                 cvPostUtils.setVisibility(View.VISIBLE);
                                  Toast.makeText(TeamDetailsPage.this, "Team Joined ", Toast.LENGTH_SHORT).show();
                              }
 
                              else{
+                                 cvPostUtils.setVisibility(View.GONE);
                                  Toast.makeText(TeamDetailsPage.this, "Team Left", Toast.LENGTH_SHORT).show();
                                  tvJoineave.setText("Join");
                              }
@@ -444,6 +457,17 @@ public class TeamDetailsPage extends AppCompatActivity {
                  }
              });
 
+    }
+
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
 
     private void makePostWithText() {
@@ -650,7 +674,7 @@ public class TeamDetailsPage extends AppCompatActivity {
             }).into(ivCover);
         }
         tvTeamNAme.setText(teamObj.getName());
-        tvmembers.setText("5 Members");
+        tvmembers.setText(getIntent().getStringExtra("memberCount")+" Members");
         tvAbout.setText(teamObj.getAbout());
         tvTeamNameTb.setText(teamObj.getName());
         if(user.getId()== Integer.parseInt(teamObj.getCreatorId())){
@@ -801,7 +825,6 @@ public class TeamDetailsPage extends AppCompatActivity {
         cvjoinleave = findViewById(R.id.cv_join_leave_team);
         cvChat = findViewById(R.id.cv_chat_team);
         cvEdit =findViewById(R.id.cv_edit_team);
-
         ivCover = findViewById(R.id.iv_team_cover);
 
         // For Post Utils
@@ -817,6 +840,8 @@ public class TeamDetailsPage extends AppCompatActivity {
         etCaption = findViewById(R.id.et_caption_team_post);
         tvCommitPost = findViewById(R.id.tv_commit_post_on_team);
 
+        cvPostUtils = findViewById(R.id.cv_card_post_utils_on_team_details);
+        tvPostNotAvailable = findViewById(R.id.tv_team_post_not_available);
 
     }
 

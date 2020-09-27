@@ -62,7 +62,7 @@ public class ClassesPage extends AppCompatActivity {
         {
             getAndSaveUserData(token);
         }
-        toolbar.setTitle("Classes");
+        toolbar.setTitle("Live Events");
         setSupportActionBar(toolbar);
 
 

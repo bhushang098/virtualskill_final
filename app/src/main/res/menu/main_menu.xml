@@ -18,12 +18,11 @@
     <item
         android:id="@+id/nav_classes"
         android:icon="@drawable/ic_baseline_desktop_mac_24"
-        android:title="DigitalEvents" />
+        android:title="LiveEvents" />
 
     <item
         android:id="@+id/nav_users"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Users" />
-
+        android:title="Users"/>
 
 </menu>

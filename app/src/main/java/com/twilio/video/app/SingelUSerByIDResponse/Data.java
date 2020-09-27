@@ -104,6 +104,18 @@ public class Data {
     @Expose
     private List<Follower> follower = null;
 
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     public Integer getId() {
         return id;
     }
