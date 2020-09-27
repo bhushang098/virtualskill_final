@@ -33,6 +33,9 @@ import com.twilio.video.app.subMainPages.HostedTeamsFrag;
 import com.twilio.video.app.subMainPages.JoinedSkillFragment;
 import com.twilio.video.app.subMainPages.JoinedTeamsFrag;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class TeamsPage extends AppCompatActivity {
 
     OnSwipeTouchListenerTeams onSwipeTouchListenerTeams;
@@ -126,6 +129,9 @@ public class TeamsPage extends AppCompatActivity {
         newTeamButton = findViewById(R.id.btn_new_team);
 
     }
+
+
+
     private void loadPreferences() {
         SharedPreferences settings = getSharedPreferences("login_preferences",
                 Context.MODE_PRIVATE);

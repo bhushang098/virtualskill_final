@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:elevation="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    android:padding="3dp">
+
 
     <androidx.cardview.widget.CardView
         app:cardUseCompatPadding="true"
@@ -18,6 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:id="@+id/lin_layout_top_inPost"
@@ -130,25 +132,45 @@
                 <ImageView
                     android:id="@+id/iv_on_post"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/welcome_image"
                     android:visibility="gone" />
 
-                <com.potyvideo.library.AndExoPlayerView
-                    android:visibility="gone"
-                    android:id="@+id/vv_on_post"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    app:andexo_full_screen="true"
-                    app:andexo_play_when_ready="false"
-                    app:andexo_show_controller="true"
-                    tools:ignore="MissingConstraints" />
+                    android:layout_height="wrap_content">
+
+
+                    <com.potyvideo.library.AndExoPlayerView
+                        android:layout_centerInParent="true"
+                        android:id="@+id/vv_on_post"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        app:andexo_play_when_ready="false"/>
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="10dp"
+                        android:padding="2dp"
+                        android:id="@+id/iv_play_img"
+                        android:layout_width="20dp"
+                        android:background="#87F9F9F5"
+                        android:src="@drawable/expand"
+                        android:layout_height="20dp" />
+
+                </RelativeLayout>
+
+
 
                 <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
                     android:visibility="gone"
+                    app:autoPlay="false"
                     app:enableAutomaticInitialization="false"
                     android:layout_below="@id/tv_caption_on_post"
                     android:id="@+id/ytVv_on_post"/>

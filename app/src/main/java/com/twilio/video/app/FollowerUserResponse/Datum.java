@@ -22,6 +22,18 @@ public class Datum {
     @Expose
     private Follower follower;
 
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     public Integer getId() {
         return id;
     }

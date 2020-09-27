@@ -127,10 +127,35 @@ public class FollworingUserAdapter2 extends RecyclerView.Adapter<FollworingUserA
         holder.type.setVisibility(View.VISIBLE);
         if(userList.get(position).getFollowing().getUserType()==1)
         {
+            holder.location.setVisibility(View.GONE);
             holder.type.setText("Professor");
+            holder.name.setGravity(View.FOCUS_LEFT);
+            holder.type.setGravity(View.FOCUS_LEFT);
+            holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
+            if(userList.get(position).getFollowing().getSkill()!=null)
+                holder.skillActual.setText("Skill : "+userList.get(position).getFollowing().getSkill());
+            holder.ratingBar.setVisibility(View.VISIBLE);
+            if(userList.get(position).getFollowing().getRating()==null)
+            {
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }else {
+                holder.ratingBar.setRating(Float.parseFloat(
+                        userList.get(position).getFollowing().getRating()));
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }
+
         }else
         {
             holder.type.setText("Student");
+            if(userList.get(position).getFollowing().getLocation()!=null)
+                holder.location.setText("Location : "+userList.get(position).getFollowing().getLocation());
+            holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
+            if(userList.get(position).getFollowing().getSkill()!=null)
+                holder.skillActual.setText("Skill : "+userList.get(position).getFollowing().getSkill());
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +178,7 @@ public class FollworingUserAdapter2 extends RecyclerView.Adapter<FollworingUserA
     public class FollworingUserAdapterViewHolder2 extends RecyclerView.ViewHolder {
 
         ImageView cover,profile;
-        TextView name,status,date,type;
+        TextView name,status,date,type,location,skill,skillActual;
         RatingBar ratingBar;
 
         public FollworingUserAdapterViewHolder2(@NonNull View itemView) {
@@ -166,6 +191,10 @@ public class FollworingUserAdapter2 extends RecyclerView.Adapter<FollworingUserA
             date = itemView.findViewById(R.id.tv_main_user_item_date);
             ratingBar = itemView.findViewById(R.id.rtb_main_user_item);
             type = itemView.findViewById(R.id.tv_user_type_on_main_user_item);
+
+            location = itemView.findViewById(R.id.tv_user_location_on_main_item);
+            skillActual = itemView.findViewById(R.id.tv_use_skill_actual_on_main_item);
+            skill = itemView.findViewById(R.id.tv_user_skill_on_main_item);
 
         }
     }

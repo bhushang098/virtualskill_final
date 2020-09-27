@@ -101,6 +101,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -354,7 +356,7 @@ public class HomePage extends AppCompatActivity{
                         i4.putExtra("token",token);
                         startActivity(i4);
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
                     case R.id.nav_teams:
                         fabHodeNav.setVisibility(View.GONE);
@@ -372,7 +374,7 @@ public class HomePage extends AppCompatActivity{
                         i3.putExtra("token",token);
                         startActivity(i3);
                         overridePendingTransition(0, 0);
-                        finish();
+
                         break;
                     case R.id.nav_users:
                         fabHodeNav.setVisibility(View.GONE);
@@ -399,7 +401,6 @@ public class HomePage extends AppCompatActivity{
                         navView.setVisibility(View.INVISIBLE);
                         Intent ii = new Intent(HomePage.this, ProUserPage.class);
                         ii.putExtra("token",token);
-
                         startActivity(ii);
                         overridePendingTransition(0, 0);
                         break;
@@ -498,8 +499,8 @@ public class HomePage extends AppCompatActivity{
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4)
                 {
@@ -786,6 +787,28 @@ public class HomePage extends AppCompatActivity{
         vvSelectedYtVideo.release();
     }
 
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     private void setUi() {
         navView = findViewById(R.id.drawer_main_navigation);
         toolbar = findViewById(R.id.tbHome);
@@ -831,6 +854,8 @@ public class HomePage extends AppCompatActivity{
 
     private void loadHomePosts(String token){
         errorlayout.setVisibility(View.INVISIBLE);
+        mShimmerViewContainer.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
         Call<HomePostModal> call = RetrifitClient.getInstance()
                 .getPostApi().getHomePosts(token);
         call.enqueue(new Callback<HomePostModal>() {

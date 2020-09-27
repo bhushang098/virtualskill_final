@@ -69,7 +69,6 @@ public class Datum {
         this.followers = followers;
     }
 
-
     public Integer getId() {
         return id;
     }

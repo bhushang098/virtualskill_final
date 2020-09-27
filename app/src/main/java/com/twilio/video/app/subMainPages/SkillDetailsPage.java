@@ -74,6 +74,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -109,6 +111,9 @@ public class SkillDetailsPage extends AppCompatActivity {
     ChatItemAdapter chatItemAdapter;
     RecyclerView chatsRecyclerView;
 
+    CardView cvPostutils;
+    TextView tvPostNotAvalilable;
+
 
 
     String content, ytLinkfinal;
@@ -138,13 +143,18 @@ public class SkillDetailsPage extends AppCompatActivity {
         else
             skillHostUser = new Creator();
         if (status.equalsIgnoreCase("Created")) {
+            cvPostutils.setVisibility(View.VISIBLE);
             tvJoinLeave.setText("Change Cover");
             cvEditSkill.setVisibility(View.VISIBLE);
             tvHost.setText("Hosted By : "+thisUSerObj.getName());
         }
 
         if (status.equalsIgnoreCase("Joined"))
+        {
+            cvPostutils.setVisibility(View.VISIBLE);
             tvJoinLeave.setText("Leave");
+        }
+
 
         getSingleSkill();
         loadSkillPost(skillId);
@@ -289,8 +299,8 @@ public class SkillDetailsPage extends AppCompatActivity {
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4) {
                     vvSelectedYtVideo.setVisibility(View.VISIBLE);
@@ -406,6 +416,8 @@ public class SkillDetailsPage extends AppCompatActivity {
 
                     }else {
                         postDataList = response.body().getPosts().getData();
+                        if(postDataList.size()>0)
+                            tvPostNotAvalilable.setVisibility(View.GONE);
                         recyclerView.setLayoutManager(new LinearLayoutManager(SkillDetailsPage.this));
                         recyclerView.setAdapter(new HomePostsAdapter(postDataList,SkillDetailsPage.this,thisUSerObj.getId(),token));
 //                        shimmerFrameLayout.stopShimmerAnimation();
@@ -441,6 +453,17 @@ public class SkillDetailsPage extends AppCompatActivity {
 
 
     }
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
+    }
+
 
     private void chooseImageForCover() {
         is_choosing = true;
@@ -618,11 +641,13 @@ public class SkillDetailsPage extends AppCompatActivity {
                         //Toast.makeText(SkillDetailsPage.this, response.message(), Toast.LENGTH_SHORT).show();
                         if (tvJoinLeave.getText().equals("Join"))
                         {
+                            cvPostutils.setVisibility(View.VISIBLE);
                             tvJoinLeave.setText("Leave");
                             Toast.makeText(SkillDetailsPage.this, "Skill Joined ", Toast.LENGTH_SHORT).show();
                         }
 
                         else{
+                            cvPostutils.setVisibility(View.GONE);
                             Toast.makeText(SkillDetailsPage.this, "Skill Left", Toast.LENGTH_SHORT).show();
                             tvJoinLeave.setText("Join");
                         }
@@ -845,6 +870,8 @@ public class SkillDetailsPage extends AppCompatActivity {
         cvEditSkill = findViewById(R.id.cv_skill_edit);
         cvQuery = findViewById(R.id.cv_skill_query);
         ivSkillCover = findViewById(R.id.iv_skill_cover);
+        cvPostutils = findViewById(R.id.cv_card_post_utils);
+
 
 
         //For PostUtils

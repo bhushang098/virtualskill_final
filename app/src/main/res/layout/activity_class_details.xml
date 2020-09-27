@@ -62,82 +62,82 @@
                         android:src="@color/cardDarkBackground"
                         android:transitionName="imgOfBlogitem" />
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_marginLeft="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:padding="5dp"
-                        android:layout_alignBottom="@+id/iv_class_cover"
-                        app:cardCornerRadius="5dp"
-                        android:layout_marginBottom="10dp"
-                        app:cardElevation="5dp"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/tv_class_name_on_details"
-                                android:padding="5dp"
-                                android:textStyle="bold"
-                                android:textSize="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Class Name"/>
-
-                            <TextView
-                                android:id="@+id/tv_class_location_on_details"
-                                android:padding="5dp"
-                                android:textStyle="bold"
-                                android:textSize="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Location"/>
-
-                        </LinearLayout>
-
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cv_join_leave_class"
-                        android:layout_marginLeft="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:padding="5dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignBottom="@+id/iv_class_cover"
-                        app:cardCornerRadius="5dp"
-                        android:layout_marginBottom="10dp"
-                        app:cardElevation="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/tv_join_leave_class"
-                                android:padding="8dp"
-                                android:textStyle="bold"
-                                android:textSize="16dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Join"/>
-
-                    </androidx.cardview.widget.CardView>
-
 
                 </RelativeLayout>
 
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_class_name"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+          android:layout_below="@+id/cv_class_image"
+                app:cardCornerRadius="5dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="5dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_class_name_on_details"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Class Name"/>
+
+                    <TextView
+                        android:id="@+id/tv_class_location_on_details"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_join_leave_class"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:padding="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/cv_class_image"
+                app:cardCornerRadius="5dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_join_leave_class"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Join"/>
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_class_free_paid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/cv_class_image"
+                android:layout_below="@+id/cv_class_name"
                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:padding="5dp"
@@ -412,6 +412,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 android:id="@+id/cv_card_post_utils_on_class_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -583,6 +584,15 @@
 
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_class_post_not_available"
+                android:text="No Post to Show"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:layout_below="@id/cv_card_post_utils_on_class_details"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_view_class_posts"

@@ -19,11 +19,11 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.gson.Gson;
 import com.twilio.video.app.MainPages.MyProfile;
 import com.twilio.video.app.MainPages.OtherUserProfile;
 import com.twilio.video.app.R;
 import com.twilio.video.app.SearchStudentResponse.Datum;
+import com.twilio.video.app.model.Rating;
 
 import java.util.List;
 
@@ -140,6 +140,17 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
             if(studentList.get(position).getSkill()!=null)
                 holder.skillActual.setText("Skill : "+studentList.get(position).getSkill());
             holder.ratingBar.setVisibility(View.VISIBLE);
+            if(studentList.get(position).getRatings().size()==0)
+            {
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }else {
+
+                holder.ratingBar.setRating(Float.parseFloat(
+                        getAvgRating(studentList.get(position).getRatings())));
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }
 
         }else
         {
@@ -170,6 +181,17 @@ public class StudentUserAdapter extends RecyclerView.Adapter<StudentUserAdapter.
             }
         });
 
+    }
+
+    private String getAvgRating(List<Rating> ratings) {
+
+        int total = 0;
+        for (Rating rating:ratings
+             ) {
+                total += rating.getRating();
+        }
+
+            return String.valueOf(total/ratings.size());
     }
 
     public void setList(List<Datum> list) {

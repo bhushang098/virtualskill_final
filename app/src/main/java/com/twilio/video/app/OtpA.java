@@ -110,12 +110,12 @@ public class OtpA extends AppCompatActivity {
                     {
                         if(count==0)
                         {
-                            btnResendOTP.setVisibility(View.VISIBLE);
-                            counter.setVisibility(View.INVISIBLE);
+                            //btnResendOTP.setVisibility(View.VISIBLE);
+                            //counter.setVisibility(View.INVISIBLE);
                             T.cancel();
                         }
                         counter.setText(" Otp Sent To Number "+number+
-                                " \n Please Wait U will get OTP soon "+" \n U can Resend Otp in "+count+" sec");
+                                " \n Please Wait U will get OTP soon ");
                         count--;
                     }
                 });

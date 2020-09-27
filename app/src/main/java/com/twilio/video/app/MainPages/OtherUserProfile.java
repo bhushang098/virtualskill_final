@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -560,6 +562,7 @@ public class OtherUserProfile extends AppCompatActivity {
         } else {
             String[] interestsAry = otherUserObj.getInterests().split("\"");
 
+            layoutInterests.removeAllViews();
             for (int i = 1; i < interestsAry.length; i++) {
                 addCardInalyout(interestsAry[i]);
             }
@@ -582,24 +585,22 @@ public class OtherUserProfile extends AppCompatActivity {
 
         cardview.setRadius(5);
 
-        cardview.setPadding(15, 2, 15, 2);
+       // cardview.setPadding(15, 2, 15, 2);
         cardview.setForegroundGravity(Gravity.CENTER);
 
-        cardview.setCardBackgroundColor(R.color.cardDarkBackground);
         cardview.setCardElevation(5);
 
         TextView textview = new TextView(this);
 
         textview.setLayoutParams(layoutparams);
 
-
         textview.setText(s);
-
         textview.setTextSize(14);
 
         textview.setTextColor(Color.WHITE);
+        textview.setBackgroundColor(R.color.cardDarkBackground);
 
-        textview.setPadding(25, 2, 25, 2);
+        textview.setPadding(25, 5, 25, 5);
 
         textview.setGravity(Gravity.CENTER);
 

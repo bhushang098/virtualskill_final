@@ -127,22 +127,38 @@ FollowerUserAdapter extends  RecyclerView.Adapter<FollowerUserAdapter.FollowerUs
         holder.type.setVisibility(View.VISIBLE);
         if(userList.get(position).getFollower().getUserType()==1)
         {
-            holder.type.setText("Professor");
             holder.location.setVisibility(View.GONE);
-            holder.skillActual.setVisibility(View.GONE);
+            holder.type.setText("Professor");
+            holder.name.setGravity(View.FOCUS_LEFT);
+            holder.type.setGravity(View.FOCUS_LEFT);
             holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
+            if(userList.get(position).getFollower().getSkill()!=null)
+                holder.skillActual.setText("Skill : "+userList.get(position).getFollower().getSkill());
             holder.ratingBar.setVisibility(View.VISIBLE);
+            if(userList.get(position).getFollower().getRating()==null)
+            {
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }else {
+                holder.ratingBar.setRating(Float.parseFloat(
+                        userList.get(position).getFollower().getRating()));
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }
 
         }else
         {
             holder.type.setText("Student");
             if(userList.get(position).getFollower().getLocation()!=null)
                 holder.location.setText("Location : "+userList.get(position).getFollower().getLocation());
+            holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
             if(userList.get(position).getFollower().getSkill()!=null)
-                holder.skillActual.setText(userList.get(position).getFollower().getSkill());
-
-
+                holder.skillActual.setText("Skill : "+userList.get(position).getFollower().getSkill());
         }
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

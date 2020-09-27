@@ -1,9 +1,5 @@
 package com.twilio.video.app.subMainPages;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,18 +7,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.twilio.video.app.FollowerUserResponse.Datum;
 import com.twilio.video.app.FollowerUserResponse.FollowerUserResponse;
 import com.twilio.video.app.FollowersListArgs.FolllowerListArgs;
 import com.twilio.video.app.FollowersListArgs.FollowersList;
-import com.twilio.video.app.FollowingListArgs.FollowingListArgs;
 import com.twilio.video.app.R;
 import com.twilio.video.app.RetrifitClient;
 import com.twilio.video.app.adapter.FollowerUserAdapter;
 import com.twilio.video.app.adapter.FollowersUserAdapter2;
-import com.twilio.video.app.adapter.FollworingUserAdapter2;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,6 +2,7 @@ package com.twilio.video.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.twilio.video.app.ChatScreen;
@@ -74,9 +76,9 @@ public class NotificationAlertAdapter extends RecyclerView.Adapter<NotificationA
             e.printStackTrace();
         }
         holder.message.setText(notiList.get(position).getMessage());
-        if(notiList.get(position).getSeen()==0)
+        if(notiList.get(position).getSeen()==1)
         {
-            holder.itemView.setBackgroundResource(R.drawable.noti_bg_highlite);
+            holder.cvitem.setCardBackgroundColor(Color.WHITE);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -176,10 +178,14 @@ public class NotificationAlertAdapter extends RecyclerView.Adapter<NotificationA
 
     public class NotificationAlertAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView message,time;
+        CardView cvitem;
+
         public NotificationAlertAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.tv_noti_message);
             time = itemView.findViewById(R.id.tv_noti_time);
+            cvitem = itemView.findViewById(R.id.cv_noti_item);
+
         }
     }
 }

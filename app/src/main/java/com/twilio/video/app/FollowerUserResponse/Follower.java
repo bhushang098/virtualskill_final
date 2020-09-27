@@ -93,6 +93,25 @@ public class Follower {
     @SerializedName("gender")
     @Expose
     private Integer gender;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+
+    public Integer get_private() {
+        return _private;
+    }
+
+    public void set_private(Integer _private) {
+        this._private = _private;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
     public Integer getId() {
         return id;

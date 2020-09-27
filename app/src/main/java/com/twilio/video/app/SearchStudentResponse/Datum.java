@@ -3,6 +3,9 @@ package com.twilio.video.app.SearchStudentResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.twilio.video.app.model.Rating;
+
+import java.util.List;
 
 public class Datum {
 
@@ -96,6 +99,27 @@ public class Datum {
     @SerializedName("gender")
     @Expose
     private Integer gender;
+
+    @SerializedName("ratings")
+    @Expose
+    private List<Rating> ratings;
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Integer get_private() {
+        return _private;
+    }
+
+    public void set_private(Integer _private) {
+        this._private = _private;
+    }
+
 
     public Integer getId() {
         return id;

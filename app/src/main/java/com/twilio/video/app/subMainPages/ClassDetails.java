@@ -77,6 +77,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -120,6 +122,9 @@ public class ClassDetails extends AppCompatActivity {
     private boolean is_choosing = false;
     PopupWindow progressPopup, mpopup;
 
+    CardView cvPostUtils;
+    TextView tvPostNotAvailable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +141,12 @@ public class ClassDetails extends AppCompatActivity {
         if(getIntent().getStringExtra("direct")!=null)
         {
                 requestPermissions(Integer.parseInt(classId));
+        }
+
+        if(status.equalsIgnoreCase("Created")||
+                status.equalsIgnoreCase("Joined"))
+        {
+            cvPostUtils.setVisibility(View.VISIBLE);
         }
 
 
@@ -270,8 +281,7 @@ public class ClassDetails extends AppCompatActivity {
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4) {
                     vvSelectedYtVideo.setVisibility(View.VISIBLE);
@@ -413,6 +423,8 @@ public class ClassDetails extends AppCompatActivity {
 
                     }else {
                         postDataList = response.body().getPosts().getData();
+                        if(postDataList.size()>0)
+                            tvPostNotAvailable.setVisibility(View.GONE);
                         recyclerView.setLayoutManager(new LinearLayoutManager(ClassDetails.this));
                         recyclerView.setAdapter(new HomePostsAdapter(postDataList,ClassDetails.this,userObj.getId(),token));
 //                        shimmerFrameLayout.stopShimmerAnimation();
@@ -711,7 +723,11 @@ public class ClassDetails extends AppCompatActivity {
                         if (response.body().getStatus() == true) {
                             Toast.makeText(ClassDetails.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                             if (tvJoinLeaveClass.getText().equals("Join"))
+                            {
                                 tvJoinLeaveClass.setText("Leave");
+                                cvPostUtils.setVisibility(View.VISIBLE);
+                            }
+
                             progressBar.setVisibility(View.GONE);
 
                             if(response.body().getMessage().equalsIgnoreCase("Success"))
@@ -720,6 +736,7 @@ public class ClassDetails extends AppCompatActivity {
                             }else
                             {
                                 showSuccessJoinMess("You Left "+ classobj.getName() +" Class ");
+                                cvPostUtils.setVisibility(View.GONE);
                             }
 
 
@@ -740,6 +757,17 @@ public class ClassDetails extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
 
     private void requestPermissions(int classId) {
@@ -818,6 +846,9 @@ public class ClassDetails extends AppCompatActivity {
         vvSelectedYtVideo = findViewById(R.id.yt_selected_vv_class_post);
         tvCommitPost = findViewById(R.id.tv_commit_post_on_post);
         recyclerView = findViewById(R.id.rec_view_class_posts);
+        cvPostUtils = findViewById(R.id.cv_card_post_utils_on_class_details);
+        tvPostNotAvailable= findViewById(R.id.tv_class_post_not_available);
+
 
         // till
         tvClassNameOnToolBar = findViewById(R.id.tv_class_name_on_toolBar);

@@ -127,21 +127,35 @@ public class FollworingUserAdapter extends RecyclerView.Adapter<FollworingUserAd
         holder.type.setVisibility(View.VISIBLE);
         if(userList.get(position).getFollowing().getUserType()==1)
         {
-            holder.type.setText("Professor");
             holder.location.setVisibility(View.GONE);
-            holder.skillActual.setVisibility(View.GONE);
+            holder.type.setText("Professor");
+            holder.name.setGravity(View.FOCUS_LEFT);
+            holder.type.setGravity(View.FOCUS_LEFT);
             holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
+            if(userList.get(position).getFollowing().getSkill()!=null)
+                holder.skillActual.setText("Skill : "+userList.get(position).getFollowing().getSkill());
             holder.ratingBar.setVisibility(View.VISIBLE);
+            if(userList.get(position).getFollowing().getRating()==null)
+            {
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }else {
+                holder.ratingBar.setRating(Float.parseFloat(
+                        userList.get(position).getFollowing().getRating()));
+                holder.ratingBar.setIsIndicator(true);
+                holder.ratingBar.setClickable(false);
+            }
 
         }else
         {
             holder.type.setText("Student");
             if(userList.get(position).getFollowing().getLocation()!=null)
                 holder.location.setText("Location : "+userList.get(position).getFollowing().getLocation());
+            holder.skill.setVisibility(View.GONE);
+            holder.skillActual.setGravity(View.FOCUS_LEFT);
             if(userList.get(position).getFollowing().getSkill()!=null)
-                holder.skillActual.setText(userList.get(position).getFollowing().getSkill());
-
-
+                holder.skillActual.setText("Skill : "+userList.get(position).getFollowing().getSkill());
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -48,8 +48,6 @@ public class Message {
     @Expose
     private ExtrasInChatList receiver_skill;
 
-
-
     @SerializedName("receiver_team")
     @Expose
     private ExtrasInChatList receiver_team;

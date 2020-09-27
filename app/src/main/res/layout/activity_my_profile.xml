@@ -15,7 +15,6 @@
         app:title="Your Profile"/>
 
     <com.facebook.shimmer.ShimmerFrameLayout
-
         android:layout_below="@+id/tb_my_profile"
         android:id="@+id/sh_v_my_profile"
         android:layout_width="match_parent"
@@ -25,6 +24,7 @@
 
         <!-- Adding 7 rows of placeholders -->
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -138,6 +138,29 @@
 
             </androidx.cardview.widget.CardView>
 
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_profile_company"
+                android:layout_marginTop="15dp"
+                app:cardElevation="2dp"
+                android:layout_below="@+id/cv_name_self"
+                app:cardCornerRadius="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Company"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"/>
+            </androidx.cardview.widget.CardView>
+
             <!--//Star RAting View-->
 
             <LinearLayout
@@ -151,9 +174,7 @@
                 android:padding="3dp">
 
                 <RatingBar
-                    android:clickable="false"
-                    android:focusableInTouchMode="false"
-                    android:focusable="false"
+                    android:theme="@style/RatingBar"
                     android:scaleX="0.4"
                     android:scaleY="0.4"
                     android:layout_width="wrap_content"
@@ -182,34 +203,12 @@
 
 
             </LinearLayout>
-
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_profile_company"
-                android:layout_marginTop="15dp"
-                app:cardElevation="2dp"
-                android:layout_below="@+id/cv_name_self"
-                app:cardCornerRadius="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Company"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20dp"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"/>
-            </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_gender_no_profile"
                 android:layout_marginTop="15dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="5dp"
-                android:layout_below="@+id/cv_profile_company"
+                android:layout_below="@+id/lin_lay_rating_view_my_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

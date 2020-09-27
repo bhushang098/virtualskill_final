@@ -124,14 +124,14 @@ public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.Se
         }
         if (postList.get(position).getHasVideo() == 1) {
             holder.videoView.setVisibility(View.VISIBLE);
-            holder.videoView.setVideoURI(Uri.parse("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/images/profile-picture.png"
-                    ));
-            holder.videoView.setOnPreparedListener(new OnPreparedListener() {
-                @Override
-                public void onPrepared() {
-                    holder.videoView.pause();
-                }
-            });
+//            holder.videoView.setVideoURI(Uri.parse("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/images/profile-picture.png"
+//                    ));
+//            holder.videoView.setOnPreparedListener(new OnPreparedListener() {
+//                @Override
+//                public void onPrepared() {
+//                    holder.videoView.pause();
+//                }
+//            });
 
 
         }
@@ -205,7 +205,7 @@ public class SearchPostAdapter extends RecyclerView.Adapter<SearchPostAdapter.Se
         CircleImageView userProfile;
         ProgressBar progressBar;
         ImageView mediaView, likeView, menuImage;
-        VideoView videoView;
+        ImageView videoView;
         YouTubePlayerView ytVidView;
         RecyclerView recComments;
         LinearLayout linLayWriteComment;

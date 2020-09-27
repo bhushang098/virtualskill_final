@@ -215,6 +215,7 @@
                 >
 
                 <RatingBar
+                    android:theme="@style/RatingBar"
                     android:layout_weight="0.5"
                     android:clickable="false"
                     android:focusableInTouchMode="false"

@@ -2,18 +2,12 @@ package com.twilio.video.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
-import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -21,12 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -63,7 +54,6 @@ import org.jetbrains.annotations.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -72,7 +62,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.HomePostAdapterViewHolder> {
 
@@ -98,21 +87,29 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         notifyDataSetChanged();
     }
 
+    @Override
+    public void onViewAttachedToWindow(@NonNull HomePostAdapterViewHolder holder) {
+
+        Log.d("AttachedView>>",holder.caption.getText().toString());
+//        if (holder.videoView.getVisibility() == View.VISIBLE)
+//            holder.videoView.getPlayer().setPlayWhenReady(true);
+        super.onViewAttachedToWindow(holder);
+
+    }
+
     @NonNull
     @Override
     public HomePostsAdapter.HomePostAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
         View view = inflater.inflate(R.layout.post_item, parent, false);
         return new HomePostAdapterViewHolder(view);
 
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull HomePostsAdapter.HomePostAdapterViewHolder holder, int position) {
-
-
 
 
         Glide.with(context).load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/" + postList.get(position).getProfilePath()).listener(new RequestListener<Drawable>() {
@@ -153,8 +150,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         holder.likeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.likeView.getTag().equals("Liked"))
-                {
+                if (holder.likeView.getTag().equals("Liked")) {
                     holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_border_24);
                     holder.likeView.setTag("UnLiked");
                     int likesNo = Integer.parseInt(holder.noOfLikes.getText().toString());
@@ -162,8 +158,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                     holder.noOfLikes.setText(String.valueOf(likesNo));
                     likePostByApi(postList.get(position).getPostId().toString());
 
-                }else
-                {
+                } else {
                     holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_24);
                     holder.likeView.setTag("Liked");
                     int likesNo = Integer.parseInt(holder.noOfLikes.getText().toString());
@@ -194,7 +189,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                                 return true;
                             case R.id.delete_post:
                                 //Toast.makeText(context, "Delete Post", Toast.LENGTH_SHORT).show();
-                                deletePost(postList.get(position),position);
+                                deletePost(postList.get(position), position);
                                 return true;
 
                             default:
@@ -228,14 +223,13 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         }
         if (postList.get(position).getHasVideo() == 1) {
             String vidUrl = "http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
-                    +postList.get(position).getDUploadedFiles().get(0).getFilePath();
+                    + postList.get(position).getDUploadedFiles().get(0).getFilePath();
+            holder.ivPlayImg.setVisibility(View.VISIBLE);
             holder.videoView.setVisibility(View.VISIBLE);
             holder.videoView.setSource(vidUrl);
-
-           // holder.videoView.setForeground(context.getResources().getDrawable(R.drawable.noti_bg_highlite));
         }
-        if (postList.get(position).getYoutubeLink() != null) {
 
+        if (postList.get(position).getYoutubeLink() != null) {
             holder.ytVidView.setVisibility(View.VISIBLE);
             holder.ytVidView.initializeWithWebUi(new YouTubePlayerListener() {
                 @Override
@@ -288,27 +282,15 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
                 }
             }, true);
-
         }
 
-        holder.videoView.setOnTouchListener(new View.OnTouchListener() {
+        holder.ivPlayImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
                 showVidPopup("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
-                        +postList.get(position).getDUploadedFiles().get(0).getFilePath());
-                return true;
+                        + postList.get(position).getDUploadedFiles().get(0).getFilePath());
             }
         });
-
-//        holder.videoView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show();
-//                showVidPopup("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
-//                        +postList.get(position).getDUploadedFiles().get(0).getFilePath());
-//            }
-//        });
 
         holder.recComments.setLayoutManager(new LinearLayoutManager(context));
         holder.recComments.setAdapter(new CommentsAdapter(postList.get(position).getComments(), context, userId));
@@ -370,40 +352,21 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
     }
 
+
     private void showVidPopup(String filePath) {
-//        Intent i = new Intent(
-//                context, DetailedVidView.class
-//        );
-//        i.putExtra("vid_file",filePath);
-//        context.startActivity(i);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popUpView = inflater.inflate(R.layout.detailed_video_view,
-                null); // inflating popup layout
-        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT, true);
-        ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_comment_popup);
+        Intent i = new Intent(
+                context, DetailedVidView.class
+        );
+        i.putExtra("vid_file", filePath);
+        context.startActivity(i);
 
-        AndExoPlayerView vidView = popUpView.findViewById(R.id.detailed_video_view_popup);
-        vidView.setSource(filePath);
-
-        ivCross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mpopup.dismiss();
-                vidView.stopPlayer();
-            }
-        });
-
-        // Creation of popup
-        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
-        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
     }
 
     private void likePostByApi(String postId) {
 
         Call<PostLikeResponse> call = RetrifitClient
-                .getInstance().getPostApi().likePost(token,postId);
+                .getInstance().getPostApi().likePost(token, postId);
 
         call.enqueue(new Callback<PostLikeResponse>() {
             @Override
@@ -427,10 +390,34 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
     }
 
-    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
-    {
-        return ThumbnailUtils.createVideoThumbnail(videoPath, MINI_KIND);
-    }
+//    public  Bitmap retriveVideoFrameFromVideo(String videoPath)throws Throwable
+//    {
+//        Bitmap bitmap = null;
+//        MediaMetadataRetriever mediaMetadataRetriever = null;
+//        try
+//        {
+//            mediaMetadataRetriever = new MediaMetadataRetriever();
+//            if (Build.VERSION.SDK_INT >= 14)
+//                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+//            else
+//                mediaMetadataRetriever.setDataSource(videoPath);
+//            //   mediaMetadataRetriever.setDataSource(videoPath);
+//            bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            throw new Throwable("Exception in retriveVideoFrameFromVideo(String videoPath)"+ e.getMessage());
+//        }
+//        finally
+//        {
+//            if (mediaMetadataRetriever != null)
+//            {
+//                mediaMetadataRetriever.release();
+//            }
+//        }
+//        return bitmap;
+//    }
 
     private void showCommentOpoup(List<Comment> comments, int position) {
 
@@ -541,7 +528,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         if (datum.getContent() != null) {
             etCaption.setText(datum.getContent());
         }
-        VideoView video = popUpView.findViewById(R.id.vv_update_post);
+        ImageView video = popUpView.findViewById(R.id.vv_update_post);
         YouTubePlayerView ytVid = popUpView.findViewById(R.id.ytVv_update_post);
         ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_update_post);
         Button uploadPic = popUpView.findViewById(R.id.btn_update_post);
@@ -564,9 +551,9 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         }
         if (datum.getHasVideo() == 1) {
             video.setVisibility(View.VISIBLE);
-            video.setVideoURI(Uri.parse("https://www.virtualskill.in/storage/uploads/posts/"
-                    + datum.getDUploadedFiles().get(0).getFilePath()));
-            video.setMediaController(new MediaController(context));
+//            video.setVideoURI(Uri.parse("https://www.virtualskill.in/storage/uploads/posts/"
+//                    + datum.getDUploadedFiles().get(0).getFilePath()));
+//            video.setMediaController(new MediaController(context));
 
         }
         if (datum.getYoutubeLink() != null) {
@@ -703,6 +690,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         ProgressBar progressBar;
         ImageView mediaView, likeView, menuImage;
         // Makeing iv for ThumbNail
+        ImageView ivPlayImg;
         AndExoPlayerView videoView;
         YouTubePlayerView ytVidView;
         RecyclerView recComments;
@@ -726,6 +714,86 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             videoView = itemView.findViewById(R.id.vv_on_post);
             ytVidView = itemView.findViewById(R.id.ytVv_on_post);
             linlayuserNameanstimesHao = itemView.findViewById(R.id.lin_lay_u_name_on_post_item);
+            ivPlayImg = itemView.findViewById(R.id.iv_play_img);
         }
     }
+//    private  class ArgsThumb {
+//        HomePostAdapterViewHolder holder;
+//          String vidUrl;
+//          Bitmap bitmap;
+//         int position;
+//
+//        public Bitmap getBitmap() {
+//            return bitmap;
+//        }
+//
+//        public void setBitmap(Bitmap bitmap) {
+//            this.bitmap = bitmap;
+//        }
+//
+//        public HomePostAdapterViewHolder getHolder() {
+//            return holder;
+//        }
+//
+//        public void setHolder(HomePostAdapterViewHolder holder) {
+//            this.holder = holder;
+//        }
+//
+//        public String getVidUrl() {
+//            return vidUrl;
+//        }
+//
+//        public void setVidUrl(String vidUrl) {
+//            this.vidUrl = vidUrl;
+//        }
+//
+//        public int getPosition() {
+//            return position;
+//        }
+//
+//        public void setPosition(int position) {
+//            this.position = position;
+//        }
+//    }
+
+//    private  class ThumbBackground extends AsyncTask<ArgsThumb,ArgsThumb,ArgsThumb>
+//    {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ArgsThumb argsThumb) {
+//            super.onPostExecute(argsThumb);
+//            if(argsThumb!=null)
+//            argsThumb.getHolder().videoView.setImageBitmap(argsThumb.getBitmap());
+//            else
+//                argsThumb.getHolder().videoView.setImageResource(R.drawable.profile_picture);
+//
+//        }
+//
+//
+//        @Override
+//        protected void onProgressUpdate(ArgsThumb... values) {
+//            super.onProgressUpdate(values);
+//            //values[0].holder.progressBar.setVisibility(View.VISIBLE);
+//        }
+//
+//        @Override
+//        protected ArgsThumb doInBackground(ArgsThumb... argsThumbs) {
+//            try {
+//                HomePostsAdapter thisAdapter = new HomePostsAdapter(postList,context,userId,token);
+//                ArgsThumb returnThumbObj = new ArgsThumb();
+//                returnThumbObj.setBitmap( thisAdapter.retriveVideoFrameFromVideo(argsThumbs[0].vidUrl));
+//                returnThumbObj.setHolder(argsThumbs[0].holder);
+//                return returnThumbObj;
+//            } catch (Throwable throwable) {
+//                throwable.printStackTrace();
+//            }
+//            return null;
+//        }
+//    }
 }
+
+

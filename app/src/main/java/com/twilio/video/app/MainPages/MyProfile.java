@@ -74,6 +74,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
@@ -280,8 +282,8 @@ public class MyProfile extends AppCompatActivity {
         etYtLink.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                String[] ytLink = s.toString().split("/");
-                ytVidId = ytLink[ytLink.length - 1];
+
+                ytVidId = getYouTubeId(s.toString());
 
                 if (ytVidId.length() > 4)
                 {
@@ -498,6 +500,7 @@ public class MyProfile extends AppCompatActivity {
         }else {
             String[] interestsAry = userObj.getInterests().split("\"");
 
+            layoutInterests.removeAllViews();
             for(int i = 1;i<interestsAry.length;i++)
             {
                 addCardInalyout(interestsAry[i]);
@@ -506,12 +509,15 @@ public class MyProfile extends AppCompatActivity {
         if(userObj.getUserType()==1)
         {
             latoutProRating.setVisibility(View.VISIBLE);
-            if(userObj.getRating()==null)
+            if(rating==null)
             {
                 tvRating.setText("Not Rated");
+                ratingBar.setIsIndicator(true);
+                ratingBar.setClickable(false);
             }else {
                 ratingBar.setRating(Float.parseFloat(rating));
                 ratingBar.setIsIndicator(true);
+                ratingBar.setClickable(false);
                 tvRating.setText(rating);
             }
         }
@@ -531,35 +537,30 @@ public class MyProfile extends AppCompatActivity {
 
         cardview.setRadius(5);
 
-        cardview.setPadding(15, 2, 15, 2);
+        // cardview.setPadding(15, 2, 15, 2);
         cardview.setForegroundGravity(Gravity.CENTER);
 
-        cardview.setCardBackgroundColor(R.color.cardDarkBackground);
         cardview.setCardElevation(5);
 
         TextView textview = new TextView(this);
 
         textview.setLayoutParams(layoutparams);
 
-
         textview.setText(s);
-
         textview.setTextSize(14);
 
         textview.setTextColor(Color.WHITE);
+        textview.setBackgroundColor(R.color.cardDarkBackground);
 
-        textview.setPadding(25,2,25,2);
+        textview.setPadding(25, 5, 25, 5);
 
         textview.setGravity(Gravity.CENTER);
 
         cardview.addView(textview);
-        if(s.length()>1)
-        {
+        if (s.length() > 1) {
             layoutInterests.addView(cardview);
             layoutInterests.addView(new TextView(this));
         }
-
-
     }
 
     private void getUserByApi(String thisUserID) {
@@ -621,6 +622,17 @@ public class MyProfile extends AppCompatActivity {
                 .allowMultipleImages(false)
                 .enableDebuggingMode(true)
                 .build();
+    }
+
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
 
     private void chooseCoverImage() {
