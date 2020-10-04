@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,6 +42,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
@@ -87,10 +89,10 @@ import retrofit2.Response;
 
 public class MyProfile extends AppCompatActivity {
 
-    ImageView coverPhoto;
-    CircleImageView profilPic;
+    ImageView coverPhoto,ivquote,ivLocation,ivgender;
+    CircleImageView profilPic,changeProfile;
     CardView changeCoverView;
-    TextView username,gender,phone,skill;
+    TextView username,gender,phone,skill,interests,locatiopn,bio;
     private static  String PREFS_NAME = "login_preferences";
     Data userObj = new Data();
     File coverImage;
@@ -100,7 +102,7 @@ public class MyProfile extends AppCompatActivity {
     private  static  String TOKEN = "token";
     private  String DefaultTokenValue = "";
 
-    LinearLayout latoutProRating,layoutInterests;
+    LinearLayout latoutProRating;
 
 
     //For Post Utils
@@ -126,6 +128,7 @@ public class MyProfile extends AppCompatActivity {
     //Ratings
     RatingBar ratingBar;
     TextView tvRating;
+    FloatingActionButton fabEdit,fabNewPost;
 
 
     //Data
@@ -196,7 +199,28 @@ public class MyProfile extends AppCompatActivity {
         profilPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //chooseProfileImage();
+                showImagePopup(userObj.getProfilePath());
+            }
+        });
+        changeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 chooseProfileImage();
+            }
+        });
+        fabEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MyProfile.this,SettingsActivityList.class);
+                i.putExtra("token",token);
+                startActivity(i);
+            }
+        });
+        fabNewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyProfile.this,CreatePostPage.class));
             }
         });
 
@@ -386,6 +410,40 @@ public class MyProfile extends AppCompatActivity {
 
     }
 
+    private void showImagePopup(String imgId) {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.detailed_media_view_layout,
+                null); // inflating popup layout
+        mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT, true);
+        ImageView image = popUpView.findViewById(R.id.iv_detailed_image);
+        ImageView ivCross = popUpView.findViewById(R.id.iv_cancle_poup);
+        ivCross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mpopup.dismiss();
+            }
+        });
+
+        Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" +imgId).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                // holder.progressBar.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                //holder.progressBar.setVisibility(View.GONE);
+                return false;
+            }
+        }).into(image);
+
+        // Creation of popup
+        mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+        mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+    }
+
     private void clearSelecetMedia() {
         ivSelectedImage.setVisibility(View.GONE);
         ivUnSelectImage.setVisibility(View.GONE);
@@ -405,7 +463,7 @@ public class MyProfile extends AppCompatActivity {
         if(userObj.getProfilePath()!=null)
         {
             Glide.with(this).
-                    load("http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/"
+                    load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/"
                             +userObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -442,7 +500,7 @@ public class MyProfile extends AppCompatActivity {
 
         if (userObj.getCoverPath()!=null)
         {
-            Glide.with(this).load("https://virtualskill.in/storage/uploads/covers/"
+            Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/"
                     +userObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override
@@ -481,14 +539,30 @@ public class MyProfile extends AppCompatActivity {
 
         username.setText(userObj.getName());
         phone.setText(userObj.getPhone());
+        if(userObj.getLocation()!=null)
+        {
+            locatiopn.setText(userObj.getLocation());
+        }else{
+            locatiopn.setVisibility(View.GONE);
+            ivLocation.setVisibility(View.GONE);
+        }
+
+        if(userObj.getBio()!=null)
+        {
+            bio.setText(userObj.getBio());
+        }else {
+            ivquote.setVisibility(View.GONE);
+            bio.setVisibility(View.GONE);
+        }
         tvFollowerNo.setText(String.valueOf(followerList.size()));
         tvFollowingNo.setText(String.valueOf(followingsList.size()));
 
         if(userObj.getSex()==0)
         {
-            gender.setText("Male");
-        }else {
             gender.setText("Female");
+            ivgender.setImageResource(R.drawable.female);
+        }else {
+            gender.setText("Male");
         }
 
         if(userObj.getSkill()!=null)
@@ -500,68 +574,39 @@ public class MyProfile extends AppCompatActivity {
         }else {
             String[] interestsAry = userObj.getInterests().split("\"");
 
-            layoutInterests.removeAllViews();
+            String interestsString = "";
+
             for(int i = 1;i<interestsAry.length;i++)
             {
-                addCardInalyout(interestsAry[i]);
+                if(interestsAry[i].length()>1)
+                {
+                    interestsString = interestsString + interestsAry[i]+"<b>"+" , "+"</b>";
+                }
+
             }
+
+            interests.setText(Html.fromHtml(interestsString));
+            if(interests.getText().toString().length()>2)
+            {
+                interests.setText(interests.getText().toString().
+                        substring(0,interests.getText().toString().length()-2));
+            }
+
         }
         if(userObj.getUserType()==1)
         {
             latoutProRating.setVisibility(View.VISIBLE);
-            if(rating==null)
+            if(userObj.getRating()==null)
             {
                 tvRating.setText("Not Rated");
-                ratingBar.setIsIndicator(true);
-                ratingBar.setClickable(false);
             }else {
                 ratingBar.setRating(Float.parseFloat(rating));
                 ratingBar.setIsIndicator(true);
-                ratingBar.setClickable(false);
                 tvRating.setText(rating);
             }
         }
     }
 
-
-    @SuppressLint("ResourceAsColor")
-    private void addCardInalyout(String s) {
-        CardView cardview = new CardView(this);
-
-        ViewGroup.LayoutParams layoutparams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-
-        cardview.setLayoutParams(layoutparams);
-
-        cardview.setRadius(5);
-
-        // cardview.setPadding(15, 2, 15, 2);
-        cardview.setForegroundGravity(Gravity.CENTER);
-
-        cardview.setCardElevation(5);
-
-        TextView textview = new TextView(this);
-
-        textview.setLayoutParams(layoutparams);
-
-        textview.setText(s);
-        textview.setTextSize(14);
-
-        textview.setTextColor(Color.WHITE);
-        textview.setBackgroundColor(R.color.cardDarkBackground);
-
-        textview.setPadding(25, 5, 25, 5);
-
-        textview.setGravity(Gravity.CENTER);
-
-        cardview.addView(textview);
-        if (s.length() > 1) {
-            layoutInterests.addView(cardview);
-            layoutInterests.addView(new TextView(this));
-        }
-    }
 
     private void getUserByApi(String thisUserID) {
 
@@ -588,7 +633,7 @@ public class MyProfile extends AppCompatActivity {
                         followingsList = response.body().getData().getFollowing();
                         if(response.body().getRating()==null)
                         {
-                            setUserData(null);
+                            setUserData("Not Rated");
                         }else {
                             int temp =  new Double(response.body().getRating()).intValue();
                             setUserData(String.valueOf(temp));
@@ -624,17 +669,6 @@ public class MyProfile extends AppCompatActivity {
                 .build();
     }
 
-    private String getYouTubeId (String youTubeUrl) {
-        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(youTubeUrl);
-        if(matcher.find()){
-            return matcher.group();
-        } else {
-            return "error";
-        }
-    }
-
     private void chooseCoverImage() {
         is_choosing = true;
         is_profile_pic = false;
@@ -658,6 +692,15 @@ public class MyProfile extends AppCompatActivity {
         skill = findViewById(R.id.tv_user_skill);
         ratingBar  = findViewById(R.id.rtv_self);
         tvRating = findViewById(R.id.tv_rating_self);
+        //Tvs Interest
+        interests = findViewById(R.id.tv_interests_self);
+        locatiopn = findViewById(R.id.tv_user_location_on_profile);
+        bio = findViewById(R.id.tv_bio_self);
+        ivLocation = findViewById(R.id.iv_location_self);
+        ivquote = findViewById(R.id.iv_quote_self);
+        ivgender = findViewById(R.id.iv_gender_self_profile);
+
+
 
         changeCoverView = findViewById(R.id.cv_change_cover_pic);
         tvPostNo = findViewById(R.id.tv_post_no);
@@ -666,7 +709,11 @@ public class MyProfile extends AppCompatActivity {
         tvNoPostToShow = findViewById(R.id.tv_no_post_self);
         shimmerFrameLayout = findViewById(R.id.sh_v_my_profile);
         latoutProRating = findViewById(R.id.lin_lay_rating_view_my_profile);
-        layoutInterests = findViewById(R.id.lin_lay_interests);
+
+
+        //Fabs
+        fabEdit = findViewById(R.id.fab_edit_profile);
+        fabNewPost = findViewById(R.id.fab_new_post_on_self_profile);
 
         //For Post util Layout
         linLayPickImage = findViewById(R.id.lin_lay_pick_image_on_profile);
@@ -681,6 +728,7 @@ public class MyProfile extends AppCompatActivity {
         tvCommitPost = findViewById(R.id.tv_commit_post_on_profile);
         //recView
         recyclerView = findViewById(R.id.rec_v_my_profile);
+        changeProfile = findViewById(R.id.civ_change_profile);
 
     }
 
@@ -753,6 +801,16 @@ public class MyProfile extends AppCompatActivity {
                 progressPopup.dismiss();
             }
         });
+    }
+    private String getYouTubeId (String youTubeUrl) {
+        String pattern = "(?<=youtu.be/|watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(youTubeUrl);
+        if(matcher.find()){
+            return matcher.group();
+        } else {
+            return "error";
+        }
     }
     private void makePostWithIamge() {
 

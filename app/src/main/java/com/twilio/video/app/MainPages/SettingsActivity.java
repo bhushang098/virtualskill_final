@@ -17,6 +17,7 @@ import com.twilio.video.app.ApiModals.UserObj;
 import com.twilio.video.app.R;
 import com.twilio.video.app.RetrifitClient;
 import com.twilio.video.app.SettingsResponse.SettingsResponse;
+import com.twilio.video.app.Settingspages.AccountSettingsPage;
 import com.twilio.video.app.SingleClassResponse.User;
 import com.twilio.video.app.SingleUserResponse.Data;
 import com.twilio.video.app.SingleUserResponse.SingleUserResponse;
@@ -280,15 +281,28 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void updateAccountSettings() {
+
+        String i1 = " ",i2 = " ",i3 = " ",i4=" ";
+        int lasteleIndex = interests.size()-1;
+
+        if(lasteleIndex>=0)
+            i1 = interests.get(0);
+        if (lasteleIndex>=1)
+            i2 = interests.get(1);
+        if (lasteleIndex>=2)
+            i3 = interests.get(2);
+        if (lasteleIndex>=3)
+            i4 = interests.get(3);
+
         Call<SettingsResponse> call = RetrifitClient.getInstance()
-                .getSettingsApi().updateBasicInfo(token,name,email,skill,interests,
+                .getSettingsApi().updateBasicInfo(token,name,email,skill,i1,i2,i3,i4,
                         location,genderStr);
-        
+
         call.enqueue(new Callback<SettingsResponse>() {
             @Override
             public void onResponse(Call<SettingsResponse> call, Response<SettingsResponse> response) {
                 Log.d("Response >>>",response.raw().toString());
-                
+
                 if(response.body()!=null)
                 {
                     if(response.body().getStatus())
@@ -305,6 +319,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<SettingsResponse> call, Throwable t) {
 
+                Log.d("Error>>",t.toString());
             }
         });
 

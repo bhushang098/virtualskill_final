@@ -23,7 +23,10 @@ public interface SettingsApI {
             @Field("name") String name,
             @Field("email") String email,
             @Field("skill") String skill,
-            @Field("interests") List<String> interests,
+            @Field("interests[]") String interests,
+            @Field("interests[]") String interests1,
+            @Field("interests[]") String interests2,
+            @Field("interests[]") String interests3,
             @Field("location") String location,
             @Field("gender") String gender
             );

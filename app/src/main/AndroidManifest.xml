@@ -22,14 +22,27 @@
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:requestLegacyExternalStorage="true"
         android:label="VirtualSkill"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".subMainPages.DetailedVidView"
+        <activity android:name=".Settingspages.PassSettingPage"
+            android:theme="@style/AppTheme.LoginScreen"></activity>
+        <activity android:name=".Settingspages.RoleSetingsPage"
+            android:theme="@style/AppTheme.LoginScreen" />
+        <activity android:name=".Settingspages.AccountSettingsPage"
+            android:theme="@style/AppTheme.LoginScreen" />
+        <activity android:name=".Settingspages.UserNameSettingsPage"
+            android:theme="@style/AppTheme.LoginScreen" />
+        <activity android:name=".MainPages.SettingsActivityList"
+            android:theme="@style/AppTheme.LoginScreen" />
+        <activity android:name=".MainPages.CreatePostPage"
+            android:theme="@style/AppTheme.LoginScreen" />
+        <activity
+            android:name=".subMainPages.DetailedVidView"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.LoginScreen" ></activity>
+            android:theme="@style/AppTheme.LoginScreen" />
         <activity
             android:name=".MainPages.NotificationsPage"
             android:theme="@style/AppTheme.LoginScreen" />

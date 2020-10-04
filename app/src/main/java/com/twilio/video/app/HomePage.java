@@ -6,9 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -34,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,16 +55,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
-import com.onesignal.OSNotification;
-import com.onesignal.OSNotificationAction;
-import com.onesignal.OSNotificationOpenResult;
 import com.onesignal.OneSignal;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.twilio.video.BuildConfig;
-import com.twilio.video.app.ApiModals.MakeClassResponse;
 import com.twilio.video.app.ApiModals.MakeNewPostResponse;
 import com.twilio.video.app.ApiModals.UserObj;
 import com.twilio.video.app.ChatUserResponse.ChatUserResponse;
@@ -80,22 +72,18 @@ import com.twilio.video.app.MainPages.MyProfile;
 import com.twilio.video.app.MainPages.NotificationsPage;
 import com.twilio.video.app.MainPages.ProUserPage;
 import com.twilio.video.app.MainPages.SearchPage;
-import com.twilio.video.app.MainPages.SettingsActivity;
+import com.twilio.video.app.MainPages.SettingsActivityList;
 import com.twilio.video.app.MainPages.SkillPage;
 import com.twilio.video.app.MainPages.StudentsUserPage;
 import com.twilio.video.app.MainPages.TeamsPage;
 import com.twilio.video.app.MainPages.UsersPage;
 import com.twilio.video.app.NotificationAlertResponse.NotificationAlerrtResponse;
-import com.twilio.video.app.adapter.ChatUSerAdapter;
 import com.twilio.video.app.adapter.HomePostsAdapter;
-import com.twilio.video.app.subMainPages.ClassDetails;
-import com.twilio.video.app.util.NetworkOperator;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 import net.alhazmy13.mediapicker.Video.VideoPicker;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -107,14 +95,11 @@ import java.util.regex.Pattern;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.nikartm.support.BadgePosition;
 import ru.nikartm.support.ImageBadgeView;
-
-import static tvi.webrtc.ContextUtils.getApplicationContext;
 
 public class HomePage extends AppCompatActivity{
     Toolbar toolbar;
@@ -126,7 +111,6 @@ public class HomePage extends AppCompatActivity{
     private RecyclerView revPostView;
     private SwipeRefreshLayout refreshLayout;
     FloatingActionButton fabHodeNav;
-    OnSwipeTouchListener onSwipeTouchListener;
     String token,name,mail;
     private static  String PREFS_NAME = "login_preferences";
     private static  String PREF_UNAME = "Username";
@@ -169,7 +153,6 @@ public class HomePage extends AppCompatActivity{
     // For Dialogsa And Progress
     Button btnOk;
     Dialog postSucessDialog;
-
 
     private ShimmerFrameLayout mShimmerViewContainer;
 
@@ -249,15 +232,7 @@ public class HomePage extends AppCompatActivity{
                 loadHomePosts(token);
             }
         });
-        onSwipeTouchListener = new OnSwipeTouchListener(this, findViewById(R.id.flHome));
-        fabHodeNav.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("RestrictedApi")
-            @Override
-            public void onClick(View v) {
-                navView.setVisibility(View.INVISIBLE);
-                fabHodeNav.setVisibility(View.INVISIBLE);
-            }
-        });
+
 
         ivGoChatScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -387,7 +362,7 @@ public class HomePage extends AppCompatActivity{
                     case R.id.nav_settings:
                         fabHodeNav.setVisibility(View.GONE);
                         navView.setVisibility(View.INVISIBLE);
-                        Intent i = new Intent(HomePage.this,SettingsActivity.class);
+                        Intent i = new Intent(HomePage.this, SettingsActivityList.class);
                         i.putExtra("token",token);
                         startActivity(i);
                         overridePendingTransition(0, 0);
@@ -504,7 +479,12 @@ public class HomePage extends AppCompatActivity{
 
                 if (ytVidId.length() > 4)
                 {
-                    vvSelectedYtVideo.setVisibility(View.VISIBLE);
+                    if(vvSelectedYtVideo.getVisibility()==View.GONE)
+                    {
+                        vvSelectedYtVideo.setVisibility(View.VISIBLE);
+                    }else {
+                        vvSelectedYtVideo.setVisibility(View.GONE);
+                    }
 
                     if(ytPlayerInitialized)
                     {
@@ -776,15 +756,15 @@ public class HomePage extends AppCompatActivity{
     }
 
     private void clearSelecetMedia() {
+        vvSelectedYtVideo.setVisibility(View.GONE);
         ivSelectedImage.setVisibility(View.GONE);
         ivUnSelectImage.setVisibility(View.GONE);
         vvSelectedVideo.setVisibility(View.GONE);
         etYtLink.setVisibility(View.GONE);
-        vvSelectedYtVideo.setVisibility(View.GONE);
         imageFile = null;
         videoFile = null;
         etYtLink.setText("");
-        vvSelectedYtVideo.release();
+
     }
 
     private String getYouTubeId (String youTubeUrl) {
@@ -853,7 +833,6 @@ public class HomePage extends AppCompatActivity{
     }
 
     private void loadHomePosts(String token){
-        errorlayout.setVisibility(View.INVISIBLE);
         mShimmerViewContainer.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmerAnimation();
         Call<HomePostModal> call = RetrifitClient.getInstance()
@@ -867,7 +846,6 @@ public class HomePage extends AppCompatActivity{
                         refreshLayout.setRefreshing(false);
                         mShimmerViewContainer.stopShimmerAnimation();
                         mShimmerViewContainer.setVisibility(View.GONE);
-
 
                     }else {
                         if(response.body().getStatus()==null){
@@ -1199,97 +1177,5 @@ public class HomePage extends AppCompatActivity{
     }
 
 
-}
-
- class OnSwipeTouchListener implements View.OnTouchListener {
-    private final GestureDetector gestureDetector;
-    Context context;
-
-    OnSwipeTouchListener(Context ctx, View mainView) {
-
-        gestureDetector = new GestureDetector(ctx, new GestureListener());
-        mainView.setOnTouchListener(this);
-        context = ctx;
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
-    }
-
-    public class GestureListener extends
-            GestureDetector.SimpleOnGestureListener {
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            boolean result = false;
-            try {
-                float diffY = e2.getY() - e1.getY();
-                float diffX = e2.getX() - e1.getX();
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight();
-                        } else {
-                            onSwipeLeft();
-                        }
-                        result = true;
-                    }
-                } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffY > 0) {
-                        onSwipeBottom();
-                    } else {
-                        onSwipeTop();
-                    }
-                    result = true;
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            return result;
-        }
-    }
-
-    void onSwipeRight() {
-//        Toast.makeText(context, "Swiped Right", Toast.LENGTH_SHORT).show();
-        this.onSwipe.swipeRight();
-    }
-
-    void onSwipeLeft() {
-        context.startActivity(new Intent(context,SkillPage.class));
-        Activity activity = (Activity) context;
-        activity.finish();
-        activity.overridePendingTransition(0, 0);
-        this.onSwipe.swipeLeft();
-    }
-
-    void onSwipeTop() {
-//        Toast.makeText(context, "Swiped Up", Toast.LENGTH_SHORT).show();
-        this.onSwipe.swipeTop();
-    }
-
-    void onSwipeBottom() {
-//        Toast.makeText(context, "Swiped Down", Toast.LENGTH_SHORT).show();
-        this.onSwipe.swipeBottom();
-    }
-
-    interface onSwipeListener {
-        void swipeRight();
-
-        void swipeTop();
-
-        void swipeBottom();
-
-        void swipeLeft();
-    }
-
-    onSwipeListener onSwipe;
 }
 

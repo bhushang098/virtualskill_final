@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.twilio.video.app.DetailedChatResponse.Datum;
 import com.twilio.video.app.R;
+import com.twilio.video.app.util.TimeService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ChatItemAdapterViewHolder> {
@@ -64,13 +67,29 @@ public class ChatItemAdapter extends RecyclerView.Adapter<ChatItemAdapter.ChatIt
             holder.linearLayoutOthers2.setVisibility(View.GONE);
             holder.tvMyMess.setText(messageList.get(position).getContent());
             holder.tvmyName.setText(" (You)");
-            holder.tv_myTimeStamp.setText(messageList.get(position).getCreatedAt().split(" ")[0]);
+
+
+            try {
+                long time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(messageList.get(position).getCreatedAt()).getTime();
+                holder.tv_myTimeStamp.setText(new TimeService().getTimeAgo(time, System.currentTimeMillis()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            // holder.tv_myTimeStamp.setText(messageList.get(position).getCreatedAt().split(" ")[0]);
         }else {
+
             holder.linearLayoutMine1.setVisibility(View.GONE);
             holder.linearLayoutMine2.setVisibility(View.GONE);
             holder.tvFrontUserMess.setText(messageList.get(position).getContent());
             holder.tvfrontUserName.setText(messageList.get(position).getAuthor());
-            holder.tvfrontUserTimeStamp.setText(messageList.get(position).getCreatedAt().split(" ")[0]);
+
+            try {
+                long time = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(messageList.get(position).getCreatedAt()).getTime();
+                holder.tvfrontUserTimeStamp.setText(new TimeService().getTimeAgo(time, System.currentTimeMillis()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            //holder.tvfrontUserTimeStamp.setText(messageList.get(position).getCreatedAt().split(" ")[0]);
 
         }
 
