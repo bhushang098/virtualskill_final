@@ -516,7 +516,7 @@ public class OtherUserProfile extends AppCompatActivity {
 
         if (otherUserObj.getProfilePath() != null) {
             Glide.with(this).
-                    load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" + otherUserObj.getProfilePath())
+                    load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/" + otherUserObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -533,7 +533,7 @@ public class OtherUserProfile extends AppCompatActivity {
         }
 
         if (otherUserObj.getCoverPath() != null) {
-            Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/" +
+            Glide.with(this).load("http://virtualskill.in/storage/uploads/covers/" +
                     otherUserObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override

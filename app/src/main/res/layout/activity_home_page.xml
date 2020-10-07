@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tbHome"
                 android:layout_width="match_parent"
@@ -90,9 +89,9 @@
                 android:layout_height="match_parent">
 
 
-                <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+<!--                <androidx.core.widget.NestedScrollView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -117,6 +116,7 @@
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
+                            android:visibility="gone"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             app:cardCornerRadius="5dp"
@@ -318,7 +318,6 @@
                         </com.facebook.shimmer.ShimmerFrameLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:layout_marginTop="20dp"
                             android:id="@+id/recViewHomePosts"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -331,10 +330,23 @@
 
                     </RelativeLayout>
 
-                </androidx.core.widget.NestedScrollView>
+<!--                </androidx.core.widget.NestedScrollView>-->
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_go_new_post_from_home"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_baseline_add_white_24"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="80dp"
+                android:layout_marginRight="10dp"
+                android:tooltipText="New Post"
+                android:accessibilityPaneTitle="New Post"
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_height="wrap_content"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_home"

@@ -425,7 +425,7 @@ public class MyProfile extends AppCompatActivity {
             }
         });
 
-        Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/" +imgId).listener(new RequestListener<Drawable>() {
+        Glide.with(this).load("http://virtualskill.in/public/uploads/profile_photos/" +imgId).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 // holder.progressBar.setVisibility(View.GONE);
@@ -463,7 +463,7 @@ public class MyProfile extends AppCompatActivity {
         if(userObj.getProfilePath()!=null)
         {
             Glide.with(this).
-                    load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/profile_photos/"
+                    load(R.string.profile_path
                             +userObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -500,7 +500,7 @@ public class MyProfile extends AppCompatActivity {
 
         if (userObj.getCoverPath()!=null)
         {
-            Glide.with(this).load("http://nexgeno1.s3.us-east-2.amazonaws.com/public/uploads/covers/"
+            Glide.with(this).load(R.string.cover_path
                     +userObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override

@@ -68,6 +68,7 @@ import com.twilio.video.app.Dialogs.ConformationDialog;
 import com.twilio.video.app.HomePostModal.Datum;
 import com.twilio.video.app.HomePostModal.HomePostModal;
 import com.twilio.video.app.MainPages.ClassesPage;
+import com.twilio.video.app.MainPages.CreatePostPage;
 import com.twilio.video.app.MainPages.MyProfile;
 import com.twilio.video.app.MainPages.NotificationsPage;
 import com.twilio.video.app.MainPages.ProUserPage;
@@ -110,7 +111,7 @@ public class HomePage extends AppCompatActivity{
     private  List<Datum> postDataList = new ArrayList<>();
     private RecyclerView revPostView;
     private SwipeRefreshLayout refreshLayout;
-    FloatingActionButton fabHodeNav;
+    FloatingActionButton fabHodeNav,fabGoPost;
     String token,name,mail;
     private static  String PREFS_NAME = "login_preferences";
     private static  String PREF_UNAME = "Username";
@@ -263,6 +264,13 @@ public class HomePage extends AppCompatActivity{
                     fabHodeNav.setVisibility(View.VISIBLE);
                     fabHodeNav.requestFocusFromTouch();
                 }
+            }
+        });
+
+        fabGoPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this, CreatePostPage.class));
             }
         });
 
@@ -803,6 +811,8 @@ public class HomePage extends AppCompatActivity{
         searchButton = findViewById(R.id.iv_search_icon);
         goNotiPage = findViewById(R.id.iv_go_note_screen);
         mainFramelayout = findViewById(R.id.flHome);
+
+        fabGoPost = findViewById(R.id.fab_go_new_post_from_home);
 //
         NavigationView navigationView = (NavigationView)
                 findViewById(R.id.drawer_main_navigation);

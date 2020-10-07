@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.reflect.KVisibility;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,6 +71,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
     int userId;
     PopupWindow mpopup;
     String token;
+
 
     public HomePostsAdapter(List<Datum> postList, Context context, int userId, String token) {
         this.postList = postList;
@@ -90,10 +92,79 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
     @Override
     public void onViewAttachedToWindow(@NonNull HomePostAdapterViewHolder holder) {
 
-        Log.d("AttachedView>>",holder.caption.getText().toString());
-//        if (holder.videoView.getVisibility() == View.VISIBLE)
-//            holder.videoView.getPlayer().setPlayWhenReady(true);
+        if(holder.ytVidView.getVisibility()== View.VISIBLE)
+        {
+//            holder.ytVidView.addYouTubePlayerListener(new YouTubePlayerListener() {
+//                @Override
+//                public void onReady(@NotNull YouTubePlayer youTubePlayer) {
+//                    youTubePlayer.loadVideo(holder.payload.getText().toString(),
+//                            0);
+//                }
+//
+//                @Override
+//                public void onStateChange(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlayerState playerState) {
+//
+//                }
+//
+//                @Override
+//                public void onPlaybackQualityChange(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlaybackQuality playbackQuality) {
+//
+//                }
+//
+//                @Override
+//                public void onPlaybackRateChange(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlaybackRate playbackRate) {
+//
+//                }
+//
+//                @Override
+//                public void onError(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlayerError playerError) {
+//
+//                }
+//
+//                @Override
+//                public void onCurrentSecond(@NotNull YouTubePlayer youTubePlayer, float v) {
+//
+//                }
+//
+//                @Override
+//                public void onVideoDuration(@NotNull YouTubePlayer youTubePlayer, float v) {
+//
+//                }
+//
+//                @Override
+//                public void onVideoLoadedFraction(@NotNull YouTubePlayer youTubePlayer, float v) {
+//
+//                }
+//
+//                @Override
+//                public void onVideoId(@NotNull YouTubePlayer youTubePlayer, @NotNull String s) {
+//
+//                }
+//                @Override
+//                public void onApiChange(@NotNull YouTubePlayer youTubePlayer) {
+//
+//                }
+//            });
+        }
+
+        if(holder.videoView.getVisibility()==View.VISIBLE)
+        {
+
+           // holder.videoView.setSource(holder.payload.getText().toString());
+
+        }
         super.onViewAttachedToWindow(holder);
+        Log.d("Attached>>",holder.caption.getText().toString());
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull HomePostAdapterViewHolder holder) {
+
+   //No Need To Pause Players Here
+
+        super.onViewDetachedFromWindow(holder);
+        Log.d("DeAttached>>",holder.caption.getText().toString());
 
     }
 
@@ -221,20 +292,24 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                 }
             }).into(holder.mediaView);
         }
+
+
         if (postList.get(position).getHasVideo() == 1) {
             String vidUrl = "http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"
                     + postList.get(position).getDUploadedFiles().get(0).getFilePath();
             holder.ivPlayImg.setVisibility(View.VISIBLE);
             holder.videoView.setVisibility(View.VISIBLE);
-            holder.videoView.setSource(vidUrl);
+           holder.videoView.setSource(vidUrl);
+            holder.payload.setText(vidUrl);
         }
 
         if (postList.get(position).getYoutubeLink() != null) {
             holder.ytVidView.setVisibility(View.VISIBLE);
-            holder.ytVidView.initializeWithWebUi(new YouTubePlayerListener() {
+            holder.ytVidView.addYouTubePlayerListener(new YouTubePlayerListener() {
                 @Override
                 public void onReady(@NotNull YouTubePlayer youTubePlayer) {
-                    youTubePlayer.loadVideo(postList.get(position).getYoutubeLink().toString(), 0);
+                    youTubePlayer.cueVideo(postList.get(position).getYoutubeLink().toString(),
+                            0);
                 }
 
                 @Override
@@ -281,7 +356,9 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                 public void onApiChange(@NotNull YouTubePlayer youTubePlayer) {
 
                 }
-            }, true);
+            });
+            holder.payload.setText(postList.get(position).getYoutubeLink().toString());
+
         }
 
         holder.ivPlayImg.setOnClickListener(new View.OnClickListener() {
@@ -678,6 +755,8 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         return position;
     }
 
+
+
     @Override
     public int getItemCount() {
         return postList.size();
@@ -685,7 +764,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
 
     class HomePostAdapterViewHolder extends RecyclerView.ViewHolder {
 
-        TextView userName, timesAgo, noOfLikes, noOfComment2, caption, tvSeeComments;
+        TextView userName, timesAgo, noOfLikes, noOfComment2, caption, tvSeeComments,payload;
         CircleImageView userProfile;
         ProgressBar progressBar;
         ImageView mediaView, likeView, menuImage;
@@ -715,6 +794,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
             ytVidView = itemView.findViewById(R.id.ytVv_on_post);
             linlayuserNameanstimesHao = itemView.findViewById(R.id.lin_lay_u_name_on_post_item);
             ivPlayImg = itemView.findViewById(R.id.iv_play_img);
+            payload = itemView.findViewById(R.id.tv_as_payload);
         }
     }
 }

@@ -20,6 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:visibility="gone"
+                android:text="Test Payload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_as_payload"/>
+
 
             <LinearLayout
                 android:id="@+id/lin_layout_top_inPost"
@@ -28,6 +35,7 @@
                 android:gravity="fill_horizontal"
                 android:orientation="horizontal"
                 android:padding="5dp">
+
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_pic_on_post"
@@ -170,8 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
                     android:visibility="gone"
-                    app:autoPlay="false"
-                    app:enableAutomaticInitialization="false"
+                    app:useWebUi="true"
                     android:layout_below="@id/tv_caption_on_post"
                     android:id="@+id/ytVv_on_post"/>
 

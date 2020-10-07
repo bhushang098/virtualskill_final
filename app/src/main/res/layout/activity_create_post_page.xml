@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context="com.twilio.video.app.MainPages.CreatePostPage">
 
@@ -38,15 +39,17 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tb_new_post">
 
         <LinearLayout
-            android:gravity="bottom"
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:gravity="bottom"
             android:orientation="vertical">
 
             <EditText
@@ -55,55 +58,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/edit_text_border"
-                android:hint="    Share what you think ...."
-                android:padding="30dp"
-                android:textColorHint="#94454647" />
-
-            <!--// 3 hidden media types-->
-
-            <ImageView
-                android:id="@+id/iv_unSelect_image_new_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_baseline_highlight_off_24" />
-
-
-            <EditText
-                android:id="@+id/et_yt_link_new_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Youtube Link"
-                android:textColor="@color/cardDarkBackground"
-                android:visibility="gone" />
-
-            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                android:id="@+id/yt_selected_vv_new_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:autoPlay="false"
-                app:enableAutomaticInitialization="false" />
-
-            <ImageView
-                android:id="@+id/iv_selected_image_new_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <VideoView
-                android:id="@+id/vv_selected_video_new_post"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:visibility="gone" />
-
-            <!--    Till -->
-
+                android:cursorVisible="true"
+                android:hint="  Share what you think ...."
+                android:paddingTop="4dp"
+                android:paddingLeft="5dp"
+                android:paddingBottom="50dp"
+                android:textColorHint="@color/lobbyColorAccent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:foregroundGravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -183,10 +149,53 @@
 
             </LinearLayout>
 
+            <!--// 3 hidden media types-->
+
+            <ImageView
+                android:id="@+id/iv_unSelect_image_new_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_baseline_highlight_off_24" />
+
+
+            <EditText
+                android:id="@+id/et_yt_link_new_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Youtube Link"
+                android:textColor="@color/cardDarkBackground"
+                android:visibility="gone" />
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/yt_selected_vv_new_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:autoPlay="false"
+                android:layout_margin="5dp"
+                app:enableAutomaticInitialization="false" />
+
+            <ImageView
+                android:layout_margin="5dp"
+                android:id="@+id/iv_selected_image_new_post"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+            <VideoView
+                android:id="@+id/vv_selected_video_new_post"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="gone" />
+
+            <!--    Till -->
+
         </LinearLayout>
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>

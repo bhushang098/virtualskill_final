@@ -218,4 +218,11 @@
 
     <string name="notifications_admin_channel_name">VirtualSkill Admin Channel</string>
     <string name="notifications_admin_channel_description">VirtualSkill Admin Channel Description</string>
+
+
+    <string name="media_path">"http://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/posts/"</string>
+    <string name="cover_path">http://virtualskill.in/storage/uploads/covers/</string>
+    <string name="profile_path">https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/</string>
+
+
 </resources>
