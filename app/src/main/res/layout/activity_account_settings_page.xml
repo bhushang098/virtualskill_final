@@ -145,42 +145,139 @@
                     android:text="Interests"
                     android:textStyle="bold" />
 
-                <CheckBox
-                    android:id="@+id/chk_graphic_design"
-                    android:layout_width="wrap_content"
+                <GridLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:layout_marginTop="10dp"
-                    android:onClick="onCheckboxClicked"
-                    android:padding="10dp"
-                    android:text="Graphic Designing" />
+                    android:columnCount="2">
 
-                <CheckBox
-                    android:id="@+id/chk_AI"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:onClick="onCheckboxClicked"
-                    android:padding="10dp"
-                    android:text="AI" />
+                    <CheckBox
+                        android:id="@+id/chk_cyber_sec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Cyber security" />
 
-                <CheckBox
-                    android:id="@+id/chk_computer_network"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:onClick="onCheckboxClicked"
-                    android:padding="10dp"
-                    android:text="Computer Network" />
 
-                <CheckBox
-                    android:id="@+id/chk_Python_programing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:onClick="onCheckboxClicked"
-                    android:padding="10dp"
-                    android:text="Python Programing" />
+
+                    <CheckBox
+                        android:id="@+id/chk_data_sci"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Data science" />
+
+                    <CheckBox
+                        android:id="@+id/chk_robotic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Robotic" />
+
+                    <!--                    //new -->
+
+                    <CheckBox
+                        android:id="@+id/chk_space_tech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Space Technology" />
+
+                    <CheckBox
+                        android:id="@+id/chk_automation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Automation" />
+
+                    <CheckBox
+                        android:id="@+id/chk_digital_marketing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Digital Marketing" />
+
+                    <CheckBox
+                        android:id="@+id/chk_ml"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Machine learning" />
+
+                    <!--                    //new-->
+
+
+                    <CheckBox
+                        android:id="@+id/chk_app_dev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Mobile App development" />
+
+                    <CheckBox
+                        android:id="@+id/chk_content_writer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Content Writer" />
+
+                    <CheckBox
+                        android:id="@+id/chk_ar_vr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="AR/VR" />
+
+                    <CheckBox
+                        android:id="@+id/chk_cloud_computing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Cloud Computing" />
+
+                    <!--                    // new-->
+
+                    <CheckBox
+                        android:id="@+id/chk_iot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="IOT" />
+
+                    <CheckBox
+                        android:id="@+id/chk_AI"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="AI" />
+
+                    <CheckBox
+                        android:id="@+id/chk_blockchain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCheckboxClicked"
+                        android:padding="10dp"
+                        android:text="Blockchain" />
+
+
+                </GridLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

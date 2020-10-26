@@ -92,60 +92,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
     @Override
     public void onViewAttachedToWindow(@NonNull HomePostAdapterViewHolder holder) {
 
-        if(holder.ytVidView.getVisibility()== View.VISIBLE)
-        {
-//            holder.ytVidView.addYouTubePlayerListener(new YouTubePlayerListener() {
-//                @Override
-//                public void onReady(@NotNull YouTubePlayer youTubePlayer) {
-//                    youTubePlayer.loadVideo(holder.payload.getText().toString(),
-//                            0);
-//                }
-//
-//                @Override
-//                public void onStateChange(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlayerState playerState) {
-//
-//                }
-//
-//                @Override
-//                public void onPlaybackQualityChange(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlaybackQuality playbackQuality) {
-//
-//                }
-//
-//                @Override
-//                public void onPlaybackRateChange(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlaybackRate playbackRate) {
-//
-//                }
-//
-//                @Override
-//                public void onError(@NotNull YouTubePlayer youTubePlayer, PlayerConstants.@NotNull PlayerError playerError) {
-//
-//                }
-//
-//                @Override
-//                public void onCurrentSecond(@NotNull YouTubePlayer youTubePlayer, float v) {
-//
-//                }
-//
-//                @Override
-//                public void onVideoDuration(@NotNull YouTubePlayer youTubePlayer, float v) {
-//
-//                }
-//
-//                @Override
-//                public void onVideoLoadedFraction(@NotNull YouTubePlayer youTubePlayer, float v) {
-//
-//                }
-//
-//                @Override
-//                public void onVideoId(@NotNull YouTubePlayer youTubePlayer, @NotNull String s) {
-//
-//                }
-//                @Override
-//                public void onApiChange(@NotNull YouTubePlayer youTubePlayer) {
-//
-//                }
-//            });
-        }
+
 
         if(holder.videoView.getVisibility()==View.VISIBLE)
         {
@@ -208,7 +155,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
         likeeduser = getLikedUSerIds(postList.get(position).getLikes());
 
         if (likeeduser.contains(userId)) {
-            holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_24);
+            holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_blue_24);
             holder.likeView.setTag("Liked");
         }
 
@@ -230,7 +177,7 @@ public class HomePostsAdapter extends RecyclerView.Adapter<HomePostsAdapter.Home
                     likePostByApi(postList.get(position).getPostId().toString());
 
                 } else {
-                    holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    holder.likeView.setImageResource(R.drawable.ic_baseline_favorite_blue_24);
                     holder.likeView.setTag("Liked");
                     int likesNo = Integer.parseInt(holder.noOfLikes.getText().toString());
                     likesNo++;

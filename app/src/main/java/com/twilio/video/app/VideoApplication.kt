@@ -33,6 +33,8 @@ class VideoApplication : Application(), HasAndroidInjector {
     @Inject
     lateinit var tree: Timber.Tree
 
+
+
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         MultiDex.install(this)
@@ -59,4 +61,5 @@ class VideoApplication : Application(), HasAndroidInjector {
     override fun androidInjector(): AndroidInjector<Any> {
         return dispatchingAndroidInjector
     }
+
 }

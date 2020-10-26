@@ -32,14 +32,14 @@ import retrofit2.Response;
 
 public class AccountSettingsPage extends AppCompatActivity {
 
-    CheckBox graphicDesign, Ai, computerNetwork, pythonPrograming;
-    CheckBox  chkGraphic, chkAi, chkcn, chkPython;
+    CheckBox  chkcyber, chkAi, chkdataSci, chkRobotic,chkspace,chkAutomation,chkDigitalMarketing
+            ,chkml,chkappDev,chkContentEriter,chkArVr,chkCloud,chkIot,chkBlockChain;
     String name, email, location, skill, genderStr, token;
     EditText etName, etMail, etLocation, etSkill;
     TextView tvUpdateAccountSettings;
     List<String> interests = new ArrayList<String>();
     Spinner spinGender;
-    String[] gender = {"Male", "Female"};
+    String[] gender = {"Female","Male"};
     ImageView ivback;
     Data userObj = new Data();
 
@@ -82,19 +82,50 @@ public class AccountSettingsPage extends AppCompatActivity {
                 email = etMail.getText().toString();
                 location = etLocation.getText().toString();
                 skill = etSkill.getText().toString();
-                if (chkGraphic.isChecked())
-                    interests.add("Graphics Designing ");
+
+                if (chkcyber.isChecked())
+                    interests.add("Cyber security");
+
+                if (chkdataSci.isChecked())
+                    interests.add("Data science");
+
+                //new ...
+
+                if (chkRobotic.isChecked())
+                    interests.add("Robotic");
+
+                if (chkspace.isChecked())
+                    interests.add("Space Technology");
+
+                if (chkAutomation.isChecked())
+                    interests.add("Automation");
+
+                if (chkDigitalMarketing.isChecked())
+                    interests.add("Digital Marketing");
+
+                if (chkml.isChecked())
+                    interests.add("Machine learning");
+
+                if (chkappDev.isChecked())
+                    interests.add("Mobile App development");
+
+                if (chkContentEriter.isChecked())
+                    interests.add("Content Writer");
+
+                if (chkArVr.isChecked())
+                    interests.add("AR/VR");
+
+                if (chkCloud.isChecked())
+                    interests.add("Cloud Computing");
+
+                if (chkIot.isChecked())
+                    interests.add("IOT");
 
                 if (chkAi.isChecked())
                     interests.add("AI");
 
-
-                if (chkcn.isChecked())
-                    interests.add("Computer Network");
-
-
-                if (chkPython.isChecked())
-                    interests.add("Programming in Python");
+                if (chkBlockChain.isChecked())
+                    interests.add("Blockchain");
 
 
                 if (location.isEmpty())
@@ -174,9 +205,9 @@ public class AccountSettingsPage extends AppCompatActivity {
         etSkill.setText(userObj.getSkill().toString());
 
         if(userObj.getGender()==1)
-            spinGender.setSelection(0);
-        else
             spinGender.setSelection(1);
+        else
+            spinGender.setSelection(0);
 
 
         if (userObj.getInterests().isEmpty()) {
@@ -185,17 +216,51 @@ public class AccountSettingsPage extends AppCompatActivity {
             String[] interestsAry = userObj.getInterests().split("\"");
 
             for (int i = 1; i < interestsAry.length; i++) {
-                if(interestsAry[i].equalsIgnoreCase("Graphics Designing"))
-                    chkGraphic.setChecked(true);
+                if(interestsAry[i].equalsIgnoreCase("Cyber security"))
+                    chkcyber.setChecked(true);
 
-                if(interestsAry[i].equalsIgnoreCase("Computer Network"))
-                    chkcn.setChecked(true);
+                if(interestsAry[i].equalsIgnoreCase("Data science"))
+                    chkdataSci.setChecked(true);
 
-                if(interestsAry[i].equalsIgnoreCase("Programming in Python"))
-                    chkPython.setChecked(true);
+                if(interestsAry[i].equalsIgnoreCase("Robotic"))
+                    chkRobotic.setChecked(true);
 
-                if(interestsAry[i].equalsIgnoreCase("Ai"))
+                if(interestsAry[i].equalsIgnoreCase("Space Technology"))
+                    chkspace.setChecked(true);
+
+                //new
+                if(interestsAry[i].equalsIgnoreCase("Automation"))
+                    chkAutomation.setChecked(true);
+
+                if(interestsAry[i].equalsIgnoreCase("Digital Marketing"))
+                    chkDigitalMarketing.setChecked(true);
+
+                if(interestsAry[i].equalsIgnoreCase("Machine learning"))
+                    chkml.setChecked(true);
+
+                if(interestsAry[i].equalsIgnoreCase("Mobile App development"))
+                    chkappDev.setChecked(true);
+
+
+                if(interestsAry[i].equalsIgnoreCase("Content Writer"))
+                    chkContentEriter.setChecked(true);
+
+
+                if(interestsAry[i].equalsIgnoreCase("AR/VR"))
+                    chkArVr.setChecked(true);
+
+                if(interestsAry[i].equalsIgnoreCase("Cloud Computing"))
+                    chkCloud.setChecked(true);
+
+                if(interestsAry[i].equalsIgnoreCase("IOT"))
+                    chkIot.setChecked(true);
+
+
+                if(interestsAry[i].equalsIgnoreCase("AI"))
                     chkAi.setChecked(true);
+
+                if(interestsAry[i].equalsIgnoreCase("Blockchain"))
+                    chkBlockChain.setChecked(true);
 
             }
         }
@@ -205,10 +270,22 @@ public class AccountSettingsPage extends AppCompatActivity {
     }
 
     private void setUi() {
-        graphicDesign = findViewById(R.id.chk_graphic_design);
-        Ai = findViewById(R.id.chk_AI);
-        computerNetwork = findViewById(R.id.chk_computer_network);
-        pythonPrograming = findViewById(R.id.chk_Python_programing);
+        chkcyber = findViewById(R.id.chk_cyber_sec);
+        chkdataSci = findViewById(R.id.chk_data_sci);
+        chkRobotic = findViewById(R.id.chk_robotic);
+        chkspace = findViewById(R.id.chk_space_tech);
+        chkAutomation = findViewById(R.id.chk_automation);
+        chkDigitalMarketing = findViewById(R.id.chk_digital_marketing);
+        chkml = findViewById(R.id.chk_ml);
+        chkappDev = findViewById(R.id.chk_app_dev);
+        chkContentEriter = findViewById(R.id.chk_content_writer);
+        chkArVr = findViewById(R.id.chk_ar_vr);
+        chkCloud = findViewById(R.id.chk_cloud_computing);
+        chkIot = findViewById(R.id.chk_iot);
+        chkAi = findViewById(R.id.chk_AI);
+        chkBlockChain = findViewById(R.id.chk_blockchain);
+
+
         spinGender = findViewById(R.id.spinner_gender);
 
         etName = findViewById(R.id.et_name_user_settings);
@@ -218,18 +295,16 @@ public class AccountSettingsPage extends AppCompatActivity {
 
         tvUpdateAccountSettings = findViewById(R.id.tv_update_account_settings);
 
-        chkGraphic = findViewById(R.id.chk_graphic_design);
-        chkAi = findViewById(R.id.chk_AI);
-        chkcn = findViewById(R.id.chk_computer_network);
-        chkPython = findViewById(R.id.chk_Python_programing);
-
         ivback = findViewById(R.id.iv_back_edit_info);
 
     }
 
     private void updateAccountSettings() {
 
-        String i1 = " ",i2 = " ",i3 = " ",i4=" ";
+        String i1 = " ",i2 = " ",i3 = " ",i4=" ",
+                i5 = " ",i6 = " ",i7 = " ",i8=" ",
+                i9 = " ",i10 = " ",i11 = " ",i12=" ",
+                i13 = " ",i14 = " ";
         int lasteleIndex = interests.size()-1;
 
         if(lasteleIndex>=0)
@@ -240,9 +315,30 @@ public class AccountSettingsPage extends AppCompatActivity {
             i3 = interests.get(2);
         if (lasteleIndex>=3)
             i4 = interests.get(3);
+        if (lasteleIndex>=4)
+            i5 = interests.get(4);
+        if (lasteleIndex>=5)
+            i6 = interests.get(5);
+        if (lasteleIndex>=6)
+            i7 = interests.get(6);
+        if (lasteleIndex>=7)
+            i8 = interests.get(7);
+        if (lasteleIndex>=8)
+            i9 = interests.get(8);
+        if (lasteleIndex>=9)
+            i10 = interests.get(9);
+        if (lasteleIndex>=10)
+            i11 = interests.get(10);
+        if (lasteleIndex>=11)
+            i12 = interests.get(11);
+        if (lasteleIndex>=12)
+            i13 = interests.get(12);
+        if (lasteleIndex>=13)
+            i14 = interests.get(13);
 
         Call<SettingsResponse> call = RetrifitClient.getInstance()
-                .getSettingsApi().updateBasicInfo(token,name,email,skill,i1,i2,i3,i4,
+                .getSettingsApi().updateBasicInfo(token,name,email,skill,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,
+                        i12,i13,i14,
                         location,genderStr);
 
         call.enqueue(new Callback<SettingsResponse>() {

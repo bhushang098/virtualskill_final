@@ -463,7 +463,7 @@ public class MyProfile extends AppCompatActivity {
         if(userObj.getProfilePath()!=null)
         {
             Glide.with(this).
-                    load(R.string.profile_path
+                    load("https://virtualskill0.s3.ap-southeast-1.amazonaws.com/public/uploads/profile_photos/"
                             +userObj.getProfilePath())
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -500,7 +500,7 @@ public class MyProfile extends AppCompatActivity {
 
         if (userObj.getCoverPath()!=null)
         {
-            Glide.with(this).load(R.string.cover_path
+            Glide.with(this).load("http://virtualskill.in/storage/uploads/covers/"
                     +userObj.getCoverPath()).
                     listener(new RequestListener<Drawable>() {
                         @Override
@@ -557,7 +557,7 @@ public class MyProfile extends AppCompatActivity {
         tvFollowerNo.setText(String.valueOf(followerList.size()));
         tvFollowingNo.setText(String.valueOf(followingsList.size()));
 
-        if(userObj.getSex()==0)
+        if(userObj.getGender()==0)
         {
             gender.setText("Female");
             ivgender.setImageResource(R.drawable.female);
@@ -578,7 +578,7 @@ public class MyProfile extends AppCompatActivity {
 
             for(int i = 1;i<interestsAry.length;i++)
             {
-                if(interestsAry[i].length()>1)
+                if(interestsAry[i].length()>1 && !(interestsAry[i].contains("null")))
                 {
                     interestsString = interestsString + interestsAry[i]+"<b>"+" , "+"</b>";
                 }

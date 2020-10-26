@@ -572,7 +572,7 @@ public class OtherUserProfile extends AppCompatActivity {
             tvSkill.setText(" ");
         }
 
-        if (otherUserObj.getSex() == 0) {
+        if (otherUserObj.getGender() == 0) {
             gender.setText("Female");
             ivGender.setImageResource(R.drawable.female);
         } else {
@@ -608,7 +608,7 @@ public class OtherUserProfile extends AppCompatActivity {
             String interestsString = "";
 
             for (int i = 1; i < interestsAry.length; i++) {
-                if(interestsAry[i].length()>1)
+                if(interestsAry[i].length()>1 && !(interestsAry[i].contains("null")))
                 {
                     interestsString = interestsString + interestsAry[i]+"<b>"+", "+"</b>";
                 }

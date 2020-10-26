@@ -27,6 +27,16 @@ public interface SettingsApI {
             @Field("interests[]") String interests1,
             @Field("interests[]") String interests2,
             @Field("interests[]") String interests3,
+            @Field("interests[]") String interests4,
+            @Field("interests[]") String interests5,
+            @Field("interests[]") String interests6,
+            @Field("interests[]") String interests7,
+            @Field("interests[]") String interest8,
+            @Field("interests[]") String interests9,
+            @Field("interests[]") String interests10,
+            @Field("interests[]") String interests11,
+            @Field("interests[]") String interests12,
+            @Field("interests[]") String interests13,
             @Field("location") String location,
             @Field("gender") String gender
             );

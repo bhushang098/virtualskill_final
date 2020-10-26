@@ -27,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SettingsActivityList extends AppCompatActivity {
-    LinearLayout goAccnt,gouName,goRole,goPasss;
+    LinearLayout goAccnt, gouName, goRole, goPasss;
     ImageView ibBack;
     Data userObj = new Data();
     String token;
@@ -44,12 +44,11 @@ public class SettingsActivityList extends AppCompatActivity {
         gouName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userObj.getUsername()==null)
-                {
+                if (userObj.getUsername() == null) {
                     Toast.makeText(SettingsActivityList.this, "Something Went Wrong please Retry", Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent i = new Intent(SettingsActivityList.this,UserNameSettingsPage.class);
-                    i.putExtra("user_name",userObj.getUsername());
+                } else {
+                    Intent i = new Intent(SettingsActivityList.this, UserNameSettingsPage.class);
+                    i.putExtra("user_name", userObj.getUsername());
                     startActivity(i);
                 }
 
@@ -65,12 +64,11 @@ public class SettingsActivityList extends AppCompatActivity {
         goRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userObj.getUserType()==null)
-                {
+                if (userObj.getUserType() == null) {
                     Toast.makeText(SettingsActivityList.this, "Something Went Wrong please Retry", Toast.LENGTH_SHORT).show();
-                }else {
-                    Intent i = new Intent(SettingsActivityList.this,RoleSetingsPage.class);
-                    i.putExtra("status",userObj.getUserType().toString());
+                } else {
+                    Intent i = new Intent(SettingsActivityList.this, RoleSetingsPage.class);
+                    i.putExtra("status", userObj.getUserType().toString());
                     startActivity(i);
                 }
 
@@ -114,25 +112,24 @@ public class SettingsActivityList extends AppCompatActivity {
         call.enqueue(new Callback<SingleUserResponse>() {
             @Override
             public void onResponse(Call<SingleUserResponse> call, Response<SingleUserResponse> response) {
-                Log.d("User>obJResponse>",response.raw().toString());
-                try{
-                    if (response.body()==null)
-                    {
+                Log.d("User>obJResponse>", response.raw().toString());
+                try {
+                    if (response.body() == null) {
                         //progressPopup.dismiss();
-                        if(response.errorBody()==null){
+                        if (response.errorBody() == null) {
                             //progressBar.setVisibility(View.INVISIBLE);
-                        }else {
+                        } else {
                             // showAuthError();
                         }
-                    }else {
+                    } else {
                         //progressPopup.dismiss();
                         userObj = response.body().getData();
 
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("Exception>>",e.toString());
+                    Log.e("Exception>>", e.toString());
                     // progressPopup.dismiss();
                 }
             }
